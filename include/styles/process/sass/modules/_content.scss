@@ -1,0 +1,40 @@
+.content {
+	-webkit-border-sizing: border-box;
+    -moz-border-sizing: border-box;
+    border-sizing: border-box;
+
+    margin-top: 30px;
+    
+	// color: white;
+	// .content__left {
+	// 	background-color: red;
+	// }
+	// .content__middle {
+	// 	background-color: blue;
+	// }
+	// .content__right {
+	// 	background-color: black;
+	// }
+	.content__title{
+        	padding: 0;
+        	margin: 0;
+
+        	.content__icon {        		
+        		padding: 10px;
+        		margin-right: 10px;  
+        		font-size: 1.0em;    		
+        	}
+
+        	.content__icon--bg{
+        		color: white;
+        		background-color: $content-icon-bg;
+        		border-radius: 50%;
+        	}
+    }
+
+    .content__title--font {
+    	color: lighten($black, 30%);
+    	font-size: 1.2em;
+    	font-weight: 400;
+    }
+}

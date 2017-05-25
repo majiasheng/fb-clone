@@ -1,0 +1,22 @@
+body {
+	font-family: "Open Sans", Helvetica, Arial;
+}
+input::-webkit-input-placeholder {
+    color: $search-bar-color !important;
+    font-size: 0.8em;
+}
+ 
+input:-moz-placeholder { /* Firefox 18- */
+    color: $search-bar-color !important;
+    font-size: 0.8em;
+}
+ 
+input::-moz-placeholder {  /* Firefox 19+ */
+    color: $search-bar-color !important;
+    font-size: 0.8em;
+}
+ 
+input:-ms-input-placeholder {  
+    color: $search-bar-color !important;
+    font-size: 0.8em;
+}

@@ -1,0 +1,97 @@
+.content__left {
+	
+    > *:not(:last-child) {
+    	box-shadow: 1px 1px 5px rgba(0,0,0,.2);
+    	margin: 0;
+    	margin-bottom: 20px;
+        padding: 5%;
+    }
+    
+    .left__intro {
+        color: $content-position;
+
+        .intro__position {
+        	margin-top: 10px;
+        	font-size: 0.9em;
+        	color: lighten($black, 30%);
+        }
+
+        .intro__address--font {
+        	font-size: 0.8em;
+        	font-weight: 300;
+        	color: lighten($black, 60%);
+        }
+
+        .intro__country--font {
+        	font-size: 0.8em;
+        	font-weight: 300;
+        	color: lighten($black, 60%);
+        }
+
+        .intro__update-btn--font {
+        	color: $link-blue;
+        	font-size: 0.8em;
+        	text-transform: uppercase;
+        	text-decoration: none;       	
+        }
+        .intro__update-btn--bg {
+        	background: transparent;
+        	border: none;
+        }
+    }
+
+    .left__photos {
+    	.photos__container {
+    		margin-top: 15px;
+
+    		img {
+    			width: 100%;
+    			height: 100%;
+    		}
+    	}
+    }
+
+    .left__friends {
+    	.photos__container {
+    		margin-top: 15px;
+
+    		img {
+    			width: 100%;
+    			height: 100%;
+    			border: 1px solid #eee;
+    		}
+    	}
+    }
+
+    .left__footer {
+    	footer {
+    		margin: 0;
+    		padding: 0;
+
+    		ul {
+    			list-style-type: none;
+    			margin: 0 10px;
+
+    			li {
+    				display: inline;
+    				a {
+    					color: lighten($black, 60%);
+    					font-size: 0.8em;
+    				}
+    			}
+
+    			/* add dot separators to all li elements but the last two */
+    			li:not(:nth-child(6))::after{
+    				content: " \00b7 ";
+    				color: lighten($black, 60%);
+    			}
+    			li:last-child::after {
+    				content: "";
+    			}
+    			li:last-child {
+    				display: block;
+    			}
+    		}
+    	}
+    }
+}

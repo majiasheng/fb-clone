@@ -1,0 +1,116 @@
+.navbar {
+	/* delete margin added by container-fluid */
+	margin-right: -15px;
+    margin-left: -15px;
+    background-color: $facebook-blue;
+    font-family: "Open Sans", Helvetica, Arial;
+}
+
+.navbar__container {
+    margin: 0 auto;
+    width: 100%;
+
+	ul {
+		width: 90%;
+		margin: 0 auto;			// center the entire ul
+		padding: 0;
+		// @include clearfix;
+	}
+
+    ul div {
+    	text-align: center;		// center the brand icon and search bar
+    	margin: 0 auto;			// center each div relative to ul
+    	padding: 0;
+    }
+
+	ul li {
+		display: inline-block;
+		color: $white;
+		// @include media-query-break(768px) {
+  //   		display: block;
+  //   		.navbar__sec
+  //   	}
+	}
+
+	ul li a {
+        text-decoration: none;
+        color: $white-95;
+        font-size: 0.8em;
+        display: inline-block;
+	}
+
+    .navbar__header{
+    	position: relative;
+    	width: 100%;
+    	margin: 0;
+    	padding: 0;
+    	border-right: 1px solid $facebook-lightblue;
+    	text-align: center;
+    	@include media-query-break(768px) {
+    		border: none;
+    		border-bottom: 1px solid $facebook-lightblue;
+    	}
+
+    }
+    /* icon padding and hover effect */
+    .header--icon-setting {
+    	// padding: 0 2px;
+    	font-size: 1.2em;
+    }
+    .header--icon-setting a {
+    	padding: 1px 6px;
+    }
+	.header--icon-setting:hover a {
+        color: $icon-hover-color;
+	}
+
+	/* brand icon */
+	.header__brand a {
+        font-size: 1.4em;
+	}
+	.header__brand i {
+		color: $facebook-blue;
+		background-color: $white-95;
+		padding: 5px 3px 0 10px;
+		border-radius: 2px;
+	}
+    
+    /* username and home button */
+    .header__username a, .header__home a{
+    	padding: 2px 12px;
+    }
+    .header__username:hover a, .header__home:hover a {
+    	background-color: $facebook-darkblue;
+    	border-radius: 3px;
+    }
+
+    /* search bar */
+
+    .navbar__search-form a {
+    	display: inline-block;
+    	font-size: 1.0em;
+    	padding: 1px 6px;
+    }
+    .navbar__search-form i {
+        color: $white-95;
+    }
+
+	.navbar__search-input {
+		padding: 0 30px 3px 3px;
+		// margin-right: 10px;
+		height: 25;
+		background-color: $facebook-blue;
+		border: none;
+		border-bottom: 1px solid $search-bar-color;
+
+	}
+	.navbar__search-input:focus {
+		color: $white-95;
+		background-color: $facebook-blue;
+		border: none;
+		border-bottom: 1px solid $search-bar-color;
+	}
+
+    
+}
+

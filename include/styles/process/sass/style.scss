@@ -1,0 +1,24 @@
+@import url('https://fonts.googleapis.com/css?family=Open+Sans');
+
+/* import variables */
+@import "variables/variables";
+
+/* import generic settings */
+@import "generic/normalize";
+@import "generic/reset";
+
+/* import base: html, body, headings */
+@import "base/base";
+
+/* import mixins */
+@import "mixins/mixins";
+
+/* import modules */
+@import "modules/navigation";
+@import "modules/cover";
+@import "modules/content";
+@import "modules/content-left";
+@import "modules/content-middle";
+@import "modules/content-right";
+// @import "modules/content-footer";
+

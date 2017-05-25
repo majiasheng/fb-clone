@@ -1,0 +1,23 @@
+/* clearfix */
+@mixin clearfix {
+	&:before,
+	&:after {
+		content: ' ';
+		display: table;
+	}
+	&:after {
+		clear: both;
+	}
+}
+
+/* media query */
+@mixin media-query-break($pixel) {
+    @media (max-width: $pixel) {
+    	@content;
+    }
+}
+
+@mixin resize-to-full-width {
+	width: 111.25%;
+    margin-left: -5.7%;
+}
