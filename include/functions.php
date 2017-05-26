@@ -1,5 +1,5 @@
 <?php
-// require_once("db_connect.php");
+require_once("db_connect.php");
 
 //TODO: declare global connection
 
@@ -7,11 +7,16 @@
  * establishes connection with db
  */
 function connect() {
-	$connection = mysqli_connect(DBHOST, DBUSER, DBPASSWORD, DBNAME);
-	if(mysqli_connect_errno()) {
-		die("Database connection failed. <br/>" . mysqli_connect_error($conn) . 
-			"(" . mysqli_connect_errno() . ") <br/>");
-	}
+    $connection = mysqli_connect(DB_SERVER, DB_USER, DB_PASSWORD, DB_NAME);
+
+    if(mysqli_connect_errno()) {
+    	die("Database connection failed. <br />" .
+    		mysqli_connect_error($connection) . " (" . 
+    		mysqli_connect_errno() . ") <br />");
+    }
+
+    // debug
+    echo "[DEBUG] Connection: " . mysqli_get_host_info($connection) . "<br/>";
 	
 	return $connection;
 }

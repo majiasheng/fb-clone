@@ -5,9 +5,6 @@
     </head>
     <body>
         <p>PLEASE LOG IN</br></p>
-        
-        <?php require_once("db_connect.php"); ?>
-        
         <form method="POST" action="login.php">
         	<input type="text" name="email" placeholder="email"><br/>
         	<input type="password" name="password" placeholder="password"><br/>
