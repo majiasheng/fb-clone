@@ -63,7 +63,7 @@ function validate_registration() {
 
 function save_user_to_db($user, $connection) {
 	$query = "";
-	$query .= "INSERT INTO user (";
+	$query .= "INSERT INTO users (";
 	// fields of user class
 	$query .= "first_name, last_name, email, password, ";
 	$query .= "birth_month, birth_day, birth_year, gender";
