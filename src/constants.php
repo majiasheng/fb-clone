@@ -1,6 +1,7 @@
+<!-- author: Jia Sheng Ma -->
 <?php 
 define("DB_SERVER",	"127.0.0.1");
-define("DB_USER", 	"majiasheng");
-define("DB_PASSWORD", "Notfound404");
-define("DB_NAME",		"fb");
+define("DB_USER", 	"fb-admin");
+define("DB_PASSWORD", "Pw4Admin");
+define("DB_NAME",		"fb_lets_go");
 ?>

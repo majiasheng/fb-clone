@@ -1,8 +1,5 @@
 <?php
-define("DBHOST", "127.0.0.1");
-define("DBUSER", "tester");
-define("DBPASSWORD", "password");
-define("DBNAME", "fb");
+// require_once("db_connect.php");
 
 //TODO: declare global connection
 
