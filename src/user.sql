@@ -12,4 +12,4 @@ CREATE TABLE users (
 	PRIMARY KEY(id)
 );
 
-INSERT INTO users (first_name, last_name, email, password, birth_month, birth_day, birth_year, gender) VALUES ('Jia-Sheng', 'Ma', 'majiasheng@fb-lets-go.com', 'passowrd', 'Jan', '01', '1900', 'M');
+INSERT INTO users (first_name, last_name, email, password, birth_month, birth_day, birth_year, gender) VALUES ('Jia-Sheng', 'Ma', 'majiasheng@fb-lets-go.com', 'password', 'Jan', '01', '1900', 'M');

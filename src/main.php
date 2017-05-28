@@ -1,3 +1,11 @@
+<?php
+// TODO: use user data to populate main.php
+session_start();
+if ($_SESSION['loggedin'] !== TRUE) {
+   header("Location: index.php");
+}
+?>
+
 <!doctype html>
 <html lang="en">
 <head>
@@ -19,7 +27,13 @@
 		  			</div>
 		  		<!-- username and home button -->
 		  		<div class="col-md-3 col-sm-12 navbar__header">
-			  		<li class="header__username"><a href="#">User</a></li>
+			  		<li class="header__username">
+                        <a href="#">
+                        <?php 
+                        echo "$user";
+                        ?>
+                        </a>
+                    </li>
 			  		<li class="header__home"><a href="#">Home</a></li>
 		  		</div>
 		  		<!-- friends, messages, and alerts -->

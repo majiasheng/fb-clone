@@ -1,4 +1,11 @@
 <!-- author: Jia Sheng Ma -->
+<?php
+session_start();
+if (isset($_SESSION['loggedin']) && $_SESSION['loggedin']==True) {
+    header("Location: main.php");
+}
+
+?>
 <html>
     <head>
         <title>Log in</title>
@@ -11,8 +18,11 @@
         	<input type="submit" name="submit" value="Log In">
         </form>
         <br/>
-        <a href="registration.php">Register</a>
-        <!-- TODO -->
-        <a href="forget_password.php">Forget password?</a>
+        <p>
+            <a href="registration.php">Register</a>
+            &nbsp;
+            <!-- TODO -->
+            <a href="forget_password.php">Forget password?</a>
+        </p>
     </body>
 </html>

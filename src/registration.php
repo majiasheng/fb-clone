@@ -1,4 +1,7 @@
-<p>sign up</p>
+<?php
+session_start();
+?>
+<p>Sign Me Up</p>
 <?php
 
 // require_once("db_connect.php");
@@ -79,18 +82,18 @@ if($_SERVER["REQUEST_METHOD"] == "POST") {
 	Birthday: <?php echo $bd_err; ?> <br/>
 	<select name="month">
 		<option value="month">Month</option>
-		<option value="jan">Jan</option>
-		<option value="feb">Feb</option>
-		<option value="mar">March</option>
-		<option value="apr">April</option>
-		<option value="may">May</option>
-		<option value="june">June</option>
-		<option value="july">July</option>
-		<option value="aug">August</option>
-		<option value="sept">September</option>
-		<option value="oct">Octobor</option>
-		<option value="nov">November</option>
-		<option value="dec">December</option>
+		<option value="Jan">Jan</option>
+		<option value="Feb">Feb</option>
+		<option value="Mar">March</option>
+		<option value="Apr">April</option>
+		<option value="May">May</option>
+		<option value="June">June</option>
+		<option value="July">July</option>
+		<option value="Aug">August</option>
+		<option value="Sept">September</option>
+		<option value="Oct">Octobor</option>
+		<option value="Nov">November</option>
+		<option value="Dec">December</option>
 	</select>
 	<select name="day">
 		<option value="day">Day</option>
