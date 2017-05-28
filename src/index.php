@@ -17,7 +17,6 @@ if (isset($_SESSION['loggedin']) && $_SESSION['loggedin']==True) {
         	<input type="password" name="password" placeholder="password"><br/>
         	<input type="submit" name="submit" value="Log In">
         </form>
-        <br/>
         <p>
             <a href="registration.php">Register</a>
             &nbsp;

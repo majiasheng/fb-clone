@@ -1,9 +1,11 @@
 <?php
+require("user.php");
 // TODO: use user data to populate main.php
 session_start();
 if ($_SESSION['loggedin'] !== TRUE) {
    header("Location: index.php");
 }
+$user = $_SESSION['user'];
 ?>
 
 <!doctype html>
@@ -30,7 +32,7 @@ if ($_SESSION['loggedin'] !== TRUE) {
 			  		<li class="header__username">
                         <a href="#">
                         <?php 
-                        echo "$user";
+                        echo $user->get_first_name() . " " . $user->get_last_name();
                         ?>
                         </a>
                     </li>
@@ -67,7 +69,11 @@ if ($_SESSION['loggedin'] !== TRUE) {
     	<div class="cover__container">
 	    	<div class="cover__profile-container">
 	    		<img src="../rsrc/img/photos/p11.jpeg" alt="profile photo" class="cover__photo"/>
-	    		<div class="cover__username">Meow Meow</div>
+	    		<div class="cover__username">
+                    <?php 
+                    echo $user->get_first_name() . " " . $user->get_last_name();
+                    ?>
+	    		</div>
 	    		<div class="cover__update-info cover__update-info--decor">update info</div>
 	    		<div class="cover__view-at cover__update-info--decor">view activity</div>
 	    	</div>

@@ -1,6 +1,7 @@
 <?php
-require_once("db_connect.php");
-
+// require_once("db_connect.php");
+require_once("../src/constants.php");
+require("../src/user.php");
 //TODO: declare global connection
 
 /**
@@ -63,7 +64,7 @@ function validate_registration() {
 
 function save_user_to_db($user, $connection) {
 	$query = "";
-	$query .= "INSERT INTO users (";
+	$query .= "INSERT INTO USERS_TABLE (";
 	// fields of user class
 	$query .= "first_name, last_name, email, password, ";
 	$query .= "birth_month, birth_day, birth_year, gender";
@@ -87,6 +88,37 @@ function save_user_to_db($user, $connection) {
 
 }
 
+/**
+ * Retrieves user info from database whose email is $user_email
+ */
+function load_user($user_email, $password, $connection) {
+    // echo "?";
+    $query = "SELECT * FROM " . USERS_TABLE .
+    			" WHERE email='".
+    			mysqli_real_escape_string($connection, $user_email) .
+    			"' AND password='" .
+    			mysqli_real_escape_string($connection, $password) 
+    			."';";
+    echo "$query";
+    $result = mysqli_query($connection, $query);
+    if(!($user_data = mysqli_fetch_assoc($result))) {
+        return NULL;
+    } else {
+        $user = new User;
+        $user->set_first_name($user_data['first_name']);
+        $user->set_last_name($user_data['last_name']);
+        $user->set_email($user_data['email']);
+        $user->set_password($user_data['password']);
+        $user->set_birth_month($user_data['birth_month']);
+        $user->set_birth_day($user_data['birth_day']);
+        $user->set_birth_year($user_data['birth_year']);
+        $user->set_gender($user_data['gender']);
+
+        //TODO: return a user
+        return $user;
+    }
+
+}
 //TODO: function that adds friend to record
 //TODO: function that removes friend from record
 
