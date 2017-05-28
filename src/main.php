@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <title>Facebook</title>
-  <link rel="stylesheet" href="css/style.css">
+  <link rel="stylesheet" href="../include/styles/css/style.css">
   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.6/css/bootstrap.min.css">
   <link rel="stylesheet" type="text/css" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
   <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -15,7 +15,7 @@
 	  		<ul class="row">
 	  			<!-- brand icon -->
 	  			<div class="col-md-2 col-sm-12">
-		  			<li class="header__brand"><a href="index.html"><i class="fa fa-facebook"></i></a></li>
+		  			<li class="header__brand"><a href="main.php"><i class="fa fa-facebook"></i></a></li>
 		  			</div>
 		  		<!-- username and home button -->
 		  		<div class="col-md-3 col-sm-12 navbar__header">
@@ -52,7 +52,7 @@
     <div class="cover">
     	<div class="cover__container">
 	    	<div class="cover__profile-container">
-	    		<img src="./img/photos/p11.jpeg" alt="profile photo" class="cover__photo"/>
+	    		<img src="../rsrc/img/photos/p11.jpeg" alt="profile photo" class="cover__photo"/>
 	    		<div class="cover__username">Meow Meow</div>
 	    		<div class="cover__update-info cover__update-info--decor">update info</div>
 	    		<div class="cover__view-at cover__update-info--decor">view activity</div>
@@ -72,37 +72,37 @@
 	    	<div class="left__photos">
 	    		<h2 class="content__title content__title--font"><i class="fa fa-picture-o content__icon content__icon--bg" aria-hidden="true"></i>Photos</h2>
 	    		<div class="row photos__container">
-	    			<div class="col-xs-4 col-sm-4 col-md-4 col-lg-4"><img src="./img/photos/p1.jpeg"></div>
-	    			<div class="col-xs-4 col-sm-4 col-md-4 col-lg-4"><img src="./img/photos/p2.jpeg"></div>
-	    			<div class="col-xs-4 col-sm-4 col-md-4 col-lg-4"><img src="./img/photos/p3.jpeg"></div>
+	    			<div class="col-xs-4 col-sm-4 col-md-4 col-lg-4"><img src="../rsrc/img/photos/p1.jpeg"></div>
+	    			<div class="col-xs-4 col-sm-4 col-md-4 col-lg-4"><img src="../rsrc/img/photos/p2.jpeg"></div>
+	    			<div class="col-xs-4 col-sm-4 col-md-4 col-lg-4"><img src="../rsrc/img/photos/p3.jpeg"></div>
 	    		</div>
 	    		<div class="row photos__container">
-	    			<div class="col-xs-4 col-sm-4 col-md-4 col-lg-4"><img src="./img/photos/p4.jpeg"></div>
-	    			<div class="col-xs-4 col-sm-4 col-md-4 col-lg-4"><img src="./img/photos/p5.png"></div>
-	    			<div class="col-xs-4 col-sm-4 col-md-4 col-lg-4"><img src="./img/photos/p6.jpeg"></div>
+	    			<div class="col-xs-4 col-sm-4 col-md-4 col-lg-4"><img src="../rsrc/img/photos/p4.jpeg"></div>
+	    			<div class="col-xs-4 col-sm-4 col-md-4 col-lg-4"><img src="../rsrc/img/photos/p5.png"></div>
+	    			<div class="col-xs-4 col-sm-4 col-md-4 col-lg-4"><img src="../rsrc/img/photos/p6.jpeg"></div>
 	    		</div>
 	    		<div class="row photos__container">
-	    			<div class="col-xs-4 col-sm-4 col-md-4 col-lg-4"><img src="./img/photos/p7.jpeg"></div>
-	    			<div class="col-xs-4 col-sm-4 col-md-4 col-lg-4"><img src="./img/photos/p8.jpeg"></div>
-	    			<div class="col-xs-4 col-sm-4 col-md-4 col-lg-4"><img src="./img/photos/p9.jpeg"></div>
+	    			<div class="col-xs-4 col-sm-4 col-md-4 col-lg-4"><img src="../rsrc/img/photos/p7.jpeg"></div>
+	    			<div class="col-xs-4 col-sm-4 col-md-4 col-lg-4"><img src="../rsrc/img/photos/p8.jpeg"></div>
+	    			<div class="col-xs-4 col-sm-4 col-md-4 col-lg-4"><img src="../rsrc/img/photos/p9.jpeg"></div>
 	    		</div>
 	    	</div>
 	        <div class="left__friends">
 	        	<h2 class="content__title content__title--font"><i class="fa fa-user-plus content__icon content__icon--bg" aria-hidden="true"></i>Friends</h2>
 	        	<div class="row photos__container">
-	    			<div class="col-xs-4 col-sm-4 col-md-4 col-lg-4"><img src="./img/friends/cat11.jpeg"></div>
-	    			<div class="col-xs-4 col-sm-4 col-md-4 col-lg-4"><img src="./img/friends/cat1.png"></div>
-	    			<div class="col-xs-4 col-sm-4 col-md-4 col-lg-4"><img src="./img/friends/cat3.jpeg"></div>
+	    			<div class="col-xs-4 col-sm-4 col-md-4 col-lg-4"><img src="../rsrc/img/friends/cat11.jpeg"></div>
+	    			<div class="col-xs-4 col-sm-4 col-md-4 col-lg-4"><img src="../rsrc/img/friends/cat1.png"></div>
+	    			<div class="col-xs-4 col-sm-4 col-md-4 col-lg-4"><img src="../rsrc/img/friends/cat3.jpeg"></div>
 	    		</div>
 	    		<div class="row photos__container">
-	    			<div class="col-xs-4 col-sm-4 col-md-4 col-lg-4"><img src="./img/friends/cat4.jpeg"></div>
-	    			<div class="col-xs-4 col-sm-4 col-md-4 col-lg-4"><img src="./img/friends/cat5.jpeg"></div>
-	    			<div class="col-xs-4 col-sm-4 col-md-4 col-lg-4"><img src="./img/friends/cat6.jpeg"></div>
+	    			<div class="col-xs-4 col-sm-4 col-md-4 col-lg-4"><img src="../rsrc/img/friends/cat4.jpeg"></div>
+	    			<div class="col-xs-4 col-sm-4 col-md-4 col-lg-4"><img src="../rsrc/img/friends/cat5.jpeg"></div>
+	    			<div class="col-xs-4 col-sm-4 col-md-4 col-lg-4"><img src="../rsrc/img/friends/cat6.jpeg"></div>
 	    		</div>
 	    		<div class="row photos__container">
-	    			<div class="col-xs-4 col-sm-4 col-md-4 col-lg-4"><img src="./img/friends/cat7.jpeg"></div>
-	    			<div class="col-xs-4 col-sm-4 col-md-4 col-lg-4"><img src="./img/friends/cat8.jpeg"></div>
-	    			<div class="col-xs-4 col-sm-4 col-md-4 col-lg-4"><img src="./img/friends/cat9.jpeg"></div>
+	    			<div class="col-xs-4 col-sm-4 col-md-4 col-lg-4"><img src="../rsrc/img/friends/cat7.jpeg"></div>
+	    			<div class="col-xs-4 col-sm-4 col-md-4 col-lg-4"><img src="../rsrc/img/friends/cat8.jpeg"></div>
+	    			<div class="col-xs-4 col-sm-4 col-md-4 col-lg-4"><img src="../rsrc/img/friends/cat9.jpeg"></div>
 	    		</div>
 	        </div>
 	        <div class="left__footer">
@@ -140,13 +140,13 @@
 
 	    	<div class="middle__posts">
 	    		<div class="post__header">
-	    			<img src="./img/photos/p11.jpeg" class="post__header__author-photo">
+	    			<img src="../rsrc/img/photos/p11.jpeg" class="post__header__author-photo">
 	    			<p class="post__header__info info__author"><a class="">Meow Meow</a> shared a link</p>
 	    			<p class="post__header__info info__date">Jan 14 at 14:17 PM via Instagram</p>
 	    		</div>
 	    		<div class="post__content">
 	    			<p class="post__content__p">meow meow, meow meow meow meow, meow meow meow meow meow meow, meow meow!!!! meow meow meow meow!</p>
-	    			<img src="./img/posts/p2.jpeg" alt="post content" class="post__content__img" />
+	    			<img src="../rsrc/img/posts/p2.jpeg" alt="post content" class="post__content__img" />
 	    		</div>
 	    		<div class="post__actions">
 	    			<div class="actions--setting actions--decor"><i class="fa fa-thumbs-up"></i></div>
@@ -158,13 +158,13 @@
 
 	    	<div class="middle__posts">
 	    		<div class="post__header">
-	    			<img src="./img/photos/p11.jpeg" class="post__header__author-photo">
+	    			<img src="../rsrc/img/photos/p11.jpeg" class="post__header__author-photo">
 	    			<p class="post__header__info info__author"><a class="">Meow Meow</a> shared a link</p>
 	    			<p class="post__header__info info__date">Jan 14 at 14:17 PM via Instagram</p>
 	    		</div>
 	    		<div class="post__content">
 	    			<p class="post__content__p">My kingdom</p>
-	    			<img src="./img/posts/p3.jpeg" alt="post content" class="post__content__img" />
+	    			<img src="../rsrc/img/posts/p3.jpeg" alt="post content" class="post__content__img" />
 	    		</div>
 	    		<div class="post__actions">
 	    			<div class="actions--setting actions--decor"><i class="fa fa-thumbs-up"></i></div>
@@ -176,13 +176,13 @@
 
 			<div class="middle__posts">
 	    		<div class="post__header">
-	    			<img src="./img/photos/p11.jpeg" class="post__header__author-photo">
+	    			<img src="../rsrc/img/photos/p11.jpeg" class="post__header__author-photo">
 	    			<p class="post__header__info info__author"><a class="">Meow Meow</a> shared a link</p>
 	    			<p class="post__header__info info__date">Jan 14 at 14:17 PM via Instagram</p>
 	    		</div>
 	    		<div class="post__content">
 	    			<p class="post__content__p">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vestibulum sollicitudin, mauris ut tincidunt elementum, lacus nisl egestas augue, quis porta arcu lacus congue orci. </p>
-	    			<img src="./img/posts/p5.jpeg" alt="post content" class="post__content__img" />
+	    			<img src="../rsrc/img/posts/p5.jpeg" alt="post content" class="post__content__img" />
 	    		</div>
 	    		<div class="post__actions">
 	    			<div class="actions--setting actions--decor"><i class="fa fa-thumbs-up"></i></div>
@@ -195,15 +195,15 @@
 	    </div>
 	    <div class="content__right col-md-2">
 	    	<div class="right__contacts">
-	    		<a href="#"><img src="./img/friends/cat1.png" alt="friends"></a>
-	    		<a href="#"><img src="./img/friends/cat2.jpeg" alt="friends"></a>
-	    		<a href="#"><img src="./img/friends/cat3.jpeg" alt="friends"></a>
-	    		<a href="#"><img src="./img/friends/cat4.jpeg" alt="friends"></a>
-	    		<a href="#"><img src="./img/friends/cat5.jpeg" alt="friends"></a>
-	    		<a href="#"><img src="./img/friends/cat6.jpeg" alt="friends"></a>
-	    		<a href="#"><img src="./img/friends/cat7.jpeg" alt="friends"></a>
-	    		<a href="#"><img src="./img/friends/cat8.jpeg" alt="friends"></a>
-	    		<a href="#"><img src="./img/friends/cat9.jpeg" alt="friends"></a>
+	    		<a href="#"><img src="../rsrc/img/friends/cat1.png" alt="friends"></a>
+	    		<a href="#"><img src="../rsrc/img/friends/cat2.jpeg" alt="friends"></a>
+	    		<a href="#"><img src="../rsrc/img/friends/cat3.jpeg" alt="friends"></a>
+	    		<a href="#"><img src="../rsrc/img/friends/cat4.jpeg" alt="friends"></a>
+	    		<a href="#"><img src="../rsrc/img/friends/cat5.jpeg" alt="friends"></a>
+	    		<a href="#"><img src="../rsrc/img/friends/cat6.jpeg" alt="friends"></a>
+	    		<a href="#"><img src="../rsrc/img/friends/cat7.jpeg" alt="friends"></a>
+	    		<a href="#"><img src="../rsrc/img/friends/cat8.jpeg" alt="friends"></a>
+	    		<a href="#"><img src="../rsrc/img/friends/cat9.jpeg" alt="friends"></a>
 
 	    		<a href="#" class="contacts__setting"><i class="fa fa-cog"></i></a>
 	    		
