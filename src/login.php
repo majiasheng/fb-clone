@@ -26,8 +26,11 @@ if(!($user_data = mysqli_fetch_assoc($result))) {
     header("Location: index.php");
 } else {
 	// redirect to main.php
-    // TODO: use user data to populate main.php
     // echo '[DEBUG] Redirecting to '.$user_email;
+
+    session_start();
+    $_SESSION['loggedin'] = True;
+    $_SESSION['user_email'] = $user_email;
     header("Location: main.php");
 }
 ?>
