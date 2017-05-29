@@ -81,19 +81,15 @@ function save_user_to_db($user, $connection) {
 				"'" . $user->get_birth_year()	. "'," .
 				"'" . $user->get_gender() . "'" );
 	$query .= ");";
-	
-	// echo $query;
-	return mysqli_query($connection, $query);
 
-	// echo "<p>Error in inserting new user into db</p>";
+	return mysqli_query($connection, $query);
 
 }
 
 /**
  * Retrieves user info from database whose email is $user_email
  */
-function load_user($user_email, $password, $connection) {
-    // echo "?";
+function loadUser($user_email, $password, $connection) {
     $query = "SELECT * FROM " . USERS_TABLE .
     			" WHERE email='".
     			mysqli_real_escape_string($connection, $user_email) .
@@ -114,8 +110,6 @@ function load_user($user_email, $password, $connection) {
         $user->set_birth_day($user_data['birth_day']);
         $user->set_birth_year($user_data['birth_year']);
         $user->set_gender($user_data['gender']);
-
-        //TODO: return a user
         return $user;
     }
 

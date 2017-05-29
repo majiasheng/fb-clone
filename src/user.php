@@ -10,6 +10,7 @@ class User {
 	private $birth_day;
 	private $birth_year;
 	private $gender;
+    private $posts = array();
 	
 	// setters
 	function set_first_name($arg) {
@@ -36,6 +37,9 @@ class User {
 	function set_gender($arg) {
 		$this->gender = $arg;
 	}
+    function addPost($arg) {
+        $posts[] = $arg;
+    }
 	
 	// getters
 	function get_first_name() {
@@ -62,6 +66,9 @@ class User {
 	function get_gender() {
 		return $this->gender;
 	}
+    function getPosts() {
+        return $posts;
+    }
 
 }
 

@@ -30,7 +30,7 @@ class Post {
     function setShares($arg) {
         $this->shares = $arg;
     }
-    
+
     function getType() {
         return $type;
     }
