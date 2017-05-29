@@ -4,8 +4,6 @@ session_start();
 <p>Sign Me Up</p>
 <?php
 
-// require_once("db_connect.php");
-require("user.php");
 require("../include/functions.php");
 
 // define error message variables to indicate errors
