@@ -1,3 +1,4 @@
+<!-- author: Jia Sheng Ma -->
 <?php
 class User {
 
@@ -61,8 +62,7 @@ class User {
 	function get_gender() {
 		return $this->gender;
 	}
-	
+
 }
-	
-	
+
 ?>

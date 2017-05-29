@@ -1,5 +1,6 @@
 2017-05-28 majiasheng <jiasheng.ma@yahoo.com>
 	* Change main.php to load user info from db when logged in
+	* Added post class
 
 2017-05-27 majiasheng <jiasheng.ma@yahoo.com>
 	* Added session for application, user info now persists across multiple pages

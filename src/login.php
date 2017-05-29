@@ -1,6 +1,7 @@
+<!-- author: Jia Sheng Ma -->
 <?php 
 require_once("../include/functions.php");
-require("user.php");
+require_once("user.php");
 $user_email = $_POST["email"];
 $password = $_POST["password"];
 
@@ -38,7 +39,7 @@ if(is_null($user)) {
 }
 else {
     // redirect to main.php
-    echo '[DEBUG] Redirecting to '.$user_email;
+    echo '[DEBUG] Redirecting to '. $user_email;
 
     session_start();
     $_SESSION['loggedin'] = True;

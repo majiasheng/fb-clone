@@ -35,7 +35,7 @@ if($_SERVER["REQUEST_METHOD"] == "POST") {
 	if($_POST["month"] == "month" || $_POST["day"] == "day" || $_POST["year"] == "year") {
 		$bd_err = " *Please select a complete birthday";
 	}
-	
+
 	// validate registration
 	if(validate_registration()) {
 		// create a user 
@@ -49,9 +49,6 @@ if($_SERVER["REQUEST_METHOD"] == "POST") {
 		$new_user->set_birth_year($_POST["year"]);
 		$new_user->set_gender($_POST["gender"]);
 
-		
-			// echo "connection: " . mysqli_get_host_info($connection) . "<br/>";
-		
 		// save user to db
 		if (save_user_to_db($new_user, $connection)) {
 

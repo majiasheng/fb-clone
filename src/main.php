@@ -1,3 +1,6 @@
+<!-- author:    Melanie Lin
+                Jia Sheng Ma 
+-->
 <?php
 require("user.php");
 // TODO: use user data to populate main.php
@@ -12,7 +15,11 @@ $user = $_SESSION['user'];
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <title>Facebook</title>
+  <title>
+  <?php 
+  echo $user->get_first_name() . " " . $user->get_last_name();
+  ?>
+  </title>
   <link rel="stylesheet" href="../include/styles/css/style.css">
   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.6/css/bootstrap.min.css">
   <link rel="stylesheet" type="text/css" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
@@ -68,6 +75,7 @@ $user = $_SESSION['user'];
     <div class="cover">
     	<div class="cover__container">
 	    	<div class="cover__profile-container">
+                <!-- TODO: Change cover photo to a default image for new users -->
 	    		<img src="../rsrc/img/photos/p11.jpeg" alt="profile photo" class="cover__photo"/>
 	    		<div class="cover__username">
                     <?php 
