@@ -2,16 +2,18 @@
 <?php
 class User {
 
-	private $first_name;
-	private $last_name;
-	private $email;
-	private $password;
-	private $birth_month;
-	private $birth_day;
-	private $birth_year;
-	private $gender;
+    private $first_name;
+    private $last_name;
+    private $email;
+    private $password;
+    private $birth_month;
+    private $birth_day;
+    private $birth_year;
+    private $gender;
+    private $cover_photo;
+    private $profile_picture;
     private $posts = array();
-	
+
 	// setters
 	function set_first_name($arg) {
 		$this->first_name = $arg;
@@ -40,7 +42,13 @@ class User {
     function addPost($arg) {
         $posts[] = $arg;
     }
-	
+    function setCoverPhoto($arg) {
+        $this->cover_photo = $arg;
+    }
+    function setProfilePicture($arg) {
+        $this->profile_picture = $arg;
+    }
+
 	// getters
 	function get_first_name() {
 		return $this->first_name;
@@ -67,7 +75,13 @@ class User {
 		return $this->gender;
 	}
     function getPosts() {
-        return $posts;
+        return $this->$posts;
+    }
+    function getCoverPhoto() {
+        return $this->cover_photo;
+    }
+    function getProfilePicture() {
+        return $this->profile_picture;
     }
 
 }

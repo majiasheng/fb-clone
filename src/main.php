@@ -75,8 +75,18 @@ $user = $_SESSION['user'];
     <div class="cover">
     	<div class="cover__container">
 	    	<div class="cover__profile-container">
-                <!-- TODO: Change cover photo to a default image for new users -->
-	    		<img src="../rsrc/img/photos/p11.jpeg" alt="profile photo" class="cover__photo"/>
+                <?php
+                if(empty($user->getProfilePicture())) {
+                    // set default profile picture
+                    echo '<img src="../rsrc/img/photos/default-profile.png" ';
+                } else {
+                    // load user profile picture
+                    //TODO:
+                    echo '<img src="../rsrc/img/photos/p11.jpeg" ';
+                }
+
+                ?>
+                alt="profile photo" class="cover__photo"/>
 	    		<div class="cover__username">
                     <?php 
                     echo $user->get_first_name() . " " . $user->get_last_name();
