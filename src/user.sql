@@ -9,14 +9,24 @@ CREATE TABLE users (
 	birth_day	CHAR(2)		NOT NULL,
 	birth_year	CHAR(4)		NOT NULL,
 	gender 		enum('M', 'F') NOT NULL,
+
 	PRIMARY KEY(id)
+);
+
+CREATE TABLE user_pics (
+	id 			INTEGER 	NOT NULL AUTO_INCREMENT,
+	profile		LONGBLOB, 							
+	cover		LONGBLOB,								
+
+	PRIMARY KEY(id),
+	FOREIGN KEY (id) REFERENCES users(id)
 );
 
 CREATE TABLE posts (
 	post_id		INTEGER		NOT NULL AUTO_INCREMENT,
 	user_id		INTEGER		NOT NULL,
 	content		TEXT		NOT NULL,
-	post_date	date 		NOT NULL,
+	post_date	TIMESTAMP() NOT NULL,
 	comment_id	INTEGER,
 
 	PRIMARY KEY(post_id),
@@ -26,7 +36,7 @@ CREATE TABLE posts (
 CREATE TABLE comments (
 	comment_id  INTEGER 	NOT NULL AUTO_INCREMENT,
 	author		VARCHAR(30) NOT NULL,
-	comment_date date 		NOT NULL,
+	comment_date TIMESTAMP() NOT NULL,
 
 
 	PRIMARY KEY(comment_id),
