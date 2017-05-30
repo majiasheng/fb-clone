@@ -1,3 +1,6 @@
+2017-05-30 majiasheng <jiasheng.ma@yahoo.com>
+	* Added: Load user profile picture if it exists, use default otherwise
+
 2017-05-28 majiasheng <jiasheng.ma@yahoo.com>
 	* Change main.php to load user info from db when logged in
 	* Added post class
