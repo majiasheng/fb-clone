@@ -3,12 +3,14 @@
 -->
 <?php
 require("user.php");
-// TODO: use user data to populate main.php
 session_start();
+// TODO: use user data to populate main.php
+
 if ($_SESSION['loggedin'] !== TRUE) {
    header("Location: index.php");
 }
 $user = $_SESSION['user'];
+$connection = $_SESSION['connection'];
 ?>
 
 <!doctype html>
@@ -40,6 +42,8 @@ $user = $_SESSION['user'];
                         <a href="#">
                         <?php 
                         echo $user->get_first_name() . " " . $user->get_last_name();
+                        //FIXME: why can't i fectch mysqli??
+                        echo "[DEBUG] Connection: " . mysqli_get_host_info($connection) . "<br/>";
                         ?>
                         </a>
                     </li>

@@ -1,10 +1,10 @@
-<?php
-session_start();
-?>
+
 <p>Sign Me Up</p>
 <?php
 
 require("../include/functions.php");
+// session_start();
+$connection = connect();
 
 // define error message variables to indicate errors
 $fn_err = $ln_err = $email_err = $reemail_err = $pw_err = $bd_err = $gender_err = "";
@@ -49,7 +49,6 @@ if($_SERVER["REQUEST_METHOD"] == "POST") {
 
 		// save user to db
 		if (save_user_to_db($new_user, $connection)) {
-
 			//TODO: redirect to index.php with user info
 			echo "<p> Redirecting to main page... </p>";
 			sleep(1);

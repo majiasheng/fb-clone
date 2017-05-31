@@ -24,6 +24,7 @@ if(is_null($user)) {
     $_SESSION['loggedin'] = True;
     $_SESSION['user_email'] = $user_email;
     $_SESSION['user'] = $user;
+    $_SESSION['connection'] = $connection;
     header("Location: main.php");
 }
 ?>
