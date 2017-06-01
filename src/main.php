@@ -57,8 +57,8 @@ $user = $_SESSION['user'];
 			 		<li class="header__privacy header--icon-setting"><a href="#"><i class="fa fa-lock"></i></a></li>
 			  		<li class="header__setting header--icon-setting"><a href="#"><i class="fa fa-caret-down" onclick="show_setting_menu()"></i></a>
 			  			<ul class="icon-setting--dropdown">
-		                    <li><a href="#" style="color:#000">Settings</a></li>
-		                    <li><a href="#" style="color:#000">Log Out</a></li>
+		                    <li><a href="#">Settings</a></li>
+		                    <li><a href="#">Log Out</a></li>
 		                </ul>
 
 			  		</li>
