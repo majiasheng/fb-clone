@@ -10,7 +10,6 @@ if ($_SESSION['loggedin'] !== TRUE) {
    header("Location: index.php");
 }
 $user = $_SESSION['user'];
-// $pdo = $_SESSION['pdo'];
 ?>
 
 <!doctype html>
@@ -28,8 +27,8 @@ $user = $_SESSION['user'];
   <meta name="viewport" content="width=device-width, initial-scale=1">
 </head>
 <body>
-  <div class="container-fluid">
-  	<nav class="navbar" role="navigation">
+<div class="container-fluid">
+    <nav class="navbar" role="navigation">
 	    <div class="navbar__container">
 	  		<ul class="row">
 	  			<!-- brand icon -->
@@ -42,8 +41,6 @@ $user = $_SESSION['user'];
                         <a href="#">
                         <?php 
                         echo $user->get_first_name() . " " . $user->get_last_name();
-                        //FIXME: why can't i fectch mysqli??
-                        // echo "[DEBUG] Connection: " . mysqli_get_host_info($pdo) . "<br/>";
                         ?>
                         </a>
                     </li>
@@ -102,6 +99,7 @@ $user = $_SESSION['user'];
     </div>
     </div>
     <div class="row content">
+
 	    <div class="content__left col-md-4">
 	    	<!-- left side -->
 	    	<div class="left__intro">
@@ -111,42 +109,68 @@ $user = $_SESSION['user'];
 	    		<p class="intro__country--font">From Wonderland</p>
 	    		<button class="intro__update-btn--font intro__update-btn--bg">update info</button>
 	    	</div>
+
+            <!-- ********************** left: photos ********************** -->
 	    	<div class="left__photos">
-	    		<h2 class="content__title content__title--font"><i class="fa fa-picture-o content__icon content__icon--bg" aria-hidden="true"></i>Photos</h2>
-	    		<div class="row photos__container">
-	    			<div class="col-xs-4 col-sm-4 col-md-4 col-lg-4"><img src="../rsrc/img/photos/p1.jpeg"></div>
-	    			<div class="col-xs-4 col-sm-4 col-md-4 col-lg-4"><img src="../rsrc/img/photos/p2.jpeg"></div>
-	    			<div class="col-xs-4 col-sm-4 col-md-4 col-lg-4"><img src="../rsrc/img/photos/p3.jpeg"></div>
-	    		</div>
-	    		<div class="row photos__container">
-	    			<div class="col-xs-4 col-sm-4 col-md-4 col-lg-4"><img src="../rsrc/img/photos/p4.jpeg"></div>
-	    			<div class="col-xs-4 col-sm-4 col-md-4 col-lg-4"><img src="../rsrc/img/photos/p5.png"></div>
-	    			<div class="col-xs-4 col-sm-4 col-md-4 col-lg-4"><img src="../rsrc/img/photos/p6.jpeg"></div>
-	    		</div>
-	    		<div class="row photos__container">
-	    			<div class="col-xs-4 col-sm-4 col-md-4 col-lg-4"><img src="../rsrc/img/photos/p7.jpeg"></div>
-	    			<div class="col-xs-4 col-sm-4 col-md-4 col-lg-4"><img src="../rsrc/img/photos/p8.jpeg"></div>
-	    			<div class="col-xs-4 col-sm-4 col-md-4 col-lg-4"><img src="../rsrc/img/photos/p9.jpeg"></div>
-	    		</div>
-	    	</div>
+                <a href=#><h2 class="content__title content__title--font">
+                    <i class="fa fa-picture-o content__icon content__icon--bg" aria-hidden="true"></i>
+                    <!-- TODO: redirect to a photo upload page -->
+                    Photos
+                </h2></a>
+
+                <?php
+                //TODO: load 3x3 user photos if there's any
+                // prompt user to upload otherwise
+                ?>
+
+<!--                <div class="row photos__container">
+                    <div class="col-xs-4 col-sm-4 col-md-4 col-lg-4"><img src="../rsrc/img/photos/p1.jpeg"></div>
+                    <div class="col-xs-4 col-sm-4 col-md-4 col-lg-4"><img src="../rsrc/img/photos/p2.jpeg"></div>
+                    <div class="col-xs-4 col-sm-4 col-md-4 col-lg-4"><img src="../rsrc/img/photos/p3.jpeg"></div>
+                </div> -->
+                <!-- <div class="row photos__container">
+                    <div class="col-xs-4 col-sm-4 col-md-4 col-lg-4"><img src="../rsrc/img/photos/p4.jpeg"></div>
+                    <div class="col-xs-4 col-sm-4 col-md-4 col-lg-4"><img src="../rsrc/img/photos/p5.png"></div>
+                    <div class="col-xs-4 col-sm-4 col-md-4 col-lg-4"><img src="../rsrc/img/photos/p6.jpeg"></div>
+                </div>
+                <div class="row photos__container">
+                    <div class="col-xs-4 col-sm-4 col-md-4 col-lg-4"><img src="../rsrc/img/photos/p7.jpeg"></div>
+                    <div class="col-xs-4 col-sm-4 col-md-4 col-lg-4"><img src="../rsrc/img/photos/p8.jpeg"></div>
+                    <div class="col-xs-4 col-sm-4 col-md-4 col-lg-4"><img src="../rsrc/img/photos/p9.jpeg"></div>
+                </div> -->
+	    	</div> <!-- ********************** end photos ********************** -->
+
+            <!-- ********************** left: friends ********************** -->
 	        <div class="left__friends">
-	        	<h2 class="content__title content__title--font"><i class="fa fa-user-plus content__icon content__icon--bg" aria-hidden="true"></i>Friends</h2>
-	        	<div class="row photos__container">
-	    			<div class="col-xs-4 col-sm-4 col-md-4 col-lg-4"><img src="../rsrc/img/friends/cat11.jpeg"></div>
-	    			<div class="col-xs-4 col-sm-4 col-md-4 col-lg-4"><img src="../rsrc/img/friends/cat1.png"></div>
-	    			<div class="col-xs-4 col-sm-4 col-md-4 col-lg-4"><img src="../rsrc/img/friends/cat3.jpeg"></div>
+                <!-- TODO: redirect to user's friends -->
+                <a href=#><h2 class="content__title content__title--font">
+                    <i class="fa fa-user-plus content__icon content__icon--bg" aria-hidden="true"></i>
+                    Friends
+                </h2></a>
+	        	
+                <div class="row photos__container">
+                    
+                    <?php
+                    //TODO: load 3x3 friends(' profile pictures)
+                    
+                    ?>
+	    			<!-- <div class="col-xs-4 col-sm-4 col-md-4 col-lg-4"><img src="../rsrc/img/friends/cat11.jpeg"></div>
+                    <div class="col-xs-4 col-sm-4 col-md-4 col-lg-4"><img src="../rsrc/img/friends/cat1.png"></div>
+                    <div class="col-xs-4 col-sm-4 col-md-4 col-lg-4"><img src="../rsrc/img/friends/cat3.jpeg"></div> -->
 	    		</div>
-	    		<div class="row photos__container">
-	    			<div class="col-xs-4 col-sm-4 col-md-4 col-lg-4"><img src="../rsrc/img/friends/cat4.jpeg"></div>
-	    			<div class="col-xs-4 col-sm-4 col-md-4 col-lg-4"><img src="../rsrc/img/friends/cat5.jpeg"></div>
-	    			<div class="col-xs-4 col-sm-4 col-md-4 col-lg-4"><img src="../rsrc/img/friends/cat6.jpeg"></div>
-	    		</div>
-	    		<div class="row photos__container">
-	    			<div class="col-xs-4 col-sm-4 col-md-4 col-lg-4"><img src="../rsrc/img/friends/cat7.jpeg"></div>
-	    			<div class="col-xs-4 col-sm-4 col-md-4 col-lg-4"><img src="../rsrc/img/friends/cat8.jpeg"></div>
-	    			<div class="col-xs-4 col-sm-4 col-md-4 col-lg-4"><img src="../rsrc/img/friends/cat9.jpeg"></div>
-	    		</div>
-	        </div>
+                <!-- <div class="row photos__container">
+                    <div class="col-xs-4 col-sm-4 col-md-4 col-lg-4"><img src="../rsrc/img/friends/cat4.jpeg"></div>
+                    <div class="col-xs-4 col-sm-4 col-md-4 col-lg-4"><img src="../rsrc/img/friends/cat5.jpeg"></div>
+                    <div class="col-xs-4 col-sm-4 col-md-4 col-lg-4"><img src="../rsrc/img/friends/cat6.jpeg"></div>
+                </div>
+                <div class="row photos__container">
+                    <div class="col-xs-4 col-sm-4 col-md-4 col-lg-4"><img src="../rsrc/img/friends/cat7.jpeg"></div>
+                    <div class="col-xs-4 col-sm-4 col-md-4 col-lg-4"><img src="../rsrc/img/friends/cat8.jpeg"></div>
+                    <div class="col-xs-4 col-sm-4 col-md-4 col-lg-4"><img src="../rsrc/img/friends/cat9.jpeg"></div>
+                </div> -->
+	        </div> <!-- ********************** end friends ********************** -->
+
+            <!-- ********************** left footer ********************** -->
 	        <div class="left__footer">
 	        	<footer>
 	                <ul class="">
@@ -159,28 +183,70 @@ $user = $_SESSION['user'];
 		                <li class="footer__copyright"><a href="">Facebook &copy 2017</a></li>
 	                </ul>
 	        	</footer>
-	        </div>
-	    </div>
+	        </div> <!-- ********************** left footer ********************** -->
+	    </div> <!-- end left column -->
+
+        <!-- ********************** middle: post panel ********************** -->
 	    <div class="content__middle col-md-6">
 	    	<div class="middle__timeline">
 	    		<ul class="row">
-	    			<li class="col-xs-3 col-sm-3 col-md-3 col-lg-3"><a href="#" class="active"><i class="fa fa-calendar-check-o timeline__icon"></i>timeline</a></li>
-	    			<li class="col-xs-3 col-sm-3 col-md-3 col-lg-3"><a href="#"><i class="fa fa-user-circle timeline__icon"></i class="fa fa-user-circle timeline__icon">about</a></li>
-	    			<li class="col-xs-3 col-sm-3 col-md-3 col-lg-3"><a href="#"><i class="fa fa-globe timeline__icon"></i>friends</a></li>
-	    			<li class="col-xs-3 col-sm-3 col-md-3 col-lg-3"><a href="#"><i class="fa fa-camera timeline__icon"></i>photos</a></li>
-	    		</ul>
+	    			<li class="col-xs-3 col-sm-3 col-md-3 col-lg-3">
+                        <a href="#" class="active">
+                            <i class="fa fa-calendar-check-o timeline__icon"></i>
+                            timeline
+                        </a>
+                    </li>
+
+                    <li class="col-xs-3 col-sm-3 col-md-3 col-lg-3">
+                        <a href="#">
+                            <i class="fa fa-user-circle timeline__icon"></i class="fa fa-user-circle timeline__icon">
+                                about
+                            </a>
+                    </li>
+                    
+                    <li class="col-xs-3 col-sm-3 col-md-3 col-lg-3">
+                        <a href="#">
+                            <i class="fa fa-globe timeline__icon"></i>
+                            friends
+                        </a>
+                    </li>
+
+                    <li class="col-xs-3 col-sm-3 col-md-3 col-lg-3">
+                        <a href="#">
+                            <i class="fa fa-camera timeline__icon"></i>
+                            photos
+                        </a>
+                    </li>
+                </ul>
 	    	</div>
+            
 	    	<div class="middle__status">
 	    		<ul class="row">
-	    			<li class="col-xs-3 col-sm-3 col-md-3 col-lg-3 status--text"><i class="fa fa-pencil"></i>Status</li>
-	    			<li class="col-xs-3 col-sm-3 col-md-3 col-lg-3 status--text"><i class="fa fa-camera-retro"></i>Photo / Video</li>
-	    			<li class="col-xs-3 col-sm-3 col-md-3 col-lg-3 status--text"><i class="fa fa-video-camera"></i>Live Video</li>
-	    			<li class="col-xs-3 col-sm-3 col-md-3 col-lg-3 status--text"><i class="fa fa-flag"></i>Life Events</li>
-	    		</ul>
-	    		<textarea type="text" placeholder="What's on your mind?" rows="3"></textarea>
-	    	</div>
+                    <li class="col-xs-3 col-sm-3 col-md-3 col-lg-3 status--text">
+                        <i class="fa fa-pencil"></i>
+                        Status
+                    </li>
 
-	    	<div class="middle__posts">
+                    <li class="col-xs-3 col-sm-3 col-md-3 col-lg-3 status--text">
+                        <i class="fa fa-camera-retro"></i>
+                        Photo / Video
+                    </li>
+                    <li class="col-xs-3 col-sm-3 col-md-3 col-lg-3 status--text">
+                        <i class="fa fa-video-camera"></i>
+                        Live Video
+                    </li>
+
+                    <li class="col-xs-3 col-sm-3 col-md-3 col-lg-3 status--text">
+                        <i class="fa fa-flag"></i>
+                        Life Events
+                    </li>
+                </ul>
+
+                <textarea type="text" placeholder="What's on your mind?" rows="3"></textarea>
+	    	</div> <!-- ********************** end panel ********************** -->
+
+            <!-- ********************** middle: post ********************** -->
+            <div class="middle__posts">
 	    		<div class="post__header">
 	    			<img src="../rsrc/img/photos/p11.jpeg" class="post__header__author-photo">
 	    			<p class="post__header__info info__author"><a class="">Meow Meow</a> shared a link</p>
@@ -196,63 +262,74 @@ $user = $_SESSION['user'];
 	    			<div class="actions--setting actions--decor actions__comment">1</div>
 	    			<div class="actions--setting actions--decor actions__comment"><i class="fa fa-comment"></i></div>
 	    		</div>
-	    	</div>
+	    	</div> <!-- ********************** end post ********************** -->
 
-	    	<div class="middle__posts">
-	    		<div class="post__header">
-	    			<img src="../rsrc/img/photos/p11.jpeg" class="post__header__author-photo">
-	    			<p class="post__header__info info__author"><a class="">Meow Meow</a> shared a link</p>
-	    			<p class="post__header__info info__date">Jan 14 at 14:17 PM via Instagram</p>
-	    		</div>
-	    		<div class="post__content">
-	    			<p class="post__content__p">My kingdom</p>
-	    			<img src="../rsrc/img/posts/p3.jpeg" alt="post content" class="post__content__img" />
-	    		</div>
-	    		<div class="post__actions">
-	    			<div class="actions--setting actions--decor"><i class="fa fa-thumbs-up"></i></div>
-	    			<div class="actions--setting actions--decor"><i class="fa fa-share"></i></div>
-	    			<div class="actions--setting actions--decor actions__comment">1</div>
-	    			<div class="actions--setting actions--decor actions__comment"><i class="fa fa-comment"></i></div>
-	    		</div>
-	    	</div>
+<!--            <div class="middle__posts">
+                <div class="post__header">
+                    <img src="../rsrc/img/photos/p11.jpeg" class="post__header__author-photo">
+                    <p class="post__header__info info__author"><a class="">Meow Meow</a> shared a link</p>
+                    <p class="post__header__info info__date">Jan 14 at 14:17 PM via Instagram</p>
+                </div>
+                <div class="post__content">
+                    <p class="post__content__p">My kingdom</p>
+                    <img src="../rsrc/img/posts/p3.jpeg" alt="post content" class="post__content__img" />
+                </div>
+                <div class="post__actions">
+                    <div class="actions--setting actions--decor"><i class="fa fa-thumbs-up"></i></div>
+                    <div class="actions--setting actions--decor"><i class="fa fa-share"></i></div>
+                    <div class="actions--setting actions--decor actions__comment">1</div>
+                    <div class="actions--setting actions--decor actions__comment"><i class="fa fa-comment"></i></div>
+                </div>
+            </div>
 
-			<div class="middle__posts">
-	    		<div class="post__header">
-	    			<img src="../rsrc/img/photos/p11.jpeg" class="post__header__author-photo">
-	    			<p class="post__header__info info__author"><a class="">Meow Meow</a> shared a link</p>
-	    			<p class="post__header__info info__date">Jan 14 at 14:17 PM via Instagram</p>
-	    		</div>
-	    		<div class="post__content">
-	    			<p class="post__content__p">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vestibulum sollicitudin, mauris ut tincidunt elementum, lacus nisl egestas augue, quis porta arcu lacus congue orci. </p>
-	    			<img src="../rsrc/img/posts/p5.jpeg" alt="post content" class="post__content__img" />
-	    		</div>
-	    		<div class="post__actions">
-	    			<div class="actions--setting actions--decor"><i class="fa fa-thumbs-up"></i></div>
-	    			<div class="actions--setting actions--decor"><i class="fa fa-share"></i></div>
-	    			<div class="actions--setting actions--decor actions__comment">1</div>
-	    			<div class="actions--setting actions--decor actions__comment"><i class="fa fa-comment"></i></div>
-	    		</div>
-	    	</div>
+            <div class="middle__posts">
+                <div class="post__header">
+                    <img src="../rsrc/img/photos/p11.jpeg" class="post__header__author-photo">
+                    <p class="post__header__info info__author"><a class="">Meow Meow</a> shared a link</p>
+                    <p class="post__header__info info__date">Jan 14 at 14:17 PM via Instagram</p>
+                </div>
+                <div class="post__content">
+                    <p class="post__content__p">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vestibulum sollicitudin, mauris ut tincidunt elementum, lacus nisl egestas augue, quis porta arcu lacus congue orci. </p>
+                    <img src="../rsrc/img/posts/p5.jpeg" alt="post content" class="post__content__img" />
+                </div>
+                <div class="post__actions">
+                    <div class="actions--setting actions--decor"><i class="fa fa-thumbs-up"></i></div>
+                    <div class="actions--setting actions--decor"><i class="fa fa-share"></i></div>
+                    <div class="actions--setting actions--decor actions__comment">1</div>
+                    <div class="actions--setting actions--decor actions__comment"><i class="fa fa-comment"></i></div>
+                </div>
+            </div> -->
 
-	    </div>
+	    </div> <!-- end middle column -->
+
+
 	    <div class="content__right col-md-2">
-	    	<div class="right__contacts">
-	    		<a href="#"><img src="../rsrc/img/friends/cat1.png" alt="friends"></a>
-	    		<a href="#"><img src="../rsrc/img/friends/cat2.jpeg" alt="friends"></a>
-	    		<a href="#"><img src="../rsrc/img/friends/cat3.jpeg" alt="friends"></a>
-	    		<a href="#"><img src="../rsrc/img/friends/cat4.jpeg" alt="friends"></a>
-	    		<a href="#"><img src="../rsrc/img/friends/cat5.jpeg" alt="friends"></a>
-	    		<a href="#"><img src="../rsrc/img/friends/cat6.jpeg" alt="friends"></a>
-	    		<a href="#"><img src="../rsrc/img/friends/cat7.jpeg" alt="friends"></a>
-	    		<a href="#"><img src="../rsrc/img/friends/cat8.jpeg" alt="friends"></a>
-	    		<a href="#"><img src="../rsrc/img/friends/cat9.jpeg" alt="friends"></a>
+        <!-- ********************** right: online contacts bar ********************** -->
+            <div class="right__contacts">
+                <?php
+                //TODO: load contacts
+                    
+                ?>
+                <!-- <a href="#"><img src="../rsrc/img/friends/cat1.png" alt="friends"></a>
+                <a href="#"><img src="../rsrc/img/friends/cat2.jpeg" alt="friends"></a>
+                <a href="#"><img src="../rsrc/img/friends/cat3.jpeg" alt="friends"></a>
+                <a href="#"><img src="../rsrc/img/friends/cat4.jpeg" alt="friends"></a>
+                <a href="#"><img src="../rsrc/img/friends/cat5.jpeg" alt="friends"></a>
+                <a href="#"><img src="../rsrc/img/friends/cat6.jpeg" alt="friends"></a>
+                <a href="#"><img src="../rsrc/img/friends/cat7.jpeg" alt="friends"></a>
+                <a href="#"><img src="../rsrc/img/friends/cat8.jpeg" alt="friends"></a>
+                <a href="#"><img src="../rsrc/img/friends/cat9.jpeg" alt="friends"></a> -->
 
-	    		<a href="#" class="contacts__setting"><i class="fa fa-cog"></i></a>
-	    		
-	    	</div>
-	    </div>
+
+                <a href="#" class="contacts__setting"><i class="fa fa-cog"></i></a>
+	    	</div> <!-- ********************** end online contacts bar ********************** -->
+
+	    </div> <!-- end right column -->
+
     </div>
-  </div>
+
+</div>
+
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.6/js/bootstrap.min.js"></script>
   <script src="js/script.js"></script>
 </body>
