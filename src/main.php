@@ -104,9 +104,24 @@ $user = $_SESSION['user'];
 	    	<!-- left side -->
 	    	<div class="left__intro">
 	    		<h2 class="content__title content__title--font"><i class="fa fa-pencil-square-o content__icon content__icon--bg" aria-hidden="true"></i>Intro</h2>
-	    		<p class="intro__position">King of Meow Kingdom</p>
-	    		<p class="intro__address--font">Lives in United States of Meow Kingdom, 11357</p>
-	    		<p class="intro__country--font">From Wonderland</p>
+	    		<p class="intro__position">
+                    //TODO: load intro/what's up?
+                    <?php
+                    //TODO: load intro/what's up?
+                    ?>
+                </p>
+	    		<p class="intro__address--font">
+                    //TODO: load address
+                    <?php
+                    //TODO: load address
+                    ?>
+                </p>
+	    		<p class="intro__country--font">
+                    //TODO: load state-country
+                    <?php
+                    //TODO: load state-country
+                    ?>
+                </p>
 	    		<button class="intro__update-btn--font intro__update-btn--bg">update info</button>
 	    	</div>
 
@@ -247,21 +262,25 @@ $user = $_SESSION['user'];
 
             <!-- ********************** middle: post ********************** -->
             <div class="middle__posts">
-	    		<div class="post__header">
-	    			<img src="../rsrc/img/photos/p11.jpeg" class="post__header__author-photo">
-	    			<p class="post__header__info info__author"><a class="">Meow Meow</a> shared a link</p>
-	    			<p class="post__header__info info__date">Jan 14 at 14:17 PM via Instagram</p>
-	    		</div>
-	    		<div class="post__content">
-	    			<p class="post__content__p">meow meow, meow meow meow meow, meow meow meow meow meow meow, meow meow!!!! meow meow meow meow!</p>
-	    			<img src="../rsrc/img/posts/p2.jpeg" alt="post content" class="post__content__img" />
-	    		</div>
-	    		<div class="post__actions">
-	    			<div class="actions--setting actions--decor"><i class="fa fa-thumbs-up"></i></div>
-	    			<div class="actions--setting actions--decor"><i class="fa fa-share"></i></div>
-	    			<div class="actions--setting actions--decor actions__comment">1</div>
-	    			<div class="actions--setting actions--decor actions__comment"><i class="fa fa-comment"></i></div>
-	    		</div>
+                <?php
+                //TODO: load user's posts if there's any
+                // if there's none, set up a prompt maybe?
+                ?>
+	    		<!-- <div class="post__header">
+                    <img src="../rsrc/img/photos/p11.jpeg" class="post__header__author-photo">
+                    <p class="post__header__info info__author"><a class="">Meow Meow</a> shared a link</p>
+                    <p class="post__header__info info__date">Jan 14 at 14:17 PM via Instagram</p>
+                </div>
+                <div class="post__content">
+                    <p class="post__content__p">meow meow, meow meow meow meow, meow meow meow meow meow meow, meow meow!!!! meow meow meow meow!</p>
+                    <img src="../rsrc/img/posts/p2.jpeg" alt="post content" class="post__content__img" />
+                </div>
+                <div class="post__actions">
+                    <div class="actions--setting actions--decor"><i class="fa fa-thumbs-up"></i></div>
+                    <div class="actions--setting actions--decor"><i class="fa fa-share"></i></div>
+                    <div class="actions--setting actions--decor actions__comment">1</div>
+                    <div class="actions--setting actions--decor actions__comment"><i class="fa fa-comment"></i></div>
+                </div> -->
 	    	</div> <!-- ********************** end post ********************** -->
 
 <!--            <div class="middle__posts">
