@@ -1,3 +1,7 @@
+2017-06-01 majiasheng <jiasheng.ma@yahoo.com> 
+	* Updated database schema
+	* Added Post function
+
 2017-05-31 majiasheng <jiasheng.ma@yahoo.com>
 	* Added logout.php 
     * Refactored: using PDO instead of MySQLI
