@@ -581,9 +581,13 @@ input:-ms-input-placeholder {
 .cover .cover__container {
   width: 100%;
   min-height: 450px;
-  background-image: url("../../../rsrc/img/cover/frozen-fruits-crop.png");
+/*  background-image: url("../../../rsrc/img/cover/frozen-fruits-crop.png");
   background-repeat: no-repeat;
-  background-size: cover;
+  background-size: cover;*/
+}
+.cover .cover__container img {
+  width: 100%;
+  height: 100%;
 }
 .cover .cover__container .cover__profile-container {
   z-index: 10;

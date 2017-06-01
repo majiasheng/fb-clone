@@ -78,6 +78,16 @@ $connection = $_SESSION['connection'];
     <!-- cover image section -->
     <div class="cover">
     	<div class="cover__container">
+    		<?php 
+    		if(empty($user->getCoverPhoto())) {
+                    // set default profile picture
+                    echo '<img src="../rsrc/img/cover/default-cover.jpg">';
+                } else {
+                    // load user cover picture
+                    //TODO:
+                    
+                }
+            ?>
 	    	<div class="cover__profile-container">
                 <?php
                 if(empty($user->getProfilePicture())) {

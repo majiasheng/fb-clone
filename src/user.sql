@@ -27,7 +27,7 @@ CREATE TABLE posts (
 	user_id		INTEGER		NOT NULL,
 	content		TEXT		NOT NULL,
 	post_date	TIMESTAMP() NOT NULL,
-	comment_id	INTEGER,
+	comment_id	INTEGER		NOT NULL,
 
 	PRIMARY KEY(post_id),
 	FOREIGN KEY (user_id) REFERENCES users(id)
