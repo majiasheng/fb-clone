@@ -533,12 +533,11 @@ input:-ms-input-placeholder {
     width:100%;
     padding:10px 0px;
     position:absolute;
-    top:100%;
+    top:125%;
     left:0px;
     display: none;
     z-index:1;
     background:#fff;
-    color: black;
 }
 .icon-setting--dropdown li {
     display:block;
