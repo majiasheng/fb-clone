@@ -1,18 +1,27 @@
 <!-- author: Jia Sheng Ma -->
 <?php 
+session_start();
+
 require_once("../include/functions.php");
-require_once("user.php");
+
+if(!isset($_POST)) {
+    /*  if no post request but landed on this page 
+        redirect back to index.php
+    */
+    header("Location: index.php");
+}
+
 $user_email = $_POST["email"];
 $password = $_POST["password"];
 
-$connection = connect();
+$pdo = connect();
 echo "[DEBUG] user: $user_email" . " pw:" . $password . "<br>";
-echo "[DEBUG] Connection: " . mysqli_get_host_info($connection) . "<br/>";
 
 // try to load user with give email and password
-$user = loadUser($user_email, $password, $connection);
+$user = loadUser($user_email, $password, $pdo);
 
 if(is_null($user)) {
+    //TODO: shoud display this message in index.php
     echo "email and password did not match <br/>";
     // rediect back to login page
     header("Location: index.php");
@@ -20,11 +29,11 @@ if(is_null($user)) {
     // redirect to main.php
     echo 'Redirecting to '. $user->get_first_name();
 
-    session_start();
     $_SESSION['loggedin'] = True;
     $_SESSION['user_email'] = $user_email;
     $_SESSION['user'] = $user;
-    $_SESSION['connection'] = $connection;
+    //FIXME:The value to be serialized. serialize() handles all types, except the resource-type
+    // $_SESSION['pdo'] = $pdo;
     header("Location: main.php");
 }
 ?>

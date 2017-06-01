@@ -1,3 +1,7 @@
+2017-05-31 majiasheng <jiasheng.ma@yahoo.com>
+	* Added logout.php 
+    * Refactored: using PDO instead of MySQLI
+
 2017-05-30 majiasheng <jiasheng.ma@yahoo.com>
 	* Added: Load user profile picture if it exists, use default otherwise
 

@@ -2,7 +2,7 @@
                 Jia Sheng Ma 
 -->
 <?php
-require("user.php");
+require_once("../include/functions.php");
 session_start();
 // TODO: use user data to populate main.php
 
@@ -10,7 +10,7 @@ if ($_SESSION['loggedin'] !== TRUE) {
    header("Location: index.php");
 }
 $user = $_SESSION['user'];
-$connection = $_SESSION['connection'];
+// $pdo = $_SESSION['pdo'];
 ?>
 
 <!doctype html>
@@ -43,7 +43,7 @@ $connection = $_SESSION['connection'];
                         <?php 
                         echo $user->get_first_name() . " " . $user->get_last_name();
                         //FIXME: why can't i fectch mysqli??
-                        echo "[DEBUG] Connection: " . mysqli_get_host_info($connection) . "<br/>";
+                        // echo "[DEBUG] Connection: " . mysqli_get_host_info($pdo) . "<br/>";
                         ?>
                         </a>
                     </li>
