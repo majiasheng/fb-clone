@@ -1,27 +1,26 @@
 <!-- author: Jia Sheng Ma -->
 <?php
 
-// require_once("db_connect.php");
 require_once("../src/constants.php");
-require("../src/user.php");
-//TODO: declare global connection
+require_once("../src/user.php");
 
 /**
- * establishes connection with db
+ * Establishes connection with db
  */
 function connect() {
-    $connection = mysqli_connect(DB_SERVER, DB_USER, DB_PASSWORD, DB_NAME);
-    $_SESSION['connection'] = $connection;
-    if(mysqli_connect_errno()) {
-    	die("Database connection failed. <br />" .
-    		mysqli_connect_error($connection) . " (" . 
-    		mysqli_connect_errno() . ") <br />");
+	$dsn = "mysql:host=".DB_SERVER.";dbname=".DB_NAME.";charset=".CHARSET;
+	$opt = [
+	    PDO::ATTR_ERRMODE            => PDO::ERRMODE_EXCEPTION,
+	    PDO::ATTR_DEFAULT_FETCH_MODE => PDO::FETCH_ASSOC,
+	    PDO::ATTR_EMULATE_PREPARES   => false,
+	];
+    try {
+	    $pdo = new PDO($dsn, DB_USER, DB_PASSWORD, $opt);
+    } catch(PDOException $e) {
+        echo $e->getMessage();
     }
 
-    // debug
-    echo "[DEBUG] Connection: " . mysqli_get_host_info($connection) . "<br/>";
-	
-	return $connection;
+	return $pdo;
 }
 
 function validate_name($name) {
@@ -40,7 +39,7 @@ function validate_registration() {
 	$email = $_POST["email"];
 	$password = $_POST["password"];
 
-	// first and last name should not have special characters
+	// TODO: first and last name should not have special characters
 	// if(!empty($first_name)) {
 	// 	return False;
 	// }
@@ -64,7 +63,7 @@ function validate_registration() {
 	}
 }
 
-function save_user_to_db($user, $connection) {
+function save_user_to_db($user, $pdo) {
 	$query = "";
 	$query .= "INSERT INTO " . USERS_TABLE . " (";
 	// fields of user class
@@ -82,24 +81,22 @@ function save_user_to_db($user, $connection) {
 				"'" . $user->get_birth_year()	. "'," .
 				"'" . $user->get_gender() . "'" );
 	$query .= ");";
-    echo "query: $query <br>";
-	return mysqli_query($connection, $query);
+
+	return $pdo->query($query);
 
 }
 
 /**
  * Retrieves user info from database whose email is $user_email
  */
-function loadUser($user_email, $password, $connection) {
+function loadUser($user_email, $password, $pdo) {
     $query = "SELECT * FROM " . USERS_TABLE .
-    			" WHERE email='".
-    			mysqli_real_escape_string($connection, $user_email) .
-    			"' AND password='" .
-    			mysqli_real_escape_string($connection, $password) 
-    			."';";
-    // echo "$query";
-    $result = mysqli_query($connection, $query);
-    if(!($user_data = mysqli_fetch_assoc($result))) {
+    			" WHERE email = :email".
+    			" AND password = :password;";
+    $stmt = $pdo->prepare($query);
+    $stmt->execute(['email' => $user_email, 'password' => $password]);
+
+    if(!($user_data = $stmt->fetch(PDO::FETCH_ASSOC))) {
         return NULL;
     } else {
         $user = new User;

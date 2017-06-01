@@ -5,4 +5,5 @@ define("DB_USER", 	"fb-admin");
 define("DB_PASSWORD", "Pw4Admin");
 define("DB_NAME",		"fb_lets_go");
 define("USERS_TABLE", "users");
+define("CHARSET","utf8");
 ?>
