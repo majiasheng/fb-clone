@@ -529,9 +529,28 @@ input:-ms-input-placeholder {
 .navbar__container .header--icon-setting a {
   padding: 1px 6px;
 }
-.navbar__container .header--icon-setting:hover a {
-  color: #8b9dc3;
+.icon-setting--dropdown {
+    width:100%;
+    padding:10px 0px;
+    position:absolute;
+    top:100%;
+    left:0px;
+    display: none;
+    z-index:1;
+    background:#fff;
+    color: black;
 }
+.icon-setting--dropdown li {
+    display:block;
+    font-size:1em;
+    width: 200px;
+    background-color: #fff;
+}
+.icon-setting--dropdown li a {
+    padding:10px 30px;
+    display:block;
+}
+
 .navbar__container .header__brand a {
   font-size: 1.4em;
 }

@@ -55,10 +55,17 @@ $connection = $_SESSION['connection'];
 			 		<li class="header__message header--icon-setting"><a href="#"><i class="fa fa-comments"></i></a></li>
 			  		<li class="header__alert header--icon-setting"><a href="#"><i class="fa fa-globe"></i></a></li>
 		  		</div>
-		  		<!-- privacy and settings -->
+		  		<!-- privacy and settings (with a dropdown menu)-->
 		  		<div class="col-md-1 col-sm-12">
 			 		<li class="header__privacy header--icon-setting"><a href="#"><i class="fa fa-lock"></i></a></li>
-			  		<li class="header__setting header--icon-setting"><a href="#"><i class="fa fa-caret-down"></i></a></li>
+			  		<li class="header__setting header--icon-setting"><a href="#"><i class="fa fa-caret-down" onclick="show_setting_menu()"></i></a>
+			  			<ul class="icon-setting--dropdown">
+		                    <li><a href="#">Settings</a></li>
+		                    <li><a href="#">Log Out</a></li>
+		                </ul>
+
+			  		</li>
+		  			
 		  		</div>
 		  		<!-- search bar -->
 		  		<div class="col-md-4 col-sm-12">
@@ -264,6 +271,6 @@ $connection = $_SESSION['connection'];
     </div>
   </div>
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.6/js/bootstrap.min.js"></script>
-  <script src="js/script.js"></script>
+  <script src="../include/scripts/js/script.js"></script>
 </body>
 </html>
