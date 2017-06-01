@@ -63,7 +63,30 @@
 	.header--icon-setting:hover a {
         color: $icon-hover-color;
 	}
-
+    // drop-down menu: logout/settings/...
+    .icon-setting--dropdown {
+        width:100%;
+        padding:10px 0px;
+        position:absolute;
+        top:100%;
+        left:0px;
+        display: none;
+        z-index:1;
+    }
+    .icon-setting--dropdown li {
+        width: 200px;
+        display:block;
+        font-size:1em;
+        background-color: #fff;
+    }
+    .icon-setting--dropdown li a {
+        color: $icon-hover-color;
+        padding:10px 30px;
+        display:block;
+    }
+    .icon-setting--dropdown li:hover a{
+        color: darken($white, 100%);
+    }
 	/* brand icon */
 	.header__brand a {
         font-size: 1.4em;
@@ -110,6 +133,7 @@
 		border: none;
 		border-bottom: 1px solid $search-bar-color;
 	}
+
 
     
 }
