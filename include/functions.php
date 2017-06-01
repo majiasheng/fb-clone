@@ -1,5 +1,6 @@
 <!-- author: Jia Sheng Ma -->
 <?php
+
 // require_once("db_connect.php");
 require_once("../src/constants.php");
 require("../src/user.php");
@@ -10,7 +11,7 @@ require("../src/user.php");
  */
 function connect() {
     $connection = mysqli_connect(DB_SERVER, DB_USER, DB_PASSWORD, DB_NAME);
-
+    $_SESSION['connection'] = $connection;
     if(mysqli_connect_errno()) {
     	die("Database connection failed. <br />" .
     		mysqli_connect_error($connection) . " (" . 
@@ -65,7 +66,7 @@ function validate_registration() {
 
 function save_user_to_db($user, $connection) {
 	$query = "";
-	$query .= "INSERT INTO USERS_TABLE (";
+	$query .= "INSERT INTO " . USERS_TABLE . " (";
 	// fields of user class
 	$query .= "first_name, last_name, email, password, ";
 	$query .= "birth_month, birth_day, birth_year, gender";
@@ -81,7 +82,7 @@ function save_user_to_db($user, $connection) {
 				"'" . $user->get_birth_year()	. "'," .
 				"'" . $user->get_gender() . "'" );
 	$query .= ");";
-
+    echo "query: $query <br>";
 	return mysqli_query($connection, $query);
 
 }
@@ -96,7 +97,7 @@ function loadUser($user_email, $password, $connection) {
     			"' AND password='" .
     			mysqli_real_escape_string($connection, $password) 
     			."';";
-    echo "$query";
+    // echo "$query";
     $result = mysqli_query($connection, $query);
     if(!($user_data = mysqli_fetch_assoc($result))) {
         return NULL;
