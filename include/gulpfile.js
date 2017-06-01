@@ -4,14 +4,8 @@ var gulp = require('gulp'),
     sourcemaps = require('gulp-sourcemaps'),
     webserver = require('gulp-webserver');
 
-gulp.task('js', function() {
-  return gulp.src('builds/frontend/js/myscript.js')
-    .pipe(jshint('./.jshintrc'))
-    .pipe(jshint.reporter('jshint-stylish'));
-});
-
 gulp.task('sass', function () {
-    return sass('process/sass/style.scss', {
+    return sass('styles/process/sass/style.scss', {
       sourcemap: true,
       style: 'expanded'
     })
@@ -19,16 +13,15 @@ gulp.task('sass', function () {
         console.error('Error!', err.message);
     })
     .pipe(sourcemaps.write())
-    .pipe(gulp.dest('builds/frontend/css'));
+    .pipe(gulp.dest('styles/process/temp_css'));
 });
 
 gulp.task('watch', function() {
-  gulp.watch('builds/frontend/js/**/*', ['js']);
-  gulp.watch(['process/sass/**/*'], ['sass']);
+  gulp.watch(['styles/process/sass/**/*'], ['sass']);
 });
 
 gulp.task('webserver', function() {
-    gulp.src('builds/frontend/')
+    gulp.src('styles/process/')
         .pipe(webserver({
             livereload: true,
             open: true
