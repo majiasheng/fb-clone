@@ -32,8 +32,6 @@ if(is_null($user)) {
     $_SESSION['loggedin'] = True;
     $_SESSION['user_email'] = $user_email;
     $_SESSION['user'] = $user;
-    //FIXME:The value to be serialized. serialize() handles all types, except the resource-type
-    // $_SESSION['pdo'] = $pdo;
     header("Location: main.php");
 }
 ?>

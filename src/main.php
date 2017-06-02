@@ -10,6 +10,15 @@ if ($_SESSION['loggedin'] !== TRUE) {
    header("Location: index.php");
 }
 $user = $_SESSION['user'];
+
+// if a form is sent to self, handle it
+if(isset($_POST) && isset($_POST['post_content'])) {
+    // savePostToDB($user, $pdo, $post);
+    //TODO: maybe unset $_POST?
+    // unset($_POST['post_content']);
+    //TODO: update this page with a new post (this should be automatically done by the load user info below)
+}
+
 ?>
 
 <!doctype html>
@@ -57,7 +66,7 @@ $user = $_SESSION['user'];
 			 		<li class="header__privacy header--icon-setting"><a href="#"><i class="fa fa-lock"></i></a></li>
 			  		<li class="header__setting header--icon-setting"><a href="#"><i class="fa fa-caret-down" onclick="show_setting_menu()"></i></a>
 			  			<ul class="icon-setting--dropdown">
-		                    <li><a href="#">Settings</a></li>
+		                    <li><a href="settings.php">Settings</a></li>
 		                    <li><a href="logout.php">Log Out</a></li>
 		                </ul>
 
@@ -277,7 +286,7 @@ $user = $_SESSION['user'];
 	    <div class="content__middle col-md-6">
 	    	<div class="middle__timeline">
 	    		<ul class="row">
-	    			<li class="col-xs-3 col-sm-3 col-md-3 col-lg-3">
+                    <li class="col-xs-3 col-sm-3 col-md-3 col-lg-3">
                         <a href="#" class="active">
                             <i class="fa fa-calendar-check-o timeline__icon"></i>
                             timeline
@@ -329,7 +338,12 @@ $user = $_SESSION['user'];
                     </li>
                 </ul>
 
-                <textarea type="text" placeholder="What's on your mind?" rows="3"></textarea>
+
+                <form action="" method="POST" id="post_form">
+                <textarea placeholder="What's on your mind?" rows="3" name="post_content" form="post_form"></textarea>
+                <input type="submit" Value="Post">
+                </form>
+
 	    	</div> <!-- ********************** end panel ********************** -->
 
             <!-- ********************** middle: post ********************** -->
@@ -338,7 +352,8 @@ $user = $_SESSION['user'];
                 //TODO: load user's posts if there's any
                 // if there's none, set up a prompt maybe?
                 ?>
-	    		<!-- <div class="post__header">
+
+                <!-- <div class="post__header">
                     <img src="../rsrc/img/photos/p11.jpeg" class="post__header__author-photo">
                     <p class="post__header__info info__author"><a class="">Meow Meow</a> shared a link</p>
                     <p class="post__header__info info__date">Jan 14 at 14:17 PM via Instagram</p>

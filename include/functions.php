@@ -110,7 +110,10 @@ function loadUser($user_email, $password, $pdo) {
         $user->set_gender($user_data['gender']);
         return $user;
     }
+}
 
+function savePostToDB($user, $pdo, $post) {
+    //TODO: insert post to db
 }
 //TODO: function that adds friend to record
 //TODO: function that removes friend from record
