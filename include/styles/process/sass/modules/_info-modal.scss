@@ -12,18 +12,27 @@
 
     .modal__page {
         background-color: #fefefe;
-        margin: 10% auto; 
-        padding: 20px;
-        border: 1px solid #888;
-        width: 80%; 
+        margin: 0 auto; 
+        margin-top: 10%;
+        margin-bottom: 10%;
+        width: 60%; 
 
         // titles and buttons
         .modal__page--titles {
             margin: 0;
-            padding: 0;
+            padding: 15px;
+            font-weight: bold;
+            cursor: default;
+            background-color: lighten(gray, 35%);
         }
         .modal__page--add {
-            
+            margin: 0;
+            padding: 15px;
+            cursor: pointer;
+            color: $link-blue;
+        }
+        .modal__page--add:hover {
+            text-decoration: underline;
         }
     }
 

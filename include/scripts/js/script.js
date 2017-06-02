@@ -21,15 +21,12 @@ window.onclick = function(event) {
 }
 
 /* Update Info Page */
-var modal = document.getElementById('update-info-page');				// get the page
-var btn = document.getElementById("update-info-btn");					// button to open the page
-var span = document.getElementsByClassName("modal__page-close")[0];		// the close button
-
-// open update-info page onclide
-btn.onclick = function() {
-    modal.style.display = "block";
+function show_update_info_page() {
+	var modal = document.getElementById('update-info-page');				// get the page
+	modal.style.display = "block";
 }
-// close onclick
-span.onclick = function() {
-    modal.style.display = "none";
+function close_update_info_page() {
+	var modal = document.getElementById('update-info-page');
+	modal.style.display = "none";
+
 }
