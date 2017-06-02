@@ -34,6 +34,23 @@
         .modal__page--add:hover {
             text-decoration: underline;
         }
+        .modal__page--text {
+            border: 1px solid lighten(black, 80%);
+            border-radius: 5px;
+        }
+        .modal__page--btn {
+            cursor: pointer;
+        }
+        #modal__page--input1,
+        #modal__page--input2,
+        #modal__page--input3,
+        #modal__page--input4,
+        #modal__page--input5 {
+            display: none;
+        }
+
+
+
     }
 
     /* the close button */

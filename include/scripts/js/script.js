@@ -30,3 +30,45 @@ function close_update_info_page() {
 	modal.style.display = "none";
 
 }
+// TODO: NO REPETITIVE CODE
+function show_modal_input1() {
+	var container = document.getElementById('modal__page--input1');
+	container.style.display = "block";
+}
+function close_modal_input1() {
+	var container = document.getElementById('modal__page--input1');
+	container.style.display = "none";
+}
+function show_modal_input2() {
+	var container = document.getElementById('modal__page--input2');
+	container.style.display = "block";
+}
+function close_modal_input2() {
+	var container = document.getElementById('modal__page--input2');
+	container.style.display = "none";
+}
+function show_modal_input3() {
+	var container = document.getElementById('modal__page--input3');
+	container.style.display = "block";
+}
+function close_modal_input3() {
+	var container = document.getElementById('modal__page--input3');
+	container.style.display = "none";
+}
+function show_modal_input4() {
+	var container = document.getElementById('modal__page--input4');
+	container.style.display = "block";
+}
+function close_modal_input4() {
+	var container = document.getElementById('modal__page--input4');
+	container.style.display = "none";
+}
+function show_modal_input5() {
+	var container = document.getElementById('modal__page--input5');
+	container.style.display = "block";
+}
+function close_modal_input5() {
+	var container = document.getElementById('modal__page--input5');
+	container.style.display = "none";
+}
+
