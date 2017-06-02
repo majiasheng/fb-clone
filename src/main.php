@@ -58,7 +58,7 @@ $user = $_SESSION['user'];
 			  		<li class="header__setting header--icon-setting"><a href="#"><i class="fa fa-caret-down" onclick="show_setting_menu()"></i></a>
 			  			<ul class="icon-setting--dropdown">
 		                    <li><a href="#">Settings</a></li>
-		                    <li><a href="#">Log Out</a></li>
+		                    <li><a href="logout.php">Log Out</a></li>
 		                </ul>
 
 			  		</li>
@@ -82,6 +82,7 @@ $user = $_SESSION['user'];
     <!-- cover image section -->
     <div class="cover">
     	<div class="cover__container">
+            
     		<?php 
     		if(empty($user->getCoverPhoto())) {
                     // set default profile picture
@@ -110,9 +111,63 @@ $user = $_SESSION['user'];
                     echo $user->get_first_name() . " " . $user->get_last_name();
                     ?>
 	    		</div>
-	    		<div class="cover__update-info cover__update-info--decor">update info</div>
+	    		<div class="cover__update-info cover__update-info--decor" id="update-info-btn" onclick="show_update_info_page()">update info</div>
 	    		<div class="cover__view-at cover__update-info--decor">view activity</div>
 	    	</div>
+            <!-- update info page -->
+            <div id="update-info-page" class="update-info__modal">
+                  <!-- page content -->
+                  <div class="modal__page">
+                        <span class="modal__page-close" onclick="close_update_info_page()">&times;</span>
+                        <p class="modal__page--titles">Workspace</p>
+                <!-- echo all workplaces and schools-->
+                        <?php
+                        if(!empty($user->getWorkspace())) {
+                            foreach($user->getWorkspace() as $workspace) {
+                                echo '<p class="modal__page--add">'. $workspace .'</p>';
+                            }   
+                        } 
+                        ?>
+                        <p class="modal__page--add">Add workspace</p>
+                        <p class="modal__page--titles">Education</p>
+                        <?php
+                        if(!empty($user->getEducation())) {
+                            foreach($user->getEducation() as $education) {
+                                echo '<p class="modal__page--add">'. $education .'</p>';
+                            }   
+                        } 
+                        ?>
+                        <p class="modal__page--add">Add education</p>
+                <!-- echo current city, hometown, and relationship -->
+                        <p class="modal__page--titles">Current City</p>
+                        <?php
+                        if(empty($user->getCurrentCity())) {
+                            echo '<p class="modal__page--add">Add current city</p>';
+                        } else {
+                            echo '<p class="modal__page--add">' . $user->getCurrentCity() . '</p>';
+                        }
+                        ?>
+                        <p class="modal__page--titles">Hometown</p>
+                        <?php
+                        if(empty($user->getHometown())) {
+                            echo '<p class="modal__page--add">Add hometown</p>';
+                        } else {
+                            echo '<p class="modal__page--add">' . $user->getHometown() . '</p>';
+                        }
+                        ?>
+                        <p class="modal__page--titles">Relationship</p>
+                        <?php
+                        if(empty($user->getRelationship())) {
+                            echo '<p class="modal__page--add">Add relationship</p>';
+                        } else {
+                            echo '<p class="modal__page--add">' . $user->getRelationship() . '</p>';
+                        }
+                        ?>
+                        <p class="modal__page--titles">About Info</p>
+                        <p class="modal__page--add">Edit Your About Info</p>
+                  </div>
+
+            </div>
     </div>
     </div>
     <div class="row content">

@@ -2,6 +2,7 @@
 <?php
 class User {
 
+	// basic info
     private $first_name;
     private $last_name;
     private $email;
@@ -10,9 +11,17 @@ class User {
     private $birth_day;
     private $birth_year;
     private $gender;
+    // cover 
     private $cover_photo;
     private $profile_picture;
+    // post 
     private $posts = array();
+    // about 
+    private $education = array();
+    private $workspace = array();
+    private $current_city;
+    private $relationship;
+    private $hometown;
 
 	// setters
 	function set_first_name($arg) {
@@ -47,6 +56,21 @@ class User {
     }
     function setProfilePicture($arg) {
         $this->profile_picture = $arg;
+    }
+    function setEducation($arg) {
+    	$education[] = $arg;
+    }
+    function setWorkspace($arg) {
+    	$workspace[] = $arg;
+    }
+    function setCurrentCity($arg) {
+    	$this->current_city = $arg;
+    }
+    function setRelationship($arg) {
+    	$this->relationship = $arg;
+    }
+    function setHometown($arg) {
+    	$this->hometown = $arg;
     }
 
 	// getters
@@ -83,6 +107,22 @@ class User {
     function getProfilePicture() {
         return $this->profile_picture;
     }
+    function getEducation() {
+    	return $this->education;
+    }
+    function getWorkspace() {
+    	return $this->workspace;
+    }
+    function getCurrentCity() {
+    	return $this->current_city;
+    }
+    function getRelationship() {
+    	return $this->relationship;
+    }
+    function getHometown() {
+    	return $this->hometown;
+    }
+
 
 }
 
