@@ -11,12 +11,19 @@ if ($_SESSION['loggedin'] !== TRUE) {
 }
 $user = $_SESSION['user'];
 
+$pdo = connect();
+
 // if a form is sent to self, handle it
 if(isset($_POST) && isset($_POST['post_content'])) {
-    // savePostToDB($user, $pdo, $post);
+
+    if(savePostToDB($user->get_email(), $pdo, $_POST['post_content'])) {
+        echo "good";
+    } else {
+        echo "bad";
+    }
+    
     //TODO: maybe unset $_POST?
-    // unset($_POST['post_content']);
-    //TODO: update this page with a new post (this should be automatically done by the load user info below)
+    unset($_POST);
 }
 
 ?>
@@ -349,8 +356,21 @@ if(isset($_POST) && isset($_POST['post_content'])) {
             <!-- ********************** middle: post ********************** -->
             <div class="middle__posts">
                 <?php
-                //TODO: load user's posts if there's any
+                //load user's posts if there's any
                 // if there's none, set up a prompt maybe?
+                $posts = loadPosts($user->get_email(), $pdo);
+                foreach($posts as $p) {
+                    echo '<div class="post__content"> <p class="post__content__p">';
+                    echo $p . "<br></p></div>";
+                    echo '<div class="post__actions">
+                    <div class="actions--setting actions--decor"><i class="fa fa-thumbs-up"></i></div>
+                    <div class="actions--setting actions--decor"><i class="fa fa-share"></i></div>
+                    <div class="actions--setting actions--decor actions__comment"></div>
+                    <div class="actions--setting actions--decor actions__comment"><i class="fa fa-comment"></i></div>
+                    </div> ';
+                }
+                //TODO: load comments, likes, shares
+                //FIXME: when refreshing page, post should not be resent to db
                 ?>
 
                 <!-- <div class="post__header">
@@ -368,7 +388,7 @@ if(isset($_POST) && isset($_POST['post_content'])) {
                     <div class="actions--setting actions--decor actions__comment">1</div>
                     <div class="actions--setting actions--decor actions__comment"><i class="fa fa-comment"></i></div>
                 </div> -->
-	    	</div> <!-- ********************** end post ********************** -->
+                    <!-- ********************** end post ********************** -->
 
 <!--            <div class="middle__posts">
                 <div class="post__header">

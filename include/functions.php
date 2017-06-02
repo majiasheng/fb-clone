@@ -112,8 +112,20 @@ function loadUser($user_email, $password, $pdo) {
     }
 }
 
-function savePostToDB($user, $pdo, $post) {
+function savePostToDB($user_email, $pdo, $post) {
     //TODO: insert post to db
+    $query = "INSERT INTO " . POSTS_TABLE 
+            . "(author_email, content) "
+            . "VALUES (:email,:content)";
+    $stmt = $pdo->prepare($query);
+    return $stmt->execute(['email' => $user_email, 'content' => $post]);
+}
+function loadPosts($user_email, $pdo) {
+    $query = "SELECT content from " . POSTS_TABLE 
+            . " WHERE author_email = :email";
+    $stmt = $pdo->prepare($query);
+    $stmt->execute(['email' => $user_email]);
+    return $stmt->fetchAll(PDO::FETCH_COLUMN);
 }
 //TODO: function that adds friend to record
 //TODO: function that removes friend from record

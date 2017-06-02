@@ -1,3 +1,6 @@
+2017-06-02 majiasheng <jiasheng.ma@yahoo.com>
+	* Load posts from db 
+
 2017-06-01 majiasheng <jiasheng.ma@yahoo.com> 
 	* Updated database schema
 	* Added Post function
