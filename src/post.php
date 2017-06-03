@@ -26,7 +26,7 @@ class Post {
     function setContent($arg) {
         $this->content = $arg;
     }
-    function setDate($arg) {
+    function setPostTime($arg) {
         $this->post_time = $arg;
     }
     function setIsEdited($arg) {
@@ -51,7 +51,7 @@ class Post {
     function getContent() {
         return $this->content;
     }
-    function getDate() {
+    function getPostTime() {
         return $this->post_time;
     }
     function getIsEdited() {

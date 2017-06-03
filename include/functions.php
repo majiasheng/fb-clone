@@ -125,22 +125,29 @@ function savePostToDB($user_email, $pdo, $post) {
 function loadPosts($user_email, $pdo) {
     //TODO: need to join comments with posts later
 
-    $query = "SELECT content from " . POSTS_TABLE 
+    $query = "SELECT content, post_time, edit_time from " . POSTS_TABLE 
             . " WHERE author_email = :email";
     $stmt = $pdo->prepare($query);
     $stmt->execute(['email' => $user_email]);
 
     //TODO: wrap contents in post object and return list of posts
-    $posts = array();
-    $contents = $stmt->fetchAll(PDO::FETCH_COLUMN);
+    $post_objs = array();
+    $posts = $stmt->fetchAll(PDO::FETCH_ASSOC);
     
-    foreach($contents as $c) {
+    foreach($posts as $c) {
         $p = new Post;
         $p->setAuthorEmail($user_email);
-        $p->setContent($c);
-        array_push($posts, $p);
+        $p->setContent($c['content']);
+        $p->setPostTime($c['post_time']);
+        if($c['post_time']==$c['edit_time']) {
+            $p->setIsEdited(False);
+        } else {
+            $p->setIsEdited(True);
+        }
+
+        array_push($post_objs, $p);
     }
-    return $posts;
+    return $post_objs;
 
 }
 //TODO: function that adds friend to record

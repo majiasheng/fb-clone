@@ -365,9 +365,14 @@ $profile_pic = "../rsrc/img/photos/default-profile.png";
                     echo '<div class="post__header">';
                     echo '<img src="' . $profile_pic . '" class="post__header__author-photo">';
                     echo '<p class="post__header__info info__author"><a class="">' 
-                        . $user->get_first_name() . " " . $user->get_last_name();
+                        . $user->get_first_name() . " " . $user->get_last_name() . '</a>';
+                    if($p->getIsEdited()) {
+                        echo " Edited";
+                    }
+                    echo '</p>';
+                    
                     echo '<p class="post__header__info info__date">' 
-                        // . date("m-d-Y") // load post's time
+                        . $p->getPostTime() // load post's time
                         . '</p></div>';
 
                     // content
