@@ -41,7 +41,8 @@ if($_SERVER["REQUEST_METHOD"] == "POST") {
 		$new_user->set_first_name($_POST["first_name"]);
 		$new_user->set_last_name($_POST["last_name"]);
 		$new_user->set_email($_POST["email"]);
-		$new_user->set_password($_POST["password"]);
+		// $new_user->set_password($_POST["password"]);
+		$new_user->set_password( password_hash( $_POST["password"], PASSWORD_DEFAULT) );
 		$new_user->set_birth_day($_POST["day"]);
 		$new_user->set_birth_month($_POST["month"]);
 		$new_user->set_birth_year($_POST["year"]);

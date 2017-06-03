@@ -91,16 +91,19 @@ function save_user_to_db($user, $pdo) {
  * Retrieves user info from database whose email is $user_email
  */
 function loadUser($user_email, $password, $pdo) {
+    
+   	
     $query = "SELECT * FROM " . USERS_TABLE .
-    			" WHERE email = :email".
-    			" AND password = :password;";
+    			" WHERE email = :email";
+    			// " AND password = :password;";
     $stmt = $pdo->prepare($query);
-    $stmt->execute(['email' => $user_email, 'password' => $password]);
+    // $stmt->bindParam(':email', $user_email);
+    // $stmt->execute(['email' => $user_email, 'password' => $password]);
+    $stmt->execute(['email' => $user_email]);
+    $res = $stmt->fetch(PDO::FETCH_ASSOC);
 
-    if(!($user_data = $stmt->fetch(PDO::FETCH_ASSOC))) {
-        return NULL;
-    } else {
-        $user = new User;
+    if( password_verify($password, $res['PASSWORD']) ){
+    	$user = new User;
         $user->set_first_name($user_data['first_name']);
         $user->set_last_name($user_data['last_name']);
         $user->set_email($user_data['email']);
@@ -110,7 +113,26 @@ function loadUser($user_email, $password, $pdo) {
         $user->set_birth_year($user_data['birth_year']);
         $user->set_gender($user_data['gender']);
         return $user;
+    } else {
+    	return NULL;
     }
+
+
+
+    // if(!($user_data = $stmt->fetch(PDO::FETCH_ASSOC))) {
+    //     return NULL;
+    // } else {
+    //     $user = new User;
+    //     $user->set_first_name($user_data['first_name']);
+    //     $user->set_last_name($user_data['last_name']);
+    //     $user->set_email($user_data['email']);
+    //     $user->set_password($user_data['password']);
+    //     $user->set_birth_month($user_data['birth_month']);
+    //     $user->set_birth_day($user_data['birth_day']);
+    //     $user->set_birth_year($user_data['birth_year']);
+    //     $user->set_gender($user_data['gender']);
+    //     return $user;
+    // }
 }
 
 function savePostToDB($user_email, $pdo, $post) {
@@ -152,5 +174,11 @@ function loadPosts($user_email, $pdo) {
 }
 //TODO: function that adds friend to record
 //TODO: function that removes friend from record
+
+function console_log( $data ){
+  echo '<script>';
+  echo 'console.log('. json_encode( $data ) .')';
+  echo '</script>';
+}
 
 ?>
