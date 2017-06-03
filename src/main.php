@@ -20,8 +20,9 @@ if(isset($_POST) && isset($_POST['post_content']) && ("" != trim($_POST['post_co
         echo "Error occurred while saving posting <br>";
     }
     // prevent resubmission of POST
-    header('Location:' . $_SERVER['PHP_SELF']);
     unset($_POST);
+    header('Location:' . $_SERVER['PHP_SELF']);
+
 }
 
 
@@ -253,7 +254,7 @@ $profile_pic = "../rsrc/img/photos/default-profile.png";
                 </h2></a>
 	        	
                 <div class="row photos__container">
-                    
+
                     <?php
                     //TODO: load 3x3 friends(' profile pictures)
                     
@@ -371,7 +372,7 @@ $profile_pic = "../rsrc/img/photos/default-profile.png";
 
                     // content
                     echo '<div class="post__content"> <p class="post__content__p">';
-                    echo $p . "<br></p></div>";
+                    echo $p->getContent() . "<br></p></div>";
 
                     // footer/actions: like, comment, share
                     echo '<div class="post__actions">

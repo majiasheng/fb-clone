@@ -3,6 +3,7 @@
 
 require_once("../src/constants.php");
 require_once("../src/user.php");
+require_once("../src/Post.php");
 
 /**
  * Establishes connection with db
@@ -120,12 +121,27 @@ function savePostToDB($user_email, $pdo, $post) {
     $stmt = $pdo->prepare($query);
     return $stmt->execute(['email' => $user_email, 'content' => $post]);
 }
+
 function loadPosts($user_email, $pdo) {
+    //TODO: need to join comments with posts later
+
     $query = "SELECT content from " . POSTS_TABLE 
             . " WHERE author_email = :email";
     $stmt = $pdo->prepare($query);
     $stmt->execute(['email' => $user_email]);
-    return $stmt->fetchAll(PDO::FETCH_COLUMN);
+
+    //TODO: wrap contents in post object and return list of posts
+    $posts = array();
+    $contents = $stmt->fetchAll(PDO::FETCH_COLUMN);
+    
+    foreach($contents as $c) {
+        $p = new Post;
+        $p->setAuthorEmail($user_email);
+        $p->setContent($c);
+        array_push($posts, $p);
+    }
+    return $posts;
+
 }
 //TODO: function that adds friend to record
 //TODO: function that removes friend from record

@@ -15,20 +15,21 @@ CREATE TABLE users (
 );
 
 CREATE TABLE posts (
-	id              INTEGER NOT NULL AUTO_INCREMENT,
+	id              INTEGER     NOT NULL AUTO_INCREMENT,
     author_email    VARCHAR(50) NOT NULL,
-	content         TEXT    NOT NULL,
-    -- post_time       TIMESTAMP() NOT NULL,
+	content         TEXT        NOT NULL,
+    post_time       TIMESTAMP   DEFAULT CURRENT_TIMESTAMP,
+    edit_time       TIMESTAMP   DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
 
 	PRIMARY KEY (id,author_email),
 	FOREIGN KEY (author_email) REFERENCES users (email)
 );
 
 CREATE TABLE comments (
-    id              INTEGER NOT NULL AUTO_INCREMENT,
-    post_id         INTEGER NOT NULL,
+    id              INTEGER     NOT NULL AUTO_INCREMENT,
+    post_id         INTEGER     NOT NULL,
     author          VARCHAR(30) NOT NULL,
-    comment_time    TIMESTAMP() NOT NULL,
+    comment_time    TIMESTAMP   NOT NULL,
     edited          BOOLEAN DEFAULT FALSE,
 
     PRIMARY KEY(id,post_id,author),

@@ -1,14 +1,25 @@
-<!-- author: Jia Sheng Ma -->
+<!-- author_email: Jia Sheng Ma -->
 <?php
 class Post {
+    private $author_email;
     private $type;
     private $content;
-    private $date;
+    private $post_time;
     private $is_edited;
     private $comments;
     private $likes;
     private $shares;
 
+    // function __construct($content, $post_time, $is_edited) {
+    //     $this->content = $content;
+    //     $this->post_time = $post_time;
+    //     $this->is_edited = $is_edited;
+    //     //TODO:
+    // }
+
+    function setAuthorEmail($arg) {
+        $this->author_email = $arg;
+    }
     function setType($arg) {
         $this->type = $arg;
     }
@@ -16,7 +27,7 @@ class Post {
         $this->content = $arg;
     }
     function setDate($arg) {
-        $this->date = $arg;
+        $this->post_time = $arg;
     }
     function setIsEdited($arg) {
         $this->is_edited = $arg;
@@ -31,26 +42,29 @@ class Post {
         $this->shares = $arg;
     }
 
+    function getAuthorEmail() {
+        return $this->author_email;
+    }
     function getType() {
-        return $type;
+        return $this->type;
     }
     function getContent() {
-        return $content;
+        return $this->content;
     }
     function getDate() {
-        return $date;
+        return $this->post_time;
     }
     function getIsEdited() {
-        return $is_edited;
+        return $this->is_edited;
     }
     function getComments() {
-        return $comments;
+        return $this->comments;
     }
     function getLikes() {
-        return $likes;
+        return $this->likes;
     }
     function getShares() {
-        return $shares;
+        return $this->shares;
     }
 
 }
