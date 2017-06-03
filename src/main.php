@@ -14,17 +14,20 @@ $user = $_SESSION['user'];
 $pdo = connect();
 
 // if a form is sent to self, handle it
-if(isset($_POST) && isset($_POST['post_content'])) {
-
-    if(savePostToDB($user->get_email(), $pdo, $_POST['post_content'])) {
-        echo "good";
-    } else {
-        echo "bad";
-    }
+if(isset($_POST) && isset($_POST['post_content']) && ("" != trim($_POST['post_content']))) {
     
-    //TODO: maybe unset $_POST?
+    if(!savePostToDB($user->get_email(), $pdo, $_POST['post_content'])) {
+        echo "Error occurred while saving posting <br>";
+    }
+    // prevent resubmission of POST
+    header('Location:' . $_SERVER['PHP_SELF']);
     unset($_POST);
 }
+
+
+
+// default profile picture
+$profile_pic = "../rsrc/img/photos/default-profile.png";
 
 ?>
 
@@ -111,14 +114,12 @@ if(isset($_POST) && isset($_POST['post_content'])) {
             ?>
 	    	<div class="cover__profile-container">
                 <?php
-                if(empty($user->getProfilePicture())) {
-                    // set default profile picture
-                    echo '<img src="../rsrc/img/photos/default-profile.png" ';
-                } else {
-                    // load user profile picture
-                    //TODO:
-                    echo '<img src="../rsrc/img/photos/p11.jpeg" ';
+                // load user profile picture
+                if(! empty($user->getProfilePicture())) {
+                    //TODO: 
+                    // $profile_pic = 
                 }
+                echo '<img src="'. $profile_pic . '" ';
 
                 ?>
                 alt="profile photo" class="cover__photo"/>
@@ -141,7 +142,7 @@ if(isset($_POST) && isset($_POST['post_content'])) {
                         if(!empty($user->getWorkspace())) {
                             foreach($user->getWorkspace() as $workspace) {
                                 echo '<p class="modal__page--add">'. $workspace .'</p>';
-                            }   
+                            }
                         } 
                         ?>
                         <p class="modal__page--add">Add workspace</p>
@@ -350,8 +351,7 @@ if(isset($_POST) && isset($_POST['post_content'])) {
                 <textarea placeholder="What's on your mind?" rows="3" name="post_content" form="post_form"></textarea>
                 <input type="submit" Value="Post">
                 </form>
-
-	    	</div> <!-- ********************** end panel ********************** -->
+            </div> <!-- ********************** end panel ********************** -->
 
             <!-- ********************** middle: post ********************** -->
             <div class="middle__posts">
@@ -360,14 +360,27 @@ if(isset($_POST) && isset($_POST['post_content'])) {
                 // if there's none, set up a prompt maybe?
                 $posts = loadPosts($user->get_email(), $pdo);
                 foreach($posts as $p) {
+                    // header: user pic, user name
+                    echo '<div class="post__header">';
+                    echo '<img src="' . $profile_pic . '" class="post__header__author-photo">';
+                    echo '<p class="post__header__info info__author"><a class="">' 
+                        . $user->get_first_name() . " " . $user->get_last_name();
+                    echo '<p class="post__header__info info__date">' 
+                        // . date("m-d-Y") // load post's time
+                        . '</p></div>';
+
+                    // content
                     echo '<div class="post__content"> <p class="post__content__p">';
                     echo $p . "<br></p></div>";
+
+                    // footer/actions: like, comment, share
                     echo '<div class="post__actions">
                     <div class="actions--setting actions--decor"><i class="fa fa-thumbs-up"></i></div>
                     <div class="actions--setting actions--decor"><i class="fa fa-share"></i></div>
                     <div class="actions--setting actions--decor actions__comment"></div>
                     <div class="actions--setting actions--decor actions__comment"><i class="fa fa-comment"></i></div>
                     </div> ';
+
                 }
                 //TODO: load comments, likes, shares
                 //FIXME: when refreshing page, post should not be resent to db
