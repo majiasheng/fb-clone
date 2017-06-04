@@ -10,6 +10,7 @@ if ($_SESSION['loggedin'] !== TRUE) {
    header("Location: index.php");
 }
 $user = $_SESSION['user'];
+$info = $_SESSION['info'];
 
 $pdo = connect();
 
@@ -49,62 +50,62 @@ $profile_pic = "../rsrc/img/photos/default-profile.png";
 <body>
 <div class="container-fluid">
     <nav class="navbar" role="navigation">
-	    <div class="navbar__container">
-	  		<ul class="row">
-	  			<!-- brand icon -->
-	  			<div class="col-md-2 col-sm-12">
-		  			<li class="header__brand"><a href="main.php"><i class="fa fa-facebook"></i></a></li>
-		  			</div>
-		  		<!-- username and home button -->
-		  		<div class="col-md-3 col-sm-12 navbar__header">
-			  		<li class="header__username">
+        <div class="navbar__container">
+            <ul class="row">
+                <!-- brand icon -->
+                <div class="col-md-2 col-sm-12">
+                    <li class="header__brand"><a href="main.php"><i class="fa fa-facebook"></i></a></li>
+                    </div>
+                <!-- username and home button -->
+                <div class="col-md-3 col-sm-12 navbar__header">
+                    <li class="header__username">
                         <a href="#">
                         <?php 
                         echo $user->get_first_name() . " " . $user->get_last_name();
                         ?>
                         </a>
                     </li>
-			  		<li class="header__home"><a href="#">Home</a></li>
-		  		</div>
-		  		<!-- friends, messages, and alerts -->
-		  		<div class="col-md-2 col-sm-12 navbar__header">
-			  		<li class="header__friends header--icon-setting"><a href="#"><i class="fa fa-user"></i></a></li>
-			 		<li class="header__message header--icon-setting"><a href="#"><i class="fa fa-comments"></i></a></li>
-			  		<li class="header__alert header--icon-setting"><a href="#"><i class="fa fa-globe"></i></a></li>
-		  		</div>
-		  		<!-- privacy and settings (with a dropdown menu)-->
-		  		<div class="col-md-1 col-sm-12">
-			 		<li class="header__privacy header--icon-setting"><a href="#"><i class="fa fa-lock"></i></a></li>
-			  		<li class="header__setting header--icon-setting"><a href="#"><i class="fa fa-caret-down" onclick="show_setting_menu()"></i></a>
-			  			<ul class="icon-setting--dropdown">
-		                    <li><a href="settings.php">Settings</a></li>
-		                    <li><a href="logout.php">Log Out</a></li>
-		                </ul>
+                    <li class="header__home"><a href="#">Home</a></li>
+                </div>
+                <!-- friends, messages, and alerts -->
+                <div class="col-md-2 col-sm-12 navbar__header">
+                    <li class="header__friends header--icon-setting"><a href="#"><i class="fa fa-user"></i></a></li>
+                    <li class="header__message header--icon-setting"><a href="#"><i class="fa fa-comments"></i></a></li>
+                    <li class="header__alert header--icon-setting"><a href="#"><i class="fa fa-globe"></i></a></li>
+                </div>
+                <!-- privacy and settings (with a dropdown menu)-->
+                <div class="col-md-1 col-sm-12">
+                    <li class="header__privacy header--icon-setting"><a href="#"><i class="fa fa-lock"></i></a></li>
+                    <li class="header__setting header--icon-setting"><a href="#"><i class="fa fa-caret-down" onclick="show_setting_menu()"></i></a>
+                        <ul class="icon-setting--dropdown">
+                            <li><a href="settings.php">Settings</a></li>
+                            <li><a href="logout.php">Log Out</a></li>
+                        </ul>
 
-			  		</li>
-		  			
-		  		</div>
-		  		<!-- search bar -->
-		  		<div class="col-md-4 col-sm-12">
-	                <li class="navbar__form">
-			  			<form class="navbar__search-form form-inline" role="search">
-			 				<!-- <div class="navbar__search-container form-group"> -->
-			  					<input type="text" class="navbar__search-input form-control" placeholder="Search">
-			  					<a href="#" class="linka"><i class="fa fa-search"></i></a>
-				  			<!-- </div> -->
-						</form>
-					</li>
-				</div>
+                    </li>
+                    
+                </div>
+                <!-- search bar -->
+                <div class="col-md-4 col-sm-12">
+                    <li class="navbar__form">
+                        <form class="navbar__search-form form-inline" role="search">
+                            <!-- <div class="navbar__search-container form-group"> -->
+                                <input type="text" class="navbar__search-input form-control" placeholder="Search">
+                                <a href="#" class="linka"><i class="fa fa-search"></i></a>
+                            <!-- </div> -->
+                        </form>
+                    </li>
+                </div>
 
-		  	</ul> 
-		</div>
+            </ul> 
+        </div>
     </nav>
     <!-- cover image section -->
     <div class="cover">
-    	<div class="cover__container">
+        <div class="cover__container">
             
-    		<?php 
-    		if(empty($user->getCoverPhoto())) {
+            <?php 
+            if(empty($user->get_cover_photo())) {
                     // set default profile picture
                     echo '<img src="../rsrc/img/cover/default-cover.jpg">';
                 } else {
@@ -113,10 +114,10 @@ $profile_pic = "../rsrc/img/photos/default-profile.png";
                     
                 }
             ?>
-	    	<div class="cover__profile-container">
+            <div class="cover__profile-container">
                 <?php
                 // load user profile picture
-                if(! empty($user->getProfilePicture())) {
+                if(! empty($user->get_profile_picture())) {
                     //TODO: 
                     // $profile_pic = 
                 }
@@ -124,14 +125,14 @@ $profile_pic = "../rsrc/img/photos/default-profile.png";
 
                 ?>
                 alt="profile photo" class="cover__photo"/>
-	    		<div class="cover__username">
+                <div class="cover__username">
                     <?php 
                     echo $user->get_first_name() . " " . $user->get_last_name();
                     ?>
-	    		</div>
-	    		<div class="cover__update-info cover__update-info--decor" id="update-info-btn" onclick="show_update_info_page()">update info</div>
-	    		<div class="cover__view-at cover__update-info--decor">view activity</div>
-	    	</div>
+                </div>
+                <div class="cover__update-info cover__update-info--decor" id="update-info-btn" onclick="show_update_info_page()">update info</div>
+                <div class="cover__view-at cover__update-info--decor">view activity</div>
+            </div>
             <!-- update info page -->
             <div id="update-info-page" class="update-info__modal">
                   <!-- page content -->
@@ -140,47 +141,72 @@ $profile_pic = "../rsrc/img/photos/default-profile.png";
                         <p class="modal__page--titles">Workspace</p>
                 <!-- echo all workplaces and schools-->
                         <?php
-                        if(!empty($user->getWorkspace())) {
-                            foreach($user->getWorkspace() as $workspace) {
+                        if(!empty($user->get_workspace())) {
+                            foreach($user->get_workspace() as $workspace) {
                                 echo '<p class="modal__page--add">'. $workspace .'</p>';
                             }
                         } 
                         ?>
-                        <p class="modal__page--add">Add workspace</p>
+                        <p class="modal__page--add" onclick="show_modal_input1()">Add workspace</p>
+                        <div id="modal__page--input1">
+                            <input type="text" class="modal__page--text">
+                            <button type="submit" class="btn btn-primary modal__page--btn">Save</button>
+                            <button type="cancel" class="btn btn-secondary modal__page--btn" onclick="close_modal_input1()">Cancel</button>
+                        </div>
                         <p class="modal__page--titles">Education</p>
                         <?php
-                        if(!empty($user->getEducation())) {
-                            foreach($user->getEducation() as $education) {
+                        if(!empty($user->get_education())) {
+                            foreach($user->get_education() as $education) {
                                 echo '<p class="modal__page--add">'. $education .'</p>';
                             }   
                         } 
                         ?>
-                        <p class="modal__page--add">Add education</p>
+                        <p class="modal__page--add" onclick="show_modal_input2()">Add education</p>
+                        <div id="modal__page--input2">
+                            <input type="text" class="modal__page--text">
+                            <button type="submit" class="btn btn-primary modal__page--btn">Save</button>
+                            <button type="cancel" class="btn btn-secondary modal__page--btn" onclick="close_modal_input2()">Cancel</button>
+                        </div>
                 <!-- echo current city, hometown, and relationship -->
                         <p class="modal__page--titles">Current City</p>
                         <?php
-                        if(empty($user->getCurrentCity())) {
-                            echo '<p class="modal__page--add">Add current city</p>';
+                        if(empty($user->get_current_city())) {
+                            echo '<p class="modal__page--add" onclick="show_modal_input3()">Add current city</p>';
                         } else {
-                            echo '<p class="modal__page--add">' . $user->getCurrentCity() . '</p>';
+                            echo '<p class="modal__page--add">' . $user->get_current_city() . '</p>';
                         }
                         ?>
+                        <div id="modal__page--input3">
+                            <input type="text" class="modal__page--text">
+                            <button type="submit" class="btn btn-primary modal__page--btn">Save</button>
+                            <button type="cancel" class="btn btn-secondary modal__page--btn" onclick="close_modal_input3()">Cancel</button>
+                        </div>
                         <p class="modal__page--titles">Hometown</p>
                         <?php
-                        if(empty($user->getHometown())) {
-                            echo '<p class="modal__page--add">Add hometown</p>';
+                        if(empty($user->get_hometown())) {
+                            echo '<p class="modal__page--add" onclick="show_modal_input4()">Add hometown</p>';
                         } else {
-                            echo '<p class="modal__page--add">' . $user->getHometown() . '</p>';
+                            echo '<p class="modal__page--add">' . $user->get_hometown() . '</p>';
                         }
                         ?>
+                        <div id="modal__page--input4">
+                            <input type="text" class="modal__page--text">
+                            <button type="submit" class="btn btn-primary modal__page--btn">Save</button>
+                            <button type="cancel" class="btn btn-secondary modal__page--btn" onclick="close_modal_input4()">Cancel</button>
+                        </div>
                         <p class="modal__page--titles">Relationship</p>
                         <?php
-                        if(empty($user->getRelationship())) {
-                            echo '<p class="modal__page--add">Add relationship</p>';
+                        if(empty($user->get_relationship())) {
+                            echo '<p class="modal__page--add" onclick="show_modal_input5()">Add relationship</p>';
                         } else {
-                            echo '<p class="modal__page--add">' . $user->getRelationship() . '</p>';
+                            echo '<p class="modal__page--add">' . $user->get_relationship() . '</p>';
                         }
                         ?>
+                        <div id="modal__page--input5">
+                            <input type="text" class="modal__page--text">
+                            <button type="submit" class="btn btn-primary modal__page--btn">Save</button>
+                            <button type="cancel" class="btn btn-secondary modal__page--btn" onclick="close_modal_input5()">Cancel</button>
+                        </div>
                         <p class="modal__page--titles">About Info</p>
                         <p class="modal__page--add">Edit Your About Info</p>
                   </div>
@@ -190,33 +216,33 @@ $profile_pic = "../rsrc/img/photos/default-profile.png";
     </div>
     <div class="row content">
 
-	    <div class="content__left col-md-4">
-	    	<!-- left side -->
-	    	<div class="left__intro">
-	    		<h2 class="content__title content__title--font"><i class="fa fa-pencil-square-o content__icon content__icon--bg" aria-hidden="true"></i>Intro</h2>
-	    		<p class="intro__position">
+        <div class="content__left col-md-4">
+            <!-- left side -->
+            <div class="left__intro">
+                <h2 class="content__title content__title--font"><i class="fa fa-pencil-square-o content__icon content__icon--bg" aria-hidden="true"></i>Intro</h2>
+                <p class="intro__position">
                     //TODO: load intro/what's up?
                     <?php
                     //TODO: load intro/what's up?
                     ?>
                 </p>
-	    		<p class="intro__address--font">
+                <p class="intro__address--font">
                     //TODO: load address
                     <?php
                     //TODO: load address
                     ?>
                 </p>
-	    		<p class="intro__country--font">
+                <p class="intro__country--font">
                     //TODO: load state-country
                     <?php
                     //TODO: load state-country
                     ?>
                 </p>
-	    		<button class="intro__update-btn--font intro__update-btn--bg">update info</button>
-	    	</div>
+                <button class="intro__update-btn--font intro__update-btn--bg">update info</button>
+            </div>
 
             <!-- ********************** left: photos ********************** -->
-	    	<div class="left__photos">
+            <div class="left__photos">
                 <a href=#><h2 class="content__title content__title--font">
                     <i class="fa fa-picture-o content__icon content__icon--bg" aria-hidden="true"></i>
                     <!-- TODO: redirect to a photo upload page -->
@@ -243,26 +269,26 @@ $profile_pic = "../rsrc/img/photos/default-profile.png";
                     <div class="col-xs-4 col-sm-4 col-md-4 col-lg-4"><img src="../rsrc/img/photos/p8.jpeg"></div>
                     <div class="col-xs-4 col-sm-4 col-md-4 col-lg-4"><img src="../rsrc/img/photos/p9.jpeg"></div>
                 </div> -->
-	    	</div> <!-- ********************** end photos ********************** -->
+            </div> <!-- ********************** end photos ********************** -->
 
             <!-- ********************** left: friends ********************** -->
-	        <div class="left__friends">
+            <div class="left__friends">
                 <!-- TODO: redirect to user's friends -->
                 <a href=#><h2 class="content__title content__title--font">
                     <i class="fa fa-user-plus content__icon content__icon--bg" aria-hidden="true"></i>
                     Friends
                 </h2></a>
-	        	
+                
                 <div class="row photos__container">
 
                     <?php
                     //TODO: load 3x3 friends(' profile pictures)
                     
                     ?>
-	    			<!-- <div class="col-xs-4 col-sm-4 col-md-4 col-lg-4"><img src="../rsrc/img/friends/cat11.jpeg"></div>
+                    <!-- <div class="col-xs-4 col-sm-4 col-md-4 col-lg-4"><img src="../rsrc/img/friends/cat11.jpeg"></div>
                     <div class="col-xs-4 col-sm-4 col-md-4 col-lg-4"><img src="../rsrc/img/friends/cat1.png"></div>
                     <div class="col-xs-4 col-sm-4 col-md-4 col-lg-4"><img src="../rsrc/img/friends/cat3.jpeg"></div> -->
-	    		</div>
+                </div>
                 <!-- <div class="row photos__container">
                     <div class="col-xs-4 col-sm-4 col-md-4 col-lg-4"><img src="../rsrc/img/friends/cat4.jpeg"></div>
                     <div class="col-xs-4 col-sm-4 col-md-4 col-lg-4"><img src="../rsrc/img/friends/cat5.jpeg"></div>
@@ -273,28 +299,28 @@ $profile_pic = "../rsrc/img/photos/default-profile.png";
                     <div class="col-xs-4 col-sm-4 col-md-4 col-lg-4"><img src="../rsrc/img/friends/cat8.jpeg"></div>
                     <div class="col-xs-4 col-sm-4 col-md-4 col-lg-4"><img src="../rsrc/img/friends/cat9.jpeg"></div>
                 </div> -->
-	        </div> <!-- ********************** end friends ********************** -->
+            </div> <!-- ********************** end friends ********************** -->
 
             <!-- ********************** left footer ********************** -->
-	        <div class="left__footer">
-	        	<footer>
-	                <ul class="">
-		                <li class="footer__links"><a href="">Privacy</a></li>   
-		                <li class="footer__links"><a href="">Terms</a></li>
-		                <li class="footer__links"><a href="">Advertising</a></li>
-		                <li class="footer__links"><a href="">Ad Choices</a></li>
-		                <li class="footer__cookies"><a href="">Cookies</a></li>
-		                <li class="footer__more"><a href="">More</a></li>
-		                <li class="footer__copyright"><a href="">Facebook &copy 2017</a></li>
-	                </ul>
-	        	</footer>
-	        </div> <!-- ********************** left footer ********************** -->
-	    </div> <!-- end left column -->
+            <div class="left__footer">
+                <footer>
+                    <ul class="">
+                        <li class="footer__links"><a href="">Privacy</a></li>   
+                        <li class="footer__links"><a href="">Terms</a></li>
+                        <li class="footer__links"><a href="">Advertising</a></li>
+                        <li class="footer__links"><a href="">Ad Choices</a></li>
+                        <li class="footer__cookies"><a href="">Cookies</a></li>
+                        <li class="footer__more"><a href="">More</a></li>
+                        <li class="footer__copyright"><a href="">Facebook &copy 2017</a></li>
+                    </ul>
+                </footer>
+            </div> <!-- ********************** left footer ********************** -->
+        </div> <!-- end left column -->
 
         <!-- ********************** middle: post panel ********************** -->
-	    <div class="content__middle col-md-6">
-	    	<div class="middle__timeline">
-	    		<ul class="row">
+        <div class="content__middle col-md-6">
+            <div class="middle__timeline">
+                <ul class="row">
                     <li class="col-xs-3 col-sm-3 col-md-3 col-lg-3">
                         <a href="#" class="active">
                             <i class="fa fa-calendar-check-o timeline__icon"></i>
@@ -323,10 +349,10 @@ $profile_pic = "../rsrc/img/photos/default-profile.png";
                         </a>
                     </li>
                 </ul>
-	    	</div>
+            </div>
             
-	    	<div class="middle__status">
-	    		<ul class="row">
+            <div class="middle__status">
+                <ul class="row">
                     <li class="col-xs-3 col-sm-3 col-md-3 col-lg-3 status--text">
                         <i class="fa fa-pencil"></i>
                         Status
@@ -445,10 +471,10 @@ $profile_pic = "../rsrc/img/photos/default-profile.png";
                 </div>
             </div> -->
 
-	    </div> <!-- end middle column -->
+        </div> <!-- end middle column -->
 
 
-	    <div class="content__right col-md-2">
+        <div class="content__right col-md-2">
         <!-- ********************** right: online contacts bar ********************** -->
             <div class="right__contacts">
                 <?php
@@ -467,9 +493,9 @@ $profile_pic = "../rsrc/img/photos/default-profile.png";
 
 
                 <a href="#" class="contacts__setting"><i class="fa fa-cog"></i></a>
-	    	</div> <!-- ********************** end online contacts bar ********************** -->
+            </div> <!-- ********************** end online contacts bar ********************** -->
 
-	    </div> <!-- end right column -->
+        </div> <!-- end right column -->
 
     </div>
 

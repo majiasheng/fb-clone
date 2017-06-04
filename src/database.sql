@@ -14,6 +14,21 @@ CREATE TABLE users (
     PRIMARY KEY(id)
 );
 
+-- about page
+CREATE TABLE info (
+    id              INTEGER     NOT NULL AUTO_INCREMENT,
+    email           VARCHAR(50) NOT NULL UNIQUE,
+    workspace       VARCHAR(50),
+    education       VARCHAR(50),
+    current_city    VARCHAR(50),
+    hometown        VARCHAR(50),
+    relationship    VARCHAR(50),
+
+    PRIMARY KEY(id, email),
+    FOREIGN KEY(email) REFERENCES users (email)
+
+);
+
 CREATE TABLE posts (
 	id              INTEGER     NOT NULL AUTO_INCREMENT,
     author_email    VARCHAR(50) NOT NULL,

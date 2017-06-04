@@ -16,12 +16,7 @@ class User {
     private $profile_picture;
     // post 
     private $posts = array();
-    // about 
-    private $education = array();
-    private $workspace = array();
-    private $current_city;
-    private $relationship;
-    private $hometown;
+
 
 	// setters
 	function set_first_name($arg) {
@@ -51,27 +46,13 @@ class User {
     function addPost($arg) {
         $posts[] = $arg;
     }
-    function setCoverPhoto($arg) {
+    function set_cover_photo($arg) {
         $this->cover_photo = $arg;
     }
-    function setProfilePicture($arg) {
+    function set_profile_picture($arg) {
         $this->profile_picture = $arg;
     }
-    function setEducation($arg) {
-    	$education[] = $arg;
-    }
-    function setWorkspace($arg) {
-    	$workspace[] = $arg;
-    }
-    function setCurrentCity($arg) {
-    	$this->current_city = $arg;
-    }
-    function setRelationship($arg) {
-    	$this->relationship = $arg;
-    }
-    function setHometown($arg) {
-    	$this->hometown = $arg;
-    }
+
 
 	// getters
 	function get_first_name() {
@@ -101,28 +82,13 @@ class User {
     function getPosts() {
         return $this->$posts;
     }
-    function getCoverPhoto() {
+    function get_cover_photo() {
         return $this->cover_photo;
     }
-    function getProfilePicture() {
+    function get_profile_picture() {
         return $this->profile_picture;
     }
-    function getEducation() {
-    	return $this->education;
-    }
-    function getWorkspace() {
-    	return $this->workspace;
-    }
-    function getCurrentCity() {
-    	return $this->current_city;
-    }
-    function getRelationship() {
-    	return $this->relationship;
-    }
-    function getHometown() {
-    	return $this->hometown;
-    }
-
+ 
 
 }
 
