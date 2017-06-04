@@ -4,7 +4,7 @@
 require_once("../src/constants.php");
 require_once("../src/user.php");
 require_once("../src/Post.php");
-
+require_once("../src/info.php");
 /**
  * Establishes connection with db
  */
@@ -113,6 +113,18 @@ function loadUser($user_email, $password, $pdo) {
     }
 }
 
+function load_user_info($user_email) {
+	// $query = "SELECT * FROM " . INFO_TABLE .
+	// 			"WHERE email = :email";
+	// $stmt = $pdo->prepare($query);
+	// $stmt->execute(['email' => $user_email]);
+
+	$info = new Info;
+	$info->set_current_city("new york");
+	return $info;
+
+}
+
 function savePostToDB($user_email, $pdo, $post) {
     //TODO: insert post to db
     $query = "INSERT INTO " . POSTS_TABLE 
@@ -121,6 +133,8 @@ function savePostToDB($user_email, $pdo, $post) {
     $stmt = $pdo->prepare($query);
     return $stmt->execute(['email' => $user_email, 'content' => $post]);
 }
+
+
 
 function loadPosts($user_email, $pdo) {
     //TODO: need to join comments with posts later

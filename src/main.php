@@ -10,8 +10,7 @@ if ($_SESSION['loggedin'] !== TRUE) {
    header("Location: index.php");
 }
 $user = $_SESSION['user'];
-$info = $_SESSION['info'];
-
+$info = $_SESSION['user_info'];
 $pdo = connect();
 
 // if a form is sent to self, handle it
@@ -25,8 +24,6 @@ if(isset($_POST) && isset($_POST['post_content']) && ("" != trim($_POST['post_co
     header('Location:' . $_SERVER['PHP_SELF']);
 
 }
-
-
 
 // default profile picture
 $profile_pic = "../rsrc/img/photos/default-profile.png";
@@ -141,22 +138,29 @@ $profile_pic = "../rsrc/img/photos/default-profile.png";
                         <p class="modal__page--titles">Workspace</p>
                 <!-- echo all workplaces and schools-->
                         <?php
-                        if(!empty($user->get_workspace())) {
-                            foreach($user->get_workspace() as $workspace) {
+                        if(!empty($info->get_workspace())) {
+                            foreach($info->get_workspace() as $workspace) {
                                 echo '<p class="modal__page--add">'. $workspace .'</p>';
                             }
                         } 
                         ?>
                         <p class="modal__page--add" onclick="show_modal_input1()">Add workspace</p>
+                        <form method="POST" action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]);?>">
                         <div id="modal__page--input1">
-                            <input type="text" class="modal__page--text">
-                            <button type="submit" class="btn btn-primary modal__page--btn">Save</button>
-                            <button type="cancel" class="btn btn-secondary modal__page--btn" onclick="close_modal_input1()">Cancel</button>
+                            <input type="text" name="input_workspace" class="modal__page--text">
+                            <button type="submit" name="input_save" class="btn btn-primary modal__page--btn">Save</button>
+                            <button type="cancel"class="btn btn-secondary modal__page--btn" onclick="close_modal_input1()">Cancel</button>
                         </div>
+                        </form>
+
+
+
+
+
                         <p class="modal__page--titles">Education</p>
                         <?php
-                        if(!empty($user->get_education())) {
-                            foreach($user->get_education() as $education) {
+                        if(!empty($info->get_education())) {
+                            foreach($info->get_education() as $education) {
                                 echo '<p class="modal__page--add">'. $education .'</p>';
                             }   
                         } 
@@ -170,10 +174,10 @@ $profile_pic = "../rsrc/img/photos/default-profile.png";
                 <!-- echo current city, hometown, and relationship -->
                         <p class="modal__page--titles">Current City</p>
                         <?php
-                        if(empty($user->get_current_city())) {
+                        if(empty($info->get_current_city())) {
                             echo '<p class="modal__page--add" onclick="show_modal_input3()">Add current city</p>';
                         } else {
-                            echo '<p class="modal__page--add">' . $user->get_current_city() . '</p>';
+                            echo '<p class="modal__page--add">' . $info->get_current_city() . '</p>';
                         }
                         ?>
                         <div id="modal__page--input3">
@@ -183,10 +187,10 @@ $profile_pic = "../rsrc/img/photos/default-profile.png";
                         </div>
                         <p class="modal__page--titles">Hometown</p>
                         <?php
-                        if(empty($user->get_hometown())) {
+                        if(empty($info->get_hometown())) {
                             echo '<p class="modal__page--add" onclick="show_modal_input4()">Add hometown</p>';
                         } else {
-                            echo '<p class="modal__page--add">' . $user->get_hometown() . '</p>';
+                            echo '<p class="modal__page--add">' . $info->get_hometown() . '</p>';
                         }
                         ?>
                         <div id="modal__page--input4">
@@ -196,10 +200,10 @@ $profile_pic = "../rsrc/img/photos/default-profile.png";
                         </div>
                         <p class="modal__page--titles">Relationship</p>
                         <?php
-                        if(empty($user->get_relationship())) {
+                        if(empty($info->get_relationship())) {
                             echo '<p class="modal__page--add" onclick="show_modal_input5()">Add relationship</p>';
                         } else {
-                            echo '<p class="modal__page--add">' . $user->get_relationship() . '</p>';
+                            echo '<p class="modal__page--add">' . $info->get_relationship() . '</p>';
                         }
                         ?>
                         <div id="modal__page--input5">

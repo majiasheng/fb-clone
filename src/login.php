@@ -32,6 +32,8 @@ if(is_null($user)) {
     $_SESSION['loggedin'] = True;
     $_SESSION['user_email'] = $user_email;
     $_SESSION['user'] = $user;
+    $info = load_user_info($user_email);    // load user info
+    $_SESSION['user_info'] = $info;
     header("Location: main.php");
 }
 ?>
