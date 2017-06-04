@@ -100,9 +100,9 @@ function loadUser($user_email, $password, $pdo) {
     // $stmt->bindParam(':email', $user_email);
     // $stmt->execute(['email' => $user_email, 'password' => $password]);
     $stmt->execute(['email' => $user_email]);
-    $res = $stmt->fetch(PDO::FETCH_ASSOC);
+    $user_data = $stmt->fetch(PDO::FETCH_ASSOC);
 
-    if( password_verify($password, $res['PASSWORD']) ){
+    if( password_verify($password, $user_data['password']) ){
     	$user = new User;
         $user->set_first_name($user_data['first_name']);
         $user->set_last_name($user_data['last_name']);

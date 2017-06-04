@@ -132,11 +132,6 @@ $profile_pic = "../rsrc/img/photos/default-profile.png";
 	    		<div class="cover__update-info cover__update-info--decor" id="update-info-btn" onclick="show_update_info_page()">update info</div>
 	    		<div class="cover__view-at cover__update-info--decor">view activity</div>
 
-                <div>
-                    <li><a href="logout.php">Log Out</a></li>
-                </div>
-
-
 	    	</div>
             <!-- update info page -->
             <div id="update-info-page" class="update-info__modal">
