@@ -116,23 +116,7 @@ function loadUser($user_email, $password, $pdo) {
     } else {
     	return NULL;
     }
-
-
-
-    // if(!($user_data = $stmt->fetch(PDO::FETCH_ASSOC))) {
-    //     return NULL;
-    // } else {
-    //     $user = new User;
-    //     $user->set_first_name($user_data['first_name']);
-    //     $user->set_last_name($user_data['last_name']);
-    //     $user->set_email($user_data['email']);
-    //     $user->set_password($user_data['password']);
-    //     $user->set_birth_month($user_data['birth_month']);
-    //     $user->set_birth_day($user_data['birth_day']);
-    //     $user->set_birth_year($user_data['birth_year']);
-    //     $user->set_gender($user_data['gender']);
-    //     return $user;
-    // }
+   
 }
 
 function savePostToDB($user_email, $pdo, $post) {

@@ -25,6 +25,8 @@ if(isset($_POST) && isset($_POST['post_content']) && ("" != trim($_POST['post_co
 
 }
 
+// if(isset($_POST) && isset($_POST['comment_content']) && ("" != trim($)))
+
 
 
 // default profile picture
@@ -380,13 +382,26 @@ $profile_pic = "../rsrc/img/photos/default-profile.png";
                     echo '<div class="post__content"> <p class="post__content__p">';
                     echo $p->getContent() . "<br></p></div>";
 
+                    echo ' <div class="comment_content"></div><br>';
+
                     // footer/actions: like, comment, share
+
                     echo '<div class="post__actions">
                     <div class="actions--setting actions--decor"><i class="fa fa-thumbs-up"></i></div>
                     <div class="actions--setting actions--decor"><i class="fa fa-share"></i></div>
                     <div class="actions--setting actions--decor actions__comment"></div>
-                    <div class="actions--setting actions--decor actions__comment"><i class="fa fa-comment"></i></div>
-                    </div> ';
+                    <div class="actions--setting actions--decor actions__comment">      
+                    <a href="javascript:void(0)">
+                    <i class="fa fa-comment" onclick="popout()"></i></a> </div>
+                    </div> <br><br>';
+
+                    
+                    // echo '<div class="post__actions">
+                    // <div class="actions--setting actions--decor"><i class="fa fa-thumbs-up"></i></div>
+                    // <div class="actions--setting actions--decor"><i class="fa fa-share"></i></div>
+                    // <div class="actions--setting actions--decor actions__comment"></div>
+                    // <div class="actions--setting actions--decor actions__comment"><i class="fa fa-comment"></i></div>
+                    // </div> ';
 
                 }
                 //TODO: load comments, likes, shares
