@@ -87,6 +87,26 @@ function save_user_to_db($user, $pdo) {
 
 }
 
+function save_info_to_db($user_email, $user_info, $pdo) {
+	$query = "";
+	$query .= "INSERT INTO " . INFO_TABLE . " (";
+	// fields of user class
+	$query .= "email, workspace, education, current_city, ";
+	$query .= "hometown, relationship";
+	$query .= ") VALUES (";
+
+	$query .= ( 
+				"'" . $info->get_email() 			. "'," .
+				"'" . $info->get_workspace() 		. "'," .
+				"'" . $info->get_education() 		. "'," .
+				"'" . $info->get_current_city() 	. "'," .
+				"'" . $info->get_hometown()			. "'," .
+				"'" . $info->get_relationship() 	. "'" );
+	$query .= ");";
+
+	return $pdo->query($query);
+}
+
 /**
  * Retrieves user info from database whose email is $user_email
  */
@@ -113,15 +133,32 @@ function loadUser($user_email, $password, $pdo) {
     }
 }
 
-function load_user_info($user_email) {
-	// $query = "SELECT * FROM " . INFO_TABLE .
-	// 			"WHERE email = :email";
-	// $stmt = $pdo->prepare($query);
-	// $stmt->execute(['email' => $user_email]);
+function load_user_info($user_email, $pdo) {
+	$query = "SELECT * FROM " . INFO_TABLE .
+				" WHERE email = :email;";
+	$stmt = $pdo->prepare($query);
+	$stmt->execute(['email' => $user_email]);
 
 	$info = new Info;
-	$info->set_current_city("new york");
-	return $info;
+	if(!($user_info = $stmt->fetch(PDO::FETCH_ASSOC))) {
+        $info = new Info;
+        $info->set_email($user_email);
+        $info->set_education("");
+        $info->set_workspace("");
+        $info->set_current_city("new york");
+        $info->set_relationship("");
+        $info->set_hometown("");
+        return $info;
+    } else {
+        $info = new Info;
+        $info->set_email($user_email);
+        $info->set_education($user_info['education']);
+        $info->set_workspace($user_info['workspace']);
+        $info->set_current_city($user_info['current_city']);
+        $info->set_relationship($user_info['relationship']);
+        $info->set_hometown($user_info['hometown']);
+        return $info;
+    }
 
 }
 
@@ -164,6 +201,7 @@ function loadPosts($user_email, $pdo) {
     return $post_objs;
 
 }
+
 //TODO: function that adds friend to record
 //TODO: function that removes friend from record
 

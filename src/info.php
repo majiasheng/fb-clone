@@ -1,12 +1,17 @@
 <!-- author_email: Melanie Lin-->
 <?php
 class Info {
+    private $email;
     private $education = array();
     private $workspace = array();
     private $current_city;
     private $relationship;
     private $hometown;
 
+
+    function set_email($arg) {
+        $this->email = $arg;
+    }
     function set_education($arg) {
         $education[] = $arg;
     }
@@ -23,6 +28,9 @@ class Info {
         $this->hometown = $arg;
     }
 
+    function get_email() {
+        return $this->email;
+    }
     function get_education() {
         return $this->education;
     }

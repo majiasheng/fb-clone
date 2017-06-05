@@ -12,8 +12,8 @@ if ($_SESSION['loggedin'] !== TRUE) {
 $user = $_SESSION['user'];
 $info = $_SESSION['user_info'];
 $pdo = connect();
-
 // if a form is sent to self, handle it
+
 if(isset($_POST) && isset($_POST['post_content']) && ("" != trim($_POST['post_content']))) {
     
     if(!savePostToDB($user->get_email(), $pdo, $_POST['post_content'])) {
@@ -22,7 +22,6 @@ if(isset($_POST) && isset($_POST['post_content']) && ("" != trim($_POST['post_co
     // prevent resubmission of POST
     unset($_POST);
     header('Location:' . $_SERVER['PHP_SELF']);
-
 }
 
 // default profile picture
