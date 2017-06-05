@@ -4,6 +4,7 @@
 require_once("../src/constants.php");
 require_once("../src/user.php");
 require_once("../src/Post.php");
+require_once("../src/comments.php");
 
 /**
  * Establishes connection with db
@@ -126,7 +127,7 @@ function saveCommentToDB($author, $post_id, $pdo, $comment){
     . "VALUES (:post__id, :author, :comment_content)";
     $stmt = $pdo->prepare($query);
     return $stmt->execute(['post__id' => $post_id, 'author' => $author, 'comment_content' => $comment]);
-    
+
 }
 
 
@@ -166,8 +167,33 @@ function loadPosts($user_email, $pdo) {
         array_push($post_objs, $p);
     }
     return $post_objs;
-
 }
+
+function load_comments($post_id, $pdo){
+    echo gettype($post_id);
+    echo $post_id;
+    $query = "SELECT author, comment_time, comment_content from " . COMMENTS_TABLE 
+    . " WHERE post_id = :post_id";
+    $stmt = $pdo->prepare($query);
+    $stmt->execute(['post_id' => $post_id]);
+
+    $comment_array = array();
+    $comments = $stmt->fetchAll(PDO::FETCH_ASSOC);
+
+    foreach($comments as $c){
+        $comment = new Comment;
+        $comment->setPostId($post_id);
+        $comment->setAuthor($c['author']);
+        $comment->setCommentContent($c['comment_content']);
+        $comment->setCommentTime($c['comment_time']);
+
+        array_push($comment_array, $comment);
+    }
+
+    return $comment_array;
+}
+
+
 //TODO: function that adds friend to record
 //TODO: function that removes friend from record
 

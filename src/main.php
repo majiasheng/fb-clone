@@ -397,7 +397,13 @@ $profile_pic = "../rsrc/img/photos/default-profile.png";
                     echo '<div class="post__content"> <p class="post__content__p">';
                     echo $p->getContent() . "<br></p></div>";
 
-                    echo ' <div class="comment_content"></div><br>';
+                    $comments = load_comments($p->getPostID(), $pdo);
+                    var_dump($comments);
+
+
+
+                    //comment content
+                    echo ' <div class="comment_content"> </div><br>';
 
                     // footer/actions: like, comment, share
 
