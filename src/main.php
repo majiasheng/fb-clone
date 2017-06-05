@@ -14,7 +14,9 @@ $info = $_SESSION['user_info'];
 $pdo = connect();
 
 // if a form is sent to self, handle it
-if($_SERVER["REQUEST_METHOD"] == "POST") {
+if (isset($_POST) && (isset($_POST["workspace"]) || isset($_POST["education"]) || isset($_POST["current_city"]) ||
+    isset($_POST["hometown"]) || isset($_POST["relationship"]))) {
+// if($_SERVER["REQUEST_METHOD"] == "POST") {
     if (isset($_POST["workspace"]))
         $info->set_workspace($_POST["workspace"]);
     else if (isset($_POST["education"]))
@@ -166,7 +168,6 @@ $profile_pic = "../rsrc/img/photos/default-profile.png";
             <!-- update info page -->
             <div id="update-info-page" class="update-info__modal">
                   <!-- page content -->
-                  <!-- <form method="POST" action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]);?>"> -->
                   <div class="modal__page">
                         <span onclick="close_update_info_page()" class="modal__page-close">&times;</span>
                         <p class="modal__page--titles">Workspace</p>
@@ -174,20 +175,17 @@ $profile_pic = "../rsrc/img/photos/default-profile.png";
                         <?php
                         if(!empty($info->get_workspace())) {
                             // foreach($info->get_workspace() as $workspace) {
-                                echo '<p class="modal__page--add" onclick="show_modal_input1()">'. $info->get_workspace() .'</p>';
+                            echo '<p class="modal__page--add" onclick="show_modal_input1()">'. $info->get_workspace() .'</p>';
                             // }
                         } else {
                             echo '<p class="modal__page--add" onclick="show_modal_input1()">Add workspace</p>';
                         }
                         ?>
-                        
-                        <!-- <div id="modal__page--input1"> -->
                         <form method="POST" action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]);?>" id="modal__page--input1">
                             <input type="text" name="workspace" class="modal__page--text">
                             <button type="submit" name="input_save" class="btn btn-primary modal__page--btn">Save</button>
                             <button type="button"class="btn btn-secondary modal__page--btn" onclick="close_modal_input1()">Cancel</button>
                         </form>
-                        <!-- </div> -->
 
                         <p class="modal__page--titles">Education</p>
                         <?php
@@ -210,7 +208,7 @@ $profile_pic = "../rsrc/img/photos/default-profile.png";
                         if(empty($info->get_current_city())) {
                             echo '<p class="modal__page--add" onclick="show_modal_input3()">Add current city</p>';
                         } else {
-                            echo '<p class="modal__page--add onclick="show_modal_input3()"">' . $info->get_current_city() . '</p>';
+                            echo '<p class="modal__page--add" onclick="show_modal_input3()">' . $info->get_current_city() . '</p>';
                         }
                         ?>
                         <form method="POST" action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]);?>" id="modal__page--input3">
@@ -275,7 +273,7 @@ $profile_pic = "../rsrc/img/photos/default-profile.png";
                     //TODO: load state-country
                     ?>
                 </p>
-                <button class="intro__update-btn--font intro__update-btn--bg">update info</button>
+                <button class="intro__update-btn--font intro__update-btn--bg" onclick="show_update_info_page()">update info</button>
             </div>
 
             <!-- ********************** left: photos ********************** -->
@@ -443,7 +441,7 @@ $profile_pic = "../rsrc/img/photos/default-profile.png";
                     echo '<div class="post__content"> <p class="post__content__p">';
                     echo $p->getContent() . "<br></p></div>";
 
-                    $comments = load_comments($p->getPostID(), $pdo);
+                    // $comments = load_comments($p->getPostID(), $pdo);
 
 
 
