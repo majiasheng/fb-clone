@@ -142,8 +142,8 @@ function savePostToDB($user_email, $pdo, $post) {
 function loadPosts($user_email, $pdo) {
     //TODO: need to join comments with posts later
 
-    $query = "SELECT id, content, post_time, edit_time from " . POSTS_TABLE 
-            . " WHERE author_email = :email";
+    $query = "SELECT content, post_time, edit_time from " . POSTS_TABLE 
+            . " WHERE author_email = :email order by post_time DESC";
     $stmt = $pdo->prepare($query);
     $stmt->execute(['email' => $user_email]);
 

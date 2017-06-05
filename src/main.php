@@ -102,10 +102,12 @@ $profile_pic = "../rsrc/img/photos/default-profile.png";
 		  		<!-- search bar -->
 		  		<div class="col-md-4 col-sm-12">
 	                <li class="navbar__form">
-			  			<form class="navbar__search-form form-inline" role="search">
+			  			<form class="navbar__search-form form-inline" role="search" action="search.php" method="GET">
 			 				<!-- <div class="navbar__search-container form-group"> -->
-			  					<input type="text" class="navbar__search-input form-control" placeholder="Search">
-			  					<a href="#" class="linka"><i class="fa fa-search"></i></a>
+			  					<input type="text" name="search" class="navbar__search-input form-control" placeholder="Search">
+                                <!--TODO: send a GET request to search.php -->
+                                  <!-- <a href=# class="linka"><i class="fa fa-search"></i></a> -->
+                                <input type="submit" value="Q" class="fa fa-search">
 				  			<!-- </div> -->
 						</form>
 					</li>
