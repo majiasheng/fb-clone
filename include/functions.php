@@ -118,20 +118,15 @@ function loadUser($user_email, $password, $pdo) {
 }
 
 function saveCommentToDB($author, $post_id, $pdo, $comment){
-       //Insert into comments (post_id, author, comment_content) VALUES (3, "ab", "hi, there") ;
 
-    // var_dump($comment);
-    // var_dump($author);
     $post_id = (int)$post_id;
-    echo gettype($post_id), "\n";
 
-    $query = "INSERT INTO" . COMMENTS_TABLE
-    ."(post_id, author, comment_content)"
-    ."VALUES (:post_id, :author, :comment_content)";
+    $query = "INSERT INTO " . COMMENTS_TABLE 
+    . "(post_id, author, comment_content) "
+    . "VALUES (:post__id, :author, :comment_content)";
     $stmt = $pdo->prepare($query);
-    $res =  $stmt->execute(['post_id' => $post_id, 'author' => $author, 'comment_content' => $comment]);
-
-    // return $res;
+    return $stmt->execute(['post__id' => $post_id, 'author' => $author, 'comment_content' => $comment]);
+    
 }
 
 

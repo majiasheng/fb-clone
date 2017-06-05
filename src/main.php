@@ -33,7 +33,10 @@ if(isset($_POST) && isset($_POST['post_comment_content'])) {
         echo "Error occurred while commenting <br>";
     }
 
+    // unset($_POST['post_comment_content']);
+    // unset($_POST['post__id']);
     unset($_POST);
+    header('Location' . $_SERVER['PHP_SELF']);
 
 }
 
