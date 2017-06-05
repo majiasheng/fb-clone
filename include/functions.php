@@ -105,8 +105,14 @@ function save_info_to_db($user_email, $info, $pdo) {
 				"'" . $info->get_hometown()			. "'," .
 				"'" . $info->get_relationship() 	. "'" );
 	$query .= ") ";
-	$query .= "ON DUPLICATE KEY UPDATE email = '" . $info->get_email() . "';";
-
+	$query .= (
+                "ON DUPLICATE KEY UPDATE " . 
+                "workspace = '" . $info->get_workspace() . "', " .
+                "education = '" . $info->get_education() . "', " .
+                "current_city = '" . $info->get_current_city() . "', " .
+                "hometown = '" . $info->get_hometown() . "', " .
+                "relationship = '" . $info->get_relationship() . "';" );
+    
 	return $pdo->query($query);
 }
 

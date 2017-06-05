@@ -12,14 +12,19 @@ if ($_SESSION['loggedin'] !== TRUE) {
 $user = $_SESSION['user'];
 $info = $_SESSION['user_info'];
 $pdo = connect();
+
 // if a form is sent to self, handle it
 if($_SERVER["REQUEST_METHOD"] == "POST") {
-    //TODO: isset()
-    $info->set_workspace($_POST["workspace"]);
-    $info->set_education($_POST["education"]);
-    $info->set_current_city($_POST["current_city"]);
-    $info->set_hometown($_POST["hometown"]);
-    $info->set_relationship($_POST["relationship"]);
+    if (isset($_POST["workspace"]))
+        $info->set_workspace($_POST["workspace"]);
+    else if (isset($_POST["education"]))
+        $info->set_education($_POST["education"]);
+    else if (isset($_POST["current_city"]))
+        $info->set_current_city($_POST["current_city"]);
+    else if (isset($_POST["hometown"]))
+        $info->set_hometown($_POST["hometown"]);
+    else if (isset($_POST["relationship"]))
+        $info->set_relationship($_POST["relationship"]);
     save_info_to_db($user->get_email(), $info, $pdo);
 }
 
@@ -161,7 +166,7 @@ $profile_pic = "../rsrc/img/photos/default-profile.png";
             <!-- update info page -->
             <div id="update-info-page" class="update-info__modal">
                   <!-- page content -->
-                  <form method="POST" action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]);?>">
+                  <!-- <form method="POST" action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]);?>"> -->
                   <div class="modal__page">
                         <button type="submit" class="modal__page-close"><span onclick="close_update_info_page()">&times;</span></button>
                         <p class="modal__page--titles">Workspace</p>
@@ -174,14 +179,13 @@ $profile_pic = "../rsrc/img/photos/default-profile.png";
                         } 
                         ?>
                         <p class="modal__page--add" onclick="show_modal_input1()">Add workspace</p>
-                        <div id="modal__page--input1">
-                        <!-- <form method="POST" action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]);?>" id="modal__page--input1"> -->
+                        <!-- <div id="modal__page--input1"> -->
+                        <form method="POST" action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]);?>" id="modal__page--input1">
                             <input type="text" name="workspace" class="modal__page--text">
-                            <button type="button" name="input_save" class="btn btn-primary modal__page--btn">Save</button>
+                            <button type="submit" name="input_save" class="btn btn-primary modal__page--btn">Save</button>
                             <button type="cancel"class="btn btn-secondary modal__page--btn" onclick="close_modal_input1()">Cancel</button>
-                        <!-- </form> -->
-                        </div>
-
+                        </form>
+                        <!-- </div> -->
 
                         <p class="modal__page--titles">Education</p>
                         <?php
@@ -192,13 +196,13 @@ $profile_pic = "../rsrc/img/photos/default-profile.png";
                         } 
                         ?>
                         <p class="modal__page--add" onclick="show_modal_input2()">Add education</p>
-                        <div id="modal__page--input2">
-                        <!-- <form method="POST" action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]);?>" id="modal__page--input2"> -->
+                        <!-- <div id="modal__page--input2"> -->
+                        <form method="POST" action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]);?>" id="modal__page--input2">
                             <input type="text" name="education" class="modal__page--text">
                             <button type="submit" class="btn btn-primary modal__page--btn">Save</button>
                             <button type="cancel" class="btn btn-secondary modal__page--btn" onclick="close_modal_input2()">Cancel</button>
-                        <!-- </form> -->
-                        </div>
+                        </form>
+                        <!-- </div> -->
                 <!-- echo current city, hometown, and relationship -->
                         <p class="modal__page--titles">Current City</p>
                         <?php
@@ -208,13 +212,13 @@ $profile_pic = "../rsrc/img/photos/default-profile.png";
                             echo '<p class="modal__page--add">' . $info->get_current_city() . '</p>';
                         }
                         ?>
-                        <div id="modal__page--input3">
-                        <!-- <form method="POST" action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]);?>" id="modal__page--input3"> -->
+                        <!-- <div id="modal__page--input3"> -->
+                        <form method="POST" action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]);?>" id="modal__page--input3">
                             <input type="text" name="current_city" class="modal__page--text">
                             <button type="submit" class="btn btn-primary modal__page--btn">Save</button>
                             <button type="cancel" class="btn btn-secondary modal__page--btn" onclick="close_modal_input3()">Cancel</button>
-                        <!-- </form> -->
-                        </div>
+                        </form>
+                        <!-- </div> -->
                         <p class="modal__page--titles">Hometown</p>
                         <?php
                         if(empty($info->get_hometown())) {
@@ -223,13 +227,13 @@ $profile_pic = "../rsrc/img/photos/default-profile.png";
                             echo '<p class="modal__page--add">' . $info->get_hometown() . '</p>';
                         }
                         ?>
-                        <div id="modal__page--input4">
-                        <!-- <form method="POST" action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]);?>" id="modal__page--input4"> -->
+                        <!-- <div id="modal__page--input4"> -->
+                        <form method="POST" action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]);?>" id="modal__page--input4">
                             <input type="text" name="hometown" class="modal__page--text">
                             <button type="submit" class="btn btn-primary modal__page--btn">Save</button>
                             <button type="cancel" class="btn btn-secondary modal__page--btn" onclick="close_modal_input4()">Cancel</button>
-                        <!-- </form> -->
-                        </div>
+                        </form>
+                        <!-- </div> -->
                         <p class="modal__page--titles">Relationship</p>
                         <?php
                         if(empty($info->get_relationship())) {
@@ -238,17 +242,17 @@ $profile_pic = "../rsrc/img/photos/default-profile.png";
                             echo '<p class="modal__page--add">' . $info->get_relationship() . '</p>';
                         }
                         ?>
-                        <div id="modal__page--input5">
-                        <!-- <form method="POST" action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]);?>" id="modal__page--input5"> -->
+                        <!-- <div id="modal__page--input5"> -->
+                        <form method="POST" action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]);?>" id="modal__page--input5">
                             <input type="text" name="relationship" class="modal__page--text">
                             <button type="submit" class="btn btn-primary modal__page--btn">Save</button>
                             <button type="cancel" class="btn btn-secondary modal__page--btn" onclick="close_modal_input5()">Cancel</button>
-                        <!-- </form> -->
-                        </div>
+                        </form>
+                        <!-- </div> -->
                         <p class="modal__page--titles">About Info</p>
                         <p class="modal__page--add">Edit Your About Info</p>
                   </div>
-              </form>
+              <!-- </form> -->
             </div>
     </div>
     </div>
