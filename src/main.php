@@ -12,14 +12,19 @@ if ($_SESSION['loggedin'] !== TRUE) {
 $user = $_SESSION['user'];
 $info = $_SESSION['user_info'];
 $pdo = connect();
+
 // if a form is sent to self, handle it
 if($_SERVER["REQUEST_METHOD"] == "POST") {
-    //TODO: isset()
-    $info->set_workspace($_POST["workspace"]);
-    $info->set_education($_POST["education"]);
-    $info->set_current_city($_POST["current_city"]);
-    $info->set_hometown($_POST["hometown"]);
-    $info->set_relationship($_POST["relationship"]);
+    if (isset($_POST["workspace"]))
+        $info->set_workspace($_POST["workspace"]);
+    else if (isset($_POST["education"]))
+        $info->set_education($_POST["education"]);
+    else if (isset($_POST["current_city"]))
+        $info->set_current_city($_POST["current_city"]);
+    else if (isset($_POST["hometown"]))
+        $info->set_hometown($_POST["hometown"]);
+    else if (isset($_POST["relationship"]))
+        $info->set_relationship($_POST["relationship"]);
     save_info_to_db($user->get_email(), $info, $pdo);
 }
 
@@ -161,94 +166,88 @@ $profile_pic = "../rsrc/img/photos/default-profile.png";
             <!-- update info page -->
             <div id="update-info-page" class="update-info__modal">
                   <!-- page content -->
-                  <form method="POST" action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]);?>">
+                  <!-- <form method="POST" action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]);?>"> -->
                   <div class="modal__page">
-                        <button type="submit" class="modal__page-close"><span onclick="close_update_info_page()">&times;</span></button>
+                        <span onclick="close_update_info_page()" class="modal__page-close">&times;</span>
                         <p class="modal__page--titles">Workspace</p>
                 <!-- echo all workplaces and schools-->
                         <?php
                         if(!empty($info->get_workspace())) {
                             // foreach($info->get_workspace() as $workspace) {
-                                echo '<p class="modal__page--add">'. $info->get_workspace() .'</p>';
+                                echo '<p class="modal__page--add" onclick="show_modal_input1()">'. $info->get_workspace() .'</p>';
                             // }
-                        } 
+                        } else {
+                            echo '<p class="modal__page--add" onclick="show_modal_input1()">Add workspace</p>';
+                        }
                         ?>
-                        <p class="modal__page--add" onclick="show_modal_input1()">Add workspace</p>
-                        <div id="modal__page--input1">
-                        <!-- <form method="POST" action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]);?>" id="modal__page--input1"> -->
+                        
+                        <!-- <div id="modal__page--input1"> -->
+                        <form method="POST" action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]);?>" id="modal__page--input1">
                             <input type="text" name="workspace" class="modal__page--text">
-                            <button type="button" name="input_save" class="btn btn-primary modal__page--btn">Save</button>
-                            <button type="cancel"class="btn btn-secondary modal__page--btn" onclick="close_modal_input1()">Cancel</button>
-                        <!-- </form> -->
-                        </div>
-
+                            <button type="submit" name="input_save" class="btn btn-primary modal__page--btn">Save</button>
+                            <button type="button"class="btn btn-secondary modal__page--btn" onclick="close_modal_input1()">Cancel</button>
+                        </form>
+                        <!-- </div> -->
 
                         <p class="modal__page--titles">Education</p>
                         <?php
                         if(!empty($info->get_education())) {
                             // foreach($info->get_education() as $education) {
-                                echo '<p class="modal__page--add">'. $info->get_education() .'</p>';
+                                echo '<p class="modal__page--add" onclick="show_modal_input2()">'. $info->get_education() .'</p>';
                             // }   
-                        } 
+                        } else {
+                            echo '<p class="modal__page--add" onclick="show_modal_input2()">Add education</p>';
+                        }
                         ?>
-                        <p class="modal__page--add" onclick="show_modal_input2()">Add education</p>
-                        <div id="modal__page--input2">
-                        <!-- <form method="POST" action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]);?>" id="modal__page--input2"> -->
+                        <form method="POST" action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]);?>" id="modal__page--input2">
                             <input type="text" name="education" class="modal__page--text">
                             <button type="submit" class="btn btn-primary modal__page--btn">Save</button>
-                            <button type="cancel" class="btn btn-secondary modal__page--btn" onclick="close_modal_input2()">Cancel</button>
-                        <!-- </form> -->
-                        </div>
+                            <button type="button" class="btn btn-secondary modal__page--btn" onclick="close_modal_input2()">Cancel</button>
+                        </form>
                 <!-- echo current city, hometown, and relationship -->
                         <p class="modal__page--titles">Current City</p>
                         <?php
                         if(empty($info->get_current_city())) {
                             echo '<p class="modal__page--add" onclick="show_modal_input3()">Add current city</p>';
                         } else {
-                            echo '<p class="modal__page--add">' . $info->get_current_city() . '</p>';
+                            echo '<p class="modal__page--add onclick="show_modal_input3()"">' . $info->get_current_city() . '</p>';
                         }
                         ?>
-                        <div id="modal__page--input3">
-                        <!-- <form method="POST" action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]);?>" id="modal__page--input3"> -->
+                        <form method="POST" action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]);?>" id="modal__page--input3">
                             <input type="text" name="current_city" class="modal__page--text">
                             <button type="submit" class="btn btn-primary modal__page--btn">Save</button>
-                            <button type="cancel" class="btn btn-secondary modal__page--btn" onclick="close_modal_input3()">Cancel</button>
-                        <!-- </form> -->
-                        </div>
+                            <button type="button" class="btn btn-secondary modal__page--btn" onclick="close_modal_input3()">Cancel</button>
+                        </form>
                         <p class="modal__page--titles">Hometown</p>
                         <?php
                         if(empty($info->get_hometown())) {
                             echo '<p class="modal__page--add" onclick="show_modal_input4()">Add hometown</p>';
                         } else {
-                            echo '<p class="modal__page--add">' . $info->get_hometown() . '</p>';
+                            echo '<p class="modal__page--add" onclick="show_modal_input4()">' . $info->get_hometown() . '</p>';
                         }
                         ?>
-                        <div id="modal__page--input4">
-                        <!-- <form method="POST" action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]);?>" id="modal__page--input4"> -->
+                        <form method="POST" action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]);?>" id="modal__page--input4">
                             <input type="text" name="hometown" class="modal__page--text">
                             <button type="submit" class="btn btn-primary modal__page--btn">Save</button>
-                            <button type="cancel" class="btn btn-secondary modal__page--btn" onclick="close_modal_input4()">Cancel</button>
-                        <!-- </form> -->
-                        </div>
+                            <button type="button" class="btn btn-secondary modal__page--btn" onclick="close_modal_input4()">Cancel</button>
+                        </form>
                         <p class="modal__page--titles">Relationship</p>
                         <?php
                         if(empty($info->get_relationship())) {
                             echo '<p class="modal__page--add" onclick="show_modal_input5()">Add relationship</p>';
                         } else {
-                            echo '<p class="modal__page--add">' . $info->get_relationship() . '</p>';
+                            echo '<p class="modal__page--add" onclick="show_modal_input5()">' . $info->get_relationship() . '</p>';
                         }
                         ?>
-                        <div id="modal__page--input5">
-                        <!-- <form method="POST" action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]);?>" id="modal__page--input5"> -->
+                        <form method="POST" action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]);?>" id="modal__page--input5">
                             <input type="text" name="relationship" class="modal__page--text">
                             <button type="submit" class="btn btn-primary modal__page--btn">Save</button>
-                            <button type="cancel" class="btn btn-secondary modal__page--btn" onclick="close_modal_input5()">Cancel</button>
-                        <!-- </form> -->
-                        </div>
+                            <button type="button" class="btn btn-secondary modal__page--btn" onclick="close_modal_input5()">Cancel</button>
+                        </form>
                         <p class="modal__page--titles">About Info</p>
                         <p class="modal__page--add">Edit Your About Info</p>
                   </div>
-              </form>
+              <!-- </form> -->
             </div>
     </div>
     </div>

@@ -4,7 +4,7 @@ CREATE TABLE users (
     first_name  VARCHAR(30) NOT NULL,
     last_name   VARCHAR(30) NOT NULL,
     email       VARCHAR(50) NOT NULL UNIQUE,
-    password    CHAR(64)	NOT NULL,
+    password    CHAR(16)	NOT NULL,
     birth_month CHAR(4)		NOT NULL,
     birth_day   CHAR(2)		NOT NULL,
     birth_year  CHAR(4)		NOT NULL,
@@ -43,7 +43,7 @@ CREATE TABLE posts (
 CREATE TABLE comments (
     id              INTEGER     NOT NULL AUTO_INCREMENT,
     post_id         INTEGER     NOT NULL,
-    author_email    VARCHAR(30) NOT NULL,
+    author_email    VARCHAR(50) NOT NULL,
     comment_content TEXT        NOT NULL,
     comment_time    TIMESTAMP   DEFAULT CURRENT_TIMESTAMP,
     edit_time       TIMESTAMP   DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
@@ -61,19 +61,11 @@ CREATE TABLE comments (
 --     FOREIGN KEY (id) REFERENCES users(id)
 -- );
 
--- CREATE TABLE notification )
---     id          INTEGER NOT NULL AUTO_INCREMENT,
---     user_email  VARCHAR(50) NOT NULL,
---     content     TEXT NOT NULL,
+/* directed graph */
+-- CREATE TABLE friend_with (
 --
+--     since TIMESTAMP()
 -- );
-
-/* undirected graph, A sent request to B */
-CREATE TABLE friend_with (
-    friendA VARCHAR(50),
-    friendB VARCHAR(50),
-    since TIMESTAMP DEFAULT CURRENT_TIMESTAMP
-);
 
 
 -- INSERT INTO users (first_name, last_name, email, password, birth_month, birth_day, birth_year, gender) VALUES ('Jia-Sheng', 'Ma', 'majiasheng@fb-lets-go.com', 'pw', 'Jan', '01', '1900', 'M');
