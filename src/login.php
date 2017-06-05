@@ -19,6 +19,7 @@ echo "[DEBUG] user: $user_email" . " pw:" . $password . "<br>";
 
 // try to load user with give email and password
 $user = loadUser($user_email, $password, $pdo);
+var_dump($user);
 
 if(is_null($user)) {
     //TODO: shoud display this message in index.php

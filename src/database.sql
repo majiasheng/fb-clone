@@ -4,7 +4,7 @@ CREATE TABLE users (
     first_name  VARCHAR(30) NOT NULL,
     last_name   VARCHAR(30) NOT NULL,
     email       VARCHAR(50) NOT NULL UNIQUE,
-    password    CHAR(16)	NOT NULL,
+    password    CHAR(64)	NOT NULL,
     birth_month CHAR(4)		NOT NULL,
     birth_day   CHAR(2)		NOT NULL,
     birth_year  CHAR(4)		NOT NULL,
@@ -44,8 +44,8 @@ CREATE TABLE comments (
     id              INTEGER     NOT NULL AUTO_INCREMENT,
     post_id         INTEGER     NOT NULL,
     author          VARCHAR(30) NOT NULL,
-    comment_time    TIMESTAMP   NOT NULL,
-    edited          BOOLEAN DEFAULT FALSE,
+    post_time       TIMESTAMP   DEFAULT CURRENT_TIMESTAMP,
+    edit_time       TIMESTAMP   DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
 
     PRIMARY KEY(id,post_id,author),
     FOREIGN KEY (post_id) REFERENCES posts(id)
