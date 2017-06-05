@@ -71,4 +71,3 @@ function close_modal_input5() {
 	var container = document.getElementById('modal__page--input5');
 	container.style.display = "none";
 }
-

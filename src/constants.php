@@ -7,5 +7,6 @@ define("DB_NAME",		"fb_lets_go");
 define("USERS_TABLE", "users");
 define("POSTS_TABLE", "posts");
 define("INFO_TABLE", "info");
+define("COMMENTS_TABLE", "comments");
 define("CHARSET","utf8");
 ?>

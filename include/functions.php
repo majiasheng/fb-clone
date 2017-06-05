@@ -5,23 +5,25 @@ require_once("../src/constants.php");
 require_once("../src/user.php");
 require_once("../src/Post.php");
 require_once("../src/info.php");
+require_once("../src/comments.php");
+
 /**
  * Establishes connection with db
  */
 function connect() {
 	$dsn = "mysql:host=".DB_SERVER.";dbname=".DB_NAME.";charset=".CHARSET;
 	$opt = [
-	    PDO::ATTR_ERRMODE            => PDO::ERRMODE_EXCEPTION,
-	    PDO::ATTR_DEFAULT_FETCH_MODE => PDO::FETCH_ASSOC,
-	    PDO::ATTR_EMULATE_PREPARES   => false,
-	];
-    try {
-	    $pdo = new PDO($dsn, DB_USER, DB_PASSWORD, $opt);
-    } catch(PDOException $e) {
-        echo $e->getMessage();
-    }
+   PDO::ATTR_ERRMODE            => PDO::ERRMODE_EXCEPTION,
+   PDO::ATTR_DEFAULT_FETCH_MODE => PDO::FETCH_ASSOC,
+   PDO::ATTR_EMULATE_PREPARES   => false,
+   ];
+   try {
+       $pdo = new PDO($dsn, DB_USER, DB_PASSWORD, $opt);
+   } catch(PDOException $e) {
+    echo $e->getMessage();
+}
 
-	return $pdo;
+return $pdo;
 }
 
 function validate_name($name) {
@@ -48,20 +50,20 @@ function validate_registration() {
 	// email is in the form of *@*
 
 	/* available pw characters are the combination of alpha-numerical chars and 
-		[`~!@#$%^&*()-_=+;:'",<.>/?] */
+  [`~!@#$%^&*()-_=+;:'",<.>/?] */
 
 	// month day and year has to be selected
-	if(isset($_POST["month"]) && $_POST["month"] != "month"
-	&& isset($_POST["day"]) && $_POST["day"] != "day"
-	&& isset($_POST["year"]) && $_POST["year"] != "year"
+  if(isset($_POST["month"]) && $_POST["month"] != "month"
+   && isset($_POST["day"]) && $_POST["day"] != "day"
+   && isset($_POST["year"]) && $_POST["year"] != "year"
 	// Gender field is required
-	&& isset($_POST["gender"])
-	
-	) {
-		return True;
-	} else {
-		return False;
-	}
+   && isset($_POST["gender"])
+
+   ) {
+      return True;
+} else {
+  return False;
+}
 }
 
 function save_user_to_db($user, $pdo) {
@@ -73,14 +75,14 @@ function save_user_to_db($user, $pdo) {
 	$query .= ") VALUES (";
 
 	$query .= ( 
-				"'" . $user->get_first_name() 	. "'," .
-				"'" . $user->get_last_name() 	. "'," .
-				"'" . $user->get_email() 		. "'," .
-				"'" . $user->get_password() 	. "'," .
-				"'" . $user->get_birth_month()	. "'," .
-				"'" . $user->get_birth_day() 	. "'," .
-				"'" . $user->get_birth_year()	. "'," .
-				"'" . $user->get_gender() . "'" );
+        "'" . $user->get_first_name() 	. "'," .
+        "'" . $user->get_last_name() 	. "'," .
+        "'" . $user->get_email() 		. "'," .
+        "'" . $user->get_password() 	. "'," .
+        "'" . $user->get_birth_month()	. "'," .
+        "'" . $user->get_birth_day() 	. "'," .
+        "'" . $user->get_birth_year()	. "'," .
+        "'" . $user->get_gender() . "'" );
 	$query .= ");";
 
 	return $pdo->query($query);
@@ -112,14 +114,12 @@ function save_info_to_db($user_email, $info, $pdo) {
  * Retrieves user info from database whose email is $user_email
  */
 function loadUser($user_email, $password, $pdo) {
-    
-   	
+
+
     $query = "SELECT * FROM " . USERS_TABLE .
-    			" WHERE email = :email";
-    			// " AND password = :password;";
+    " WHERE email = :email";
     $stmt = $pdo->prepare($query);
-    // $stmt->bindParam(':email', $user_email);
-    // $stmt->execute(['email' => $user_email, 'password' => $password]);
+
     $stmt->execute(['email' => $user_email]);
     $user_data = $stmt->fetch(PDO::FETCH_ASSOC);
 
@@ -138,22 +138,18 @@ function loadUser($user_email, $password, $pdo) {
     	return NULL;
     }
 
+}
 
+function saveCommentToDB($author, $post_id, $pdo, $comment){
 
-    // if(!($user_data = $stmt->fetch(PDO::FETCH_ASSOC))) {
-    //     return NULL;
-    // } else {
-    //     $user = new User;
-    //     $user->set_first_name($user_data['first_name']);
-    //     $user->set_last_name($user_data['last_name']);
-    //     $user->set_email($user_data['email']);
-    //     $user->set_password($user_data['password']);
-    //     $user->set_birth_month($user_data['birth_month']);
-    //     $user->set_birth_day($user_data['birth_day']);
-    //     $user->set_birth_year($user_data['birth_year']);
-    //     $user->set_gender($user_data['gender']);
-    //     return $user;
-    // }
+    $post_id = (int)$post_id;
+
+    $query = "INSERT INTO " . COMMENTS_TABLE 
+    . "(post_id, author, comment_content) "
+    . "VALUES (:post__id, :author, :comment_content)";
+    $stmt = $pdo->prepare($query);
+    return $stmt->execute(['post__id' => $post_id, 'author' => $author, 'comment_content' => $comment]);
+
 }
 
 function load_user_info($user_email, $pdo) {
@@ -188,8 +184,8 @@ function load_user_info($user_email, $pdo) {
 function savePostToDB($user_email, $pdo, $post) {
     //TODO: insert post to db
     $query = "INSERT INTO " . POSTS_TABLE 
-            . "(author_email, content) "
-            . "VALUES (:email,:content)";
+    . "(author_email, content) "
+    . "VALUES (:email,:content)";
     $stmt = $pdo->prepare($query);
     return $stmt->execute(['email' => $user_email, 'content' => $post]);
 }
@@ -199,8 +195,8 @@ function savePostToDB($user_email, $pdo, $post) {
 function loadPosts($user_email, $pdo) {
     //TODO: need to join comments with posts later
 
-    $query = "SELECT content, post_time, edit_time from " . POSTS_TABLE 
-            . " WHERE author_email = :email";
+    $query = "SELECT id, content, post_time, edit_time from " . POSTS_TABLE 
+    . " WHERE author_email = :email order by post_time DESC";
     $stmt = $pdo->prepare($query);
     $stmt->execute(['email' => $user_email]);
 
@@ -213,6 +209,7 @@ function loadPosts($user_email, $pdo) {
         $p->setAuthorEmail($user_email);
         $p->setContent($c['content']);
         $p->setPostTime($c['post_time']);
+        $p->setPostId($c['id']);
         if($c['post_time']==$c['edit_time']) {
             $p->setIsEdited(False);
         } else {
@@ -222,7 +219,29 @@ function loadPosts($user_email, $pdo) {
         array_push($post_objs, $p);
     }
     return $post_objs;
+}
 
+function load_comments($post_id, $pdo){
+    
+    $query = "SELECT author, comment_time, comment_content from " . COMMENTS_TABLE 
+    . " WHERE post_id = :post_id";
+    $stmt = $pdo->prepare($query);
+    $stmt->execute(['post_id' => $post_id]);
+
+    $comment_array = array();
+    $comments = $stmt->fetchAll(PDO::FETCH_ASSOC);
+
+    foreach($comments as $c){
+        $comment = new Comment;
+        $comment->setPostId($post_id);
+        $comment->setAuthor($c['author']);
+        $comment->setCommentContent($c['comment_content']);
+        $comment->setCommentTime($c['comment_time']);
+
+        array_push($comment_array, $comment);
+    }
+
+    return $comment_array;
 }
 
 //TODO: function that adds friend to record

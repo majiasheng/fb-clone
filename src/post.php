@@ -9,6 +9,7 @@ class Post {
     private $comments;
     private $likes;
     private $shares;
+    private $post_id;
 
     // function __construct($content, $post_time, $is_edited) {
     //     $this->content = $content;
@@ -16,6 +17,10 @@ class Post {
     //     $this->is_edited = $is_edited;
     //     //TODO:
     // }
+
+    function setPostId($arg){
+        $this->post_id = $arg;
+    }
 
     function setAuthorEmail($arg) {
         $this->author_email = $arg;
@@ -42,6 +47,10 @@ class Post {
         $this->shares = $arg;
     }
 
+    function getPostId(){
+        return $this->post_id;
+    }
+    
     function getAuthorEmail() {
         return $this->author_email;
     }

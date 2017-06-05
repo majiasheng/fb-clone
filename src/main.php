@@ -19,18 +19,33 @@ if($_SERVER["REQUEST_METHOD"] == "POST") {
     $info->set_education($_POST["education"]);
     $info->set_current_city($_POST["current_city"]);
     $info->set_hometown($_POST["hometown"]);
-    $info->set_relationship($_POST("relationship");
+    $info->set_relationship($_POST["relationship"]);
     save_info_to_db($user->get_email(), $info, $pdo);
 }
 
 if(isset($_POST) && isset($_POST['post_content']) && ("" != trim($_POST['post_content']))) {
-    
     if(!savePostToDB($user->get_email(), $pdo, $_POST['post_content'])) {
         echo "Error occurred while saving posting <br>";
     }
     // prevent resubmission of POST
     unset($_POST);
+    var_dump($_POST);
     header('Location:' . $_SERVER['PHP_SELF']);
+}
+
+if(isset($_POST) && isset($_POST['post_comment_content']) && ("" != trim($_POST['post_comment_content']))) {
+
+    if(!saveCommentToDB($user->get_email(), $_POST['post__id'], $pdo, $_POST['post_comment_content'])){
+        echo "Error occurred while commenting <br>";
+    }
+
+    var_dump($_POST);
+
+    unset($_POST);
+
+    var_dump($_POST);
+    header('Location:'.$_SERVER['PHP_SELF']);
+
 }
 
 // default profile picture
@@ -70,40 +85,43 @@ $profile_pic = "../rsrc/img/photos/default-profile.png";
                         ?>
                         </a>
                     </li>
-                    <li class="header__home"><a href="#">Home</a></li>
-                </div>
-                <!-- friends, messages, and alerts -->
-                <div class="col-md-2 col-sm-12 navbar__header">
-                    <li class="header__friends header--icon-setting"><a href="#"><i class="fa fa-user"></i></a></li>
-                    <li class="header__message header--icon-setting"><a href="#"><i class="fa fa-comments"></i></a></li>
-                    <li class="header__alert header--icon-setting"><a href="#"><i class="fa fa-globe"></i></a></li>
-                </div>
-                <!-- privacy and settings (with a dropdown menu)-->
-                <div class="col-md-1 col-sm-12">
-                    <li class="header__privacy header--icon-setting"><a href="#"><i class="fa fa-lock"></i></a></li>
-                    <li class="header__setting header--icon-setting"><a href="#"><i class="fa fa-caret-down" onclick="show_setting_menu()"></i></a>
-                        <ul class="icon-setting--dropdown">
-                            <li><a href="settings.php">Settings</a></li>
-                            <li><a href="logout.php">Log Out</a></li>
-                        </ul>
 
-                    </li>
-                    
-                </div>
-                <!-- search bar -->
-                <div class="col-md-4 col-sm-12">
-                    <li class="navbar__form">
-                        <form class="navbar__search-form form-inline" role="search">
-                            <!-- <div class="navbar__search-container form-group"> -->
-                                <input type="text" class="navbar__search-input form-control" placeholder="Search">
-                                <a href="#" class="linka"><i class="fa fa-search"></i></a>
-                            <!-- </div> -->
-                        </form>
-                    </li>
-                </div>
+			  		<li class="header__home"><a href="#">Home</a></li>
+		  		</div>
+		  		<!-- friends, messages, and alerts -->
+		  		<div class="col-md-2 col-sm-12 navbar__header">
+			  		<li class="header__friends header--icon-setting"><a href="#"><i class="fa fa-user"></i></a></li>
+			 		<li class="header__message header--icon-setting"><a href="#"><i class="fa fa-comments"></i></a></li>
+			  		<li class="header__alert header--icon-setting"><a href="#"><i class="fa fa-globe"></i></a></li>
+		  		</div>
+		  		<!-- privacy and settings (with a dropdown menu)-->
+		  		<div class="col-md-1 col-sm-12">
+			 		<li class="header__privacy header--icon-setting"><a href="#"><i class="fa fa-lock"></i></a></li>
+			  		<li class="header__setting header--icon-setting"><a href="#"><i class="fa fa-caret-down" onclick="show_setting_menu()"></i></a>
+			  			<ul class="icon-setting--dropdown">
+		                    <li><a href="settings.php">Settings</a></li>
+		                    <li><a href="logout.php">Log Out</a></li>
+		                </ul>
 
-            </ul> 
-        </div>
+			  		</li>
+		  			
+		  		</div>
+		  		<!-- search bar -->
+		  		<div class="col-md-4 col-sm-12">
+	                <li class="navbar__form">
+			  			<form class="navbar__search-form form-inline" role="search" action="search.php" method="GET">
+			 				<!-- <div class="navbar__search-container form-group"> -->
+			  					<input type="text" name="search" class="navbar__search-input form-control" placeholder="Search">
+                                <!--TODO: send a GET request to search.php -->
+                                  <!-- <a href=# class="linka"><i class="fa fa-search"></i></a> -->
+                                <input type="submit" value="Q" class="fa fa-search">
+				  			<!-- </div> -->
+						</form>
+					</li>
+				</div>
+
+		  	</ul> 
+		</div>
     </nav>
     <!-- cover image section -->
     <div class="cover">
@@ -406,6 +424,7 @@ $profile_pic = "../rsrc/img/photos/default-profile.png";
                 //load user's posts if there's any
                 // if there's none, set up a prompt maybe?
                 $posts = loadPosts($user->get_email(), $pdo);
+                // var_dump($posts);
                 foreach($posts as $p) {
                     // header: user pic, user name
                     echo '<div class="post__header">';
@@ -425,13 +444,45 @@ $profile_pic = "../rsrc/img/photos/default-profile.png";
                     echo '<div class="post__content"> <p class="post__content__p">';
                     echo $p->getContent() . "<br></p></div>";
 
+                    $comments = load_comments($p->getPostID(), $pdo);
+
+
+
+                    //comment content
+                    foreach($comments as $c){
+                        echo ' <div class="comment_content"> &nbsp&nbsp'. $c->getCommentContent()  . '------('. $c->getAuthor() .')----------' . $c->getCommentTime() . '</div>';
+
+
+                    }
+
                     // footer/actions: like, comment, share
+
                     echo '<div class="post__actions">
                     <div class="actions--setting actions--decor"><i class="fa fa-thumbs-up"></i></div>
                     <div class="actions--setting actions--decor"><i class="fa fa-share"></i></div>
                     <div class="actions--setting actions--decor actions__comment"></div>
-                    <div class="actions--setting actions--decor actions__comment"><i class="fa fa-comment"></i></div>
-                    </div> ';
+                    <div class="actions--setting actions--decor actions__comment">';
+                          
+                          
+                    echo '
+                    <form action="" method="POST" id="post_comment_form">
+                        <input type="text" name="post_comment_content" placeholder="Write some comment"/>
+                        <input type="hidden" name="post__id" value="'  . $p->getPostId()  . '" >
+                        <button type="submit">
+                            <i class="fa fa-comment"></i>
+                        </button>
+                    </form>';
+
+                    echo'
+                    </div>
+                    </div> <br><br>';
+
+                    // echo '<div class="post__actions">
+                    // <div class="actions--setting actions--decor"><i class="fa fa-thumbs-up"></i></div>
+                    // <div class="actions--setting actions--decor"><i class="fa fa-share"></i></div>
+                    // <div class="actions--setting actions--decor actions__comment"></div>
+                    // <div class="actions--setting actions--decor actions__comment"><i class="fa fa-comment"></i></div>
+                    // </div> ';
 
                 }
                 //TODO: load comments, likes, shares
