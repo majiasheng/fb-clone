@@ -20,22 +20,22 @@ if(isset($_POST) && isset($_POST['post_content']) && ("" != trim($_POST['post_co
     }
     // prevent resubmission of POST
     unset($_POST);
+    var_dump($_POST);
     header('Location:' . $_SERVER['PHP_SELF']);
 
 }
 
-if(isset($_POST) && isset($_POST['post_comment_content'])) {
-
-    // var_dump($_POST['post_comment_content']);
-    // var_dump($_POST['post__id']);
+if(isset($_POST) && isset($_POST['post_comment_content']) && ("" != trim($_POST['post_comment_content']))) {
 
     if(!saveCommentToDB($user->get_email(), $_POST['post__id'], $pdo, $_POST['post_comment_content'])){
         echo "Error occurred while commenting <br>";
     }
 
-    // unset($_POST['post_comment_content']);
-    // unset($_POST['post__id']);
+    var_dump($_POST);
+
     unset($_POST);
+
+    var_dump($_POST);
     header('Location' . $_SERVER['PHP_SELF']);
 
 }
@@ -398,12 +398,14 @@ $profile_pic = "../rsrc/img/photos/default-profile.png";
                     echo $p->getContent() . "<br></p></div>";
 
                     $comments = load_comments($p->getPostID(), $pdo);
-                    var_dump($comments);
 
 
 
                     //comment content
-                    echo ' <div class="comment_content"> </div><br>';
+                    foreach($comments as $c){
+                        echo ' <div class="comment_content"> &nbsp&nbsp'. $c->getCommentContent()  .  '</div>';
+
+                    }
 
                     // footer/actions: like, comment, share
 

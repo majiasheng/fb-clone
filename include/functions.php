@@ -170,8 +170,7 @@ function loadPosts($user_email, $pdo) {
 }
 
 function load_comments($post_id, $pdo){
-    echo gettype($post_id);
-    echo $post_id;
+    
     $query = "SELECT author, comment_time, comment_content from " . COMMENTS_TABLE 
     . " WHERE post_id = :post_id";
     $stmt = $pdo->prepare($query);
