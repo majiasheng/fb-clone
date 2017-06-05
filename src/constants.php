@@ -6,5 +6,6 @@ define("DB_PASSWORD", "Pw4Admin");
 define("DB_NAME",		"fb_lets_go");
 define("USERS_TABLE", "users");
 define("POSTS_TABLE", "posts");
+define("COMMENTS_TABLE", "comments");
 define("CHARSET","utf8");
 ?>

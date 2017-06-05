@@ -26,10 +26,10 @@ if(isset($_POST) && isset($_POST['post_content']) && ("" != trim($_POST['post_co
 
 if(isset($_POST) && isset($_POST['post_comment_content'])) {
 
-    var_dump($_POST['post_comment_content']);
-    var_dump($_POST['post__id']);
+    // var_dump($_POST['post_comment_content']);
+    // var_dump($_POST['post__id']);
 
-    if(!saveCommentToDB($user->get_email(), $pdo, $_POST['post_comment_content'])){
+    if(!saveCommentToDB($user->get_email(), $_POST['post__id'], $pdo, $_POST['post_comment_content'])){
         echo "Error occurred while commenting <br>";
     }
 
@@ -402,14 +402,17 @@ $profile_pic = "../rsrc/img/photos/default-profile.png";
                     <div class="actions--setting actions--decor"><i class="fa fa-thumbs-up"></i></div>
                     <div class="actions--setting actions--decor"><i class="fa fa-share"></i></div>
                     <div class="actions--setting actions--decor actions__comment"></div>
-                    <div class="actions--setting actions--decor actions__comment">
+                    <div class="actions--setting actions--decor actions__comment">';
                           
                           
+                    echo '
                     <form action="" method="POST" id="post_comment_form">
                         <input type="text" name="post_comment_content" placeholder="Write some comment"/>
+                        <input type="hidden" name="post__id" value="'  . $p->getPostId()  . '" >
                         <input type="submit">
-                    </form>
-                 
+                    </form>';
+
+                    echo'
                     </div>
                     </div> <br><br>';
 

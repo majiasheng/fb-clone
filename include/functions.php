@@ -11,17 +11,17 @@ require_once("../src/Post.php");
 function connect() {
 	$dsn = "mysql:host=".DB_SERVER.";dbname=".DB_NAME.";charset=".CHARSET;
 	$opt = [
-	    PDO::ATTR_ERRMODE            => PDO::ERRMODE_EXCEPTION,
-	    PDO::ATTR_DEFAULT_FETCH_MODE => PDO::FETCH_ASSOC,
-	    PDO::ATTR_EMULATE_PREPARES   => false,
-	];
-    try {
-	    $pdo = new PDO($dsn, DB_USER, DB_PASSWORD, $opt);
-    } catch(PDOException $e) {
-        echo $e->getMessage();
-    }
+   PDO::ATTR_ERRMODE            => PDO::ERRMODE_EXCEPTION,
+   PDO::ATTR_DEFAULT_FETCH_MODE => PDO::FETCH_ASSOC,
+   PDO::ATTR_EMULATE_PREPARES   => false,
+   ];
+   try {
+       $pdo = new PDO($dsn, DB_USER, DB_PASSWORD, $opt);
+   } catch(PDOException $e) {
+    echo $e->getMessage();
+}
 
-	return $pdo;
+return $pdo;
 }
 
 function validate_name($name) {
@@ -48,20 +48,20 @@ function validate_registration() {
 	// email is in the form of *@*
 
 	/* available pw characters are the combination of alpha-numerical chars and 
-		[`~!@#$%^&*()-_=+;:'",<.>/?] */
+  [`~!@#$%^&*()-_=+;:'",<.>/?] */
 
 	// month day and year has to be selected
-	if(isset($_POST["month"]) && $_POST["month"] != "month"
-	&& isset($_POST["day"]) && $_POST["day"] != "day"
-	&& isset($_POST["year"]) && $_POST["year"] != "year"
+  if(isset($_POST["month"]) && $_POST["month"] != "month"
+   && isset($_POST["day"]) && $_POST["day"] != "day"
+   && isset($_POST["year"]) && $_POST["year"] != "year"
 	// Gender field is required
-	&& isset($_POST["gender"])
-	
-	) {
-		return True;
-	} else {
-		return False;
-	}
+   && isset($_POST["gender"])
+
+   ) {
+      return True;
+} else {
+  return False;
+}
 }
 
 function save_user_to_db($user, $pdo) {
@@ -73,14 +73,14 @@ function save_user_to_db($user, $pdo) {
 	$query .= ") VALUES (";
 
 	$query .= ( 
-				"'" . $user->get_first_name() 	. "'," .
-				"'" . $user->get_last_name() 	. "'," .
-				"'" . $user->get_email() 		. "'," .
-				"'" . $user->get_password() 	. "'," .
-				"'" . $user->get_birth_month()	. "'," .
-				"'" . $user->get_birth_day() 	. "'," .
-				"'" . $user->get_birth_year()	. "'," .
-				"'" . $user->get_gender() . "'" );
+        "'" . $user->get_first_name() 	. "'," .
+        "'" . $user->get_last_name() 	. "'," .
+        "'" . $user->get_email() 		. "'," .
+        "'" . $user->get_password() 	. "'," .
+        "'" . $user->get_birth_month()	. "'," .
+        "'" . $user->get_birth_day() 	. "'," .
+        "'" . $user->get_birth_year()	. "'," .
+        "'" . $user->get_gender() . "'" );
 	$query .= ");";
 
 	return $pdo->query($query);
@@ -91,14 +91,12 @@ function save_user_to_db($user, $pdo) {
  * Retrieves user info from database whose email is $user_email
  */
 function loadUser($user_email, $password, $pdo) {
-    
-   	
+
+
     $query = "SELECT * FROM " . USERS_TABLE .
-    			" WHERE email = :email";
-    			// " AND password = :password;";
+    " WHERE email = :email";
     $stmt = $pdo->prepare($query);
-    // $stmt->bindParam(':email', $user_email);
-    // $stmt->execute(['email' => $user_email, 'password' => $password]);
+
     $stmt->execute(['email' => $user_email]);
     $user_data = $stmt->fetch(PDO::FETCH_ASSOC);
 
@@ -116,25 +114,32 @@ function loadUser($user_email, $password, $pdo) {
     } else {
     	return NULL;
     }
-   
+
 }
 
-function saveCommentToDB($author , $pdo, $comment){
-   // $query = "INSERT INTO" . COMMENTS_TABLE
-   //         ."(author, comment) "
-   //         ."VALUES (:email, :comment)";
-   // $stmt = $pdo->prepare($query);
-   // $res =  $stmt->execute(['author'=> $author, 'comment' => $comment]);
+function saveCommentToDB($author, $post_id, $pdo, $comment){
+       //Insert into comments (post_id, author, comment_content) VALUES (3, "ab", "hi, there") ;
 
-   // return $res;
+    // var_dump($comment);
+    // var_dump($author);
+    $post_id = (int)$post_id;
+    echo gettype($post_id), "\n";
+
+    $query = "INSERT INTO" . COMMENTS_TABLE
+    ."(post_id, author, comment_content)"
+    ."VALUES (:post_id, :author, :comment_content)";
+    $stmt = $pdo->prepare($query);
+    $res =  $stmt->execute(['post_id' => $post_id, 'author' => $author, 'comment_content' => $comment]);
+
+    // return $res;
 }
 
 
 function savePostToDB($user_email, $pdo, $post) {
     //TODO: insert post to db
     $query = "INSERT INTO " . POSTS_TABLE 
-            . "(author_email, content) "
-            . "VALUES (:email,:content)";
+    . "(author_email, content) "
+    . "VALUES (:email,:content)";
     $stmt = $pdo->prepare($query);
     return $stmt->execute(['email' => $user_email, 'content' => $post]);
 }
@@ -143,7 +148,7 @@ function loadPosts($user_email, $pdo) {
     //TODO: need to join comments with posts later
 
     $query = "SELECT id, content, post_time, edit_time from " . POSTS_TABLE 
-            . " WHERE author_email = :email order by post_time DESC";
+    . " WHERE author_email = :email order by post_time DESC";
     $stmt = $pdo->prepare($query);
     $stmt->execute(['email' => $user_email]);
 
