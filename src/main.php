@@ -38,10 +38,6 @@ if(isset($_POST) && isset($_POST['post_comment_content'])) {
 }
 
 
-
-
-
-
 // default profile picture
 $profile_pic = "../rsrc/img/photos/default-profile.png";
 
