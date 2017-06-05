@@ -1,3 +1,7 @@
+2017-06-05 majiasheng <jiasheng.ma@yahoo.com>
+	* Added search.php to handle search bar searches
+	* Added friend schema
+
 2017-06-02 majiasheng <jiasheng.ma@yahoo.com>
 	* Load posts from db 
 
