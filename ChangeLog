@@ -1,3 +1,7 @@
+2017-06-05 binzhou <binz545627124@gmail.com>
+	* Comment works for now(temp).
+	* Need to change the comment and post to Ajax, so the page doesn't refresh.
+
 2017-06-05 majiasheng <jiasheng.ma@yahoo.com>
 	* Added search.php to handle search bar searches
 	* Added friend schema
