@@ -15,7 +15,6 @@ $pdo = connect();
 
 // if a form is sent to self, handle it
 if(isset($_POST) && isset($_POST['post_content']) && ("" != trim($_POST['post_content']))) {
-    
     if(!savePostToDB($user->get_email(), $pdo, $_POST['post_content'])) {
         echo "Error occurred while saving posting <br>";
     }
@@ -25,7 +24,21 @@ if(isset($_POST) && isset($_POST['post_content']) && ("" != trim($_POST['post_co
 
 }
 
-// if(isset($_POST) && isset($_POST['comment_content']) && ("" != trim($)))
+if(isset($_POST) && isset($_POST['post_comment_content'])) {
+
+    var_dump($_POST['post_comment_content']);
+    var_dump($_POST['post__id']);
+
+    if(!saveCommentToDB($user->get_email(), $pdo, $_POST['post_comment_content'])){
+        echo "Error occurred while commenting <br>";
+    }
+
+    unset($_POST);
+
+}
+
+
+
 
 
 
@@ -363,6 +376,7 @@ $profile_pic = "../rsrc/img/photos/default-profile.png";
                 //load user's posts if there's any
                 // if there's none, set up a prompt maybe?
                 $posts = loadPosts($user->get_email(), $pdo);
+                // var_dump($posts);
                 foreach($posts as $p) {
                     // header: user pic, user name
                     echo '<div class="post__header">';
@@ -390,12 +404,18 @@ $profile_pic = "../rsrc/img/photos/default-profile.png";
                     <div class="actions--setting actions--decor"><i class="fa fa-thumbs-up"></i></div>
                     <div class="actions--setting actions--decor"><i class="fa fa-share"></i></div>
                     <div class="actions--setting actions--decor actions__comment"></div>
-                    <div class="actions--setting actions--decor actions__comment">      
-                    <a href="javascript:void(0)">
-                    <i class="fa fa-comment" onclick="popout()"></i></a> </div>
+                    <div class="actions--setting actions--decor actions__comment">
+                          
+                          
+                    <form action="" method="POST" id="post_comment_form">
+                        <input type="text" name="post_comment_content" placeholder="Write some comment"/>
+                        <input type="submit">
+                    </form>
+                 
+                    </div>
                     </div> <br><br>';
 
-                    
+                   // <?---                        <i class="fa fa-comment" type="submit"></i>
                     // echo '<div class="post__actions">
                     // <div class="actions--setting actions--decor"><i class="fa fa-thumbs-up"></i></div>
                     // <div class="actions--setting actions--decor"><i class="fa fa-share"></i></div>

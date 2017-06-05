@@ -71,26 +71,3 @@ function close_modal_input5() {
 	var container = document.getElementById('modal__page--input5');
 	container.style.display = "none";
 }
-
-function popout(){
-	var comment = prompt("Enter your comment");
-
-	var doc = document.getElementsByClassName("comment_content").innerHTML;
-	console.log(doc);
-
-
-	
-	// if(comment != null){
-
-	// 	// ajax to php
-	// 	var xmlhttp =new XMLHttpRequest();
-	// 	xmlhttp.onreadystatechagne = function(){
-	// 		if(this.readyState = 4 && this.status == 2000){
-	// 			document.getElement
-	// 		}
-	// 	}
-
-	// }
-
-}
-

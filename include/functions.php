@@ -119,6 +119,17 @@ function loadUser($user_email, $password, $pdo) {
    
 }
 
+function saveCommentToDB($author , $pdo, $comment){
+   // $query = "INSERT INTO" . COMMENTS_TABLE
+   //         ."(author, comment) "
+   //         ."VALUES (:email, :comment)";
+   // $stmt = $pdo->prepare($query);
+   // $res =  $stmt->execute(['author'=> $author, 'comment' => $comment]);
+
+   // return $res;
+}
+
+
 function savePostToDB($user_email, $pdo, $post) {
     //TODO: insert post to db
     $query = "INSERT INTO " . POSTS_TABLE 
@@ -131,7 +142,7 @@ function savePostToDB($user_email, $pdo, $post) {
 function loadPosts($user_email, $pdo) {
     //TODO: need to join comments with posts later
 
-    $query = "SELECT content, post_time, edit_time from " . POSTS_TABLE 
+    $query = "SELECT id, content, post_time, edit_time from " . POSTS_TABLE 
             . " WHERE author_email = :email";
     $stmt = $pdo->prepare($query);
     $stmt->execute(['email' => $user_email]);
@@ -145,6 +156,7 @@ function loadPosts($user_email, $pdo) {
         $p->setAuthorEmail($user_email);
         $p->setContent($c['content']);
         $p->setPostTime($c['post_time']);
+        $p->setPostId($c['id']);
         if($c['post_time']==$c['edit_time']) {
             $p->setIsEdited(False);
         } else {
