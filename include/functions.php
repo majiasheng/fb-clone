@@ -87,7 +87,7 @@ function save_user_to_db($user, $pdo) {
 
 }
 
-function save_info_to_db($user_email, $user_info, $pdo) {
+function save_info_to_db($user_email, $info, $pdo) {
 	$query = "";
 	$query .= "INSERT INTO " . INFO_TABLE . " (";
 	// fields of user class
@@ -145,7 +145,7 @@ function load_user_info($user_email, $pdo) {
         $info->set_email($user_email);
         $info->set_education("");
         $info->set_workspace("");
-        $info->set_current_city("new york");
+        $info->set_current_city("");
         $info->set_relationship("");
         $info->set_hometown("");
         return $info;

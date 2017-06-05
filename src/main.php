@@ -13,6 +13,10 @@ $user = $_SESSION['user'];
 $info = $_SESSION['user_info'];
 $pdo = connect();
 // if a form is sent to self, handle it
+if($_SERVER["REQUEST_METHOD"] == "POST") {
+    $info->set_current_city($_POST["current_city"]);
+    save_info_to_db($user->get_email(), $info, $pdo);
+}
 
 if(isset($_POST) && isset($_POST['post_content']) && ("" != trim($_POST['post_content']))) {
     
@@ -138,20 +142,18 @@ $profile_pic = "../rsrc/img/photos/default-profile.png";
                 <!-- echo all workplaces and schools-->
                         <?php
                         if(!empty($info->get_workspace())) {
-                            foreach($info->get_workspace() as $workspace) {
-                                echo '<p class="modal__page--add">'. $workspace .'</p>';
-                            }
+                            // foreach($info->get_workspace() as $workspace) {
+                                echo '<p class="modal__page--add">'. $info->get_workspace() .'</p>';
+                            // }
                         } 
                         ?>
                         <p class="modal__page--add" onclick="show_modal_input1()">Add workspace</p>
-                        <form method="POST" action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]);?>">
+                        
                         <div id="modal__page--input1">
                             <input type="text" name="input_workspace" class="modal__page--text">
                             <button type="submit" name="input_save" class="btn btn-primary modal__page--btn">Save</button>
                             <button type="cancel"class="btn btn-secondary modal__page--btn" onclick="close_modal_input1()">Cancel</button>
                         </div>
-                        </form>
-
 
 
 
@@ -159,9 +161,9 @@ $profile_pic = "../rsrc/img/photos/default-profile.png";
                         <p class="modal__page--titles">Education</p>
                         <?php
                         if(!empty($info->get_education())) {
-                            foreach($info->get_education() as $education) {
-                                echo '<p class="modal__page--add">'. $education .'</p>';
-                            }   
+                            // foreach($info->get_education() as $education) {
+                                echo '<p class="modal__page--add">'. $info->get_education() .'</p>';
+                            // }   
                         } 
                         ?>
                         <p class="modal__page--add" onclick="show_modal_input2()">Add education</p>
@@ -179,11 +181,11 @@ $profile_pic = "../rsrc/img/photos/default-profile.png";
                             echo '<p class="modal__page--add">' . $info->get_current_city() . '</p>';
                         }
                         ?>
-                        <div id="modal__page--input3">
-                            <input type="text" class="modal__page--text">
+                        <form method="POST" action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]);?>" id="modal__page--input3">
+                            <input type="text" name="current_city" class="modal__page--text">
                             <button type="submit" class="btn btn-primary modal__page--btn">Save</button>
                             <button type="cancel" class="btn btn-secondary modal__page--btn" onclick="close_modal_input3()">Cancel</button>
-                        </div>
+                        </form>
                         <p class="modal__page--titles">Hometown</p>
                         <?php
                         if(empty($info->get_hometown())) {

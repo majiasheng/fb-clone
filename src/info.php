@@ -2,8 +2,8 @@
 <?php
 class Info {
     private $email;
-    private $education = array();
-    private $workspace = array();
+    private $education;
+    private $workspace;
     private $current_city;
     private $relationship;
     private $hometown;
@@ -13,10 +13,10 @@ class Info {
         $this->email = $arg;
     }
     function set_education($arg) {
-        $education[] = $arg;
+        $this->education = $arg;
     }
     function set_workspace($arg) {
-        $workspace[] = $arg;
+        $this->workspace = $arg;
     }
     function set_current_city($arg) {
         $this->current_city = $arg;
