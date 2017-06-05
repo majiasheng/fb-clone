@@ -41,7 +41,7 @@ if(isset($_POST) && isset($_POST['post_content']) && ("" != trim($_POST['post_co
 }
 
 if(isset($_POST) && isset($_POST['post_comment_content']) && ("" != trim($_POST['post_comment_content']))) {
-
+    //FIXME: $user->get_email() <= not really, $user can be anyone
     if(!saveCommentToDB($user->get_email(), $_POST['post__id'], $pdo, $_POST['post_comment_content'])){
         echo "Error occurred while commenting <br>";
     }
