@@ -9,7 +9,7 @@ CREATE TABLE users (
     birth_day   CHAR(2)		NOT NULL,
     birth_year  CHAR(4)		NOT NULL,
     gender      enum('M', 'F') NOT NULL,
-    -- date_joined 
+    date_joined TIMESTAMP   DEFAULT CURRENT_TIMESTAMP,
 
     PRIMARY KEY(id)
 );
@@ -43,12 +43,12 @@ CREATE TABLE posts (
 CREATE TABLE comments (
     id              INTEGER     NOT NULL AUTO_INCREMENT,
     post_id         INTEGER     NOT NULL,
-    author          VARCHAR(30) NOT NULL,
+    author_email    VARCHAR(30) NOT NULL,
     comment_content TEXT        NOT NULL,
     comment_time    TIMESTAMP   DEFAULT CURRENT_TIMESTAMP,
     edit_time       TIMESTAMP   DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
 
-    PRIMARY KEY(id,post_id,author),
+    PRIMARY KEY(id,post_id,author_email),
     FOREIGN KEY (post_id) REFERENCES posts(id)
 );
 
@@ -76,4 +76,4 @@ CREATE TABLE friend_with (
 );
 
 
-INSERT INTO users (first_name, last_name, email, password, birth_month, birth_day, birth_year, gender) VALUES ('Jia-Sheng', 'Ma', 'majiasheng@fb-lets-go.com', 'pw', 'Jan', '01', '1900', 'M');
+-- INSERT INTO users (first_name, last_name, email, password, birth_month, birth_day, birth_year, gender) VALUES ('Jia-Sheng', 'Ma', 'majiasheng@fb-lets-go.com', 'pw', 'Jan', '01', '1900', 'M');

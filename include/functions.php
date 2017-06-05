@@ -140,15 +140,15 @@ function loadUser($user_email, $password, $pdo) {
 
 }
 
-function saveCommentToDB($author, $post_id, $pdo, $comment){
+function saveCommentToDB($author_email, $post_id, $pdo, $comment){
 
     $post_id = (int)$post_id;
 
     $query = "INSERT INTO " . COMMENTS_TABLE 
-    . "(post_id, author, comment_content) "
-    . "VALUES (:post__id, :author, :comment_content)";
+    . "(post_id, author_email, comment_content) "
+    . "VALUES (:post__id, :author_email, :comment_content)";
     $stmt = $pdo->prepare($query);
-    return $stmt->execute(['post__id' => $post_id, 'author' => $author, 'comment_content' => $comment]);
+    return $stmt->execute(['post__id' => $post_id, 'author_email' => $author_email, 'comment_content' => $comment]);
 
 }
 
@@ -223,7 +223,7 @@ function loadPosts($user_email, $pdo) {
 
 function load_comments($post_id, $pdo){
     
-    $query = "SELECT author, comment_time, comment_content from " . COMMENTS_TABLE 
+    $query = "SELECT author_email, comment_time, comment_content from " . COMMENTS_TABLE 
     . " WHERE post_id = :post_id";
     $stmt = $pdo->prepare($query);
     $stmt->execute(['post_id' => $post_id]);
@@ -234,7 +234,7 @@ function load_comments($post_id, $pdo){
     foreach($comments as $c){
         $comment = new Comment;
         $comment->setPostId($post_id);
-        $comment->setAuthor($c['author']);
+        $comment->setAuthor($c['author_email']);
         $comment->setCommentContent($c['comment_content']);
         $comment->setCommentTime($c['comment_time']);
 
