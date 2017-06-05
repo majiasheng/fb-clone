@@ -36,7 +36,7 @@ if(isset($_POST) && isset($_POST['post_comment_content']) && ("" != trim($_POST[
     unset($_POST);
 
     var_dump($_POST);
-    header('Location' . $_SERVER['PHP_SELF']);
+    header('Location:'.$_SERVER['PHP_SELF']);
 
 }
 
@@ -403,7 +403,8 @@ $profile_pic = "../rsrc/img/photos/default-profile.png";
 
                     //comment content
                     foreach($comments as $c){
-                        echo ' <div class="comment_content"> &nbsp&nbsp'. $c->getCommentContent()  .  '</div>';
+                        echo ' <div class="comment_content"> &nbsp&nbsp'. $c->getCommentContent()  . '------('. $c->getAuthor() .')----------' . $c->getCommentTime() . '</div>';
+
 
                     }
 
@@ -420,14 +421,15 @@ $profile_pic = "../rsrc/img/photos/default-profile.png";
                     <form action="" method="POST" id="post_comment_form">
                         <input type="text" name="post_comment_content" placeholder="Write some comment"/>
                         <input type="hidden" name="post__id" value="'  . $p->getPostId()  . '" >
-                        <input type="submit">
+                        <button type="submit">
+                            <i class="fa fa-comment"></i>
+                        </button>
                     </form>';
 
                     echo'
                     </div>
                     </div> <br><br>';
 
-                   // <?---                        <i class="fa fa-comment" type="submit"></i>
                     // echo '<div class="post__actions">
                     // <div class="actions--setting actions--decor"><i class="fa fa-thumbs-up"></i></div>
                     // <div class="actions--setting actions--decor"><i class="fa fa-share"></i></div>
