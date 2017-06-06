@@ -275,6 +275,14 @@ function getUserIfMatch($keyword, $pdo) {
 //     return $pdo->query($query)->fetch();
 }
 
+//TODO: get list of friends
+function loadFriends($user_email, $pdo) {
+    // $query = "SELECT u.first_name, u.last_name, u.email FROM "
+    //     . USERS_TABLE . " AS u, "
+    //     . FRIENDS_TABLE . " AS f "
+    //     . "WHERE :email=f.friendA OR :email=f.friendB";
+}
+
 //TODO: function that adds friend to record
 //TODO: function that removes friend from record
 

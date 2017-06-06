@@ -9,4 +9,5 @@ define("POSTS_TABLE", "posts");
 define("INFO_TABLE", "info");
 define("COMMENTS_TABLE", "comments");
 define("CHARSET","utf8");
+define("FRIENDS_TABLE, friend_with");
 ?>
