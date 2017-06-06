@@ -13,17 +13,17 @@ require_once("../src/comments.php");
 function connect() {
 	$dsn = "mysql:host=".DB_SERVER.";dbname=".DB_NAME.";charset=".CHARSET;
 	$opt = [
-   PDO::ATTR_ERRMODE            => PDO::ERRMODE_EXCEPTION,
-   PDO::ATTR_DEFAULT_FETCH_MODE => PDO::FETCH_ASSOC,
-   PDO::ATTR_EMULATE_PREPARES   => false,
-   ];
-   try {
+        PDO::ATTR_ERRMODE            => PDO::ERRMODE_EXCEPTION,
+        PDO::ATTR_DEFAULT_FETCH_MODE => PDO::FETCH_ASSOC,
+        PDO::ATTR_EMULATE_PREPARES   => false,
+    ];
+    try {
        $pdo = new PDO($dsn, DB_USER, DB_PASSWORD, $opt);
-   } catch(PDOException $e) {
-    echo $e->getMessage();
-}
+    } catch(PDOException $e) {
+        echo $e->getMessage();
+    }
 
-return $pdo;
+    return $pdo;
 }
 
 function validate_name($name) {
@@ -115,7 +115,7 @@ function save_info_to_db($user_email, $info, $pdo) {
                 "hometown = '" . $info->get_hometown() . "', " .
                 "relationship = '" . $info->get_relationship() . "', " .
                 "description = '" . $info->get_description() . "';" );
-    
+
 	return $pdo->query($query);
 }
 
@@ -253,6 +253,37 @@ function load_comments($post_id, $pdo){
     }
 
     return $comment_array;
+}
+
+function getUserNameByEmail($email, $pdo) {
+    $query = "SELECT first_name, last_name FROM " 
+        . USERS_TABLE 
+        . " WHERE email = :email";
+    $stmt = $pdo->prepare($query);
+    $stmt->execute(['email' => $email]);
+    $rtval = $stmt->fetchAll(PDO::FETCH_ASSOC);
+    return $rtval['first_name'] . " " . $rtval['last_name'];
+}
+
+function getAllUsers($pdo) {
+    $query = "SELECT first_name, last_name FROM " . USERS_TABLE;
+    return $pdo->query($query);
+}
+
+function getUserIfMatch($keyword, $pdo) {
+
+    $query = "SELECT first_name, last_name, email FROM "
+        . USERS_TABLE
+        . " WHERE first_name LIKE ?"
+        . " OR last_name LIKE ?";
+    $stmt = $pdo->prepare($query);
+    $stmt->execute(array("%$keyword%", "%$keyword%"));
+    return $stmt->fetchAll(PDO::FETCH_ASSOC);
+// $query = "SELECT first_name, last_name, email FROM "
+//     . USERS_TABLE
+//     . " WHERE first_name LIKE '%". $keyword . "%'"
+//     . " OR last_name LIKE '%". $keyword . "%'";
+//     return $pdo->query($query)->fetch();
 }
 
 //TODO: function that adds friend to record

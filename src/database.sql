@@ -4,7 +4,7 @@ CREATE TABLE users (
     first_name  VARCHAR(30) NOT NULL,
     last_name   VARCHAR(30) NOT NULL,
     email       VARCHAR(50) NOT NULL UNIQUE,
-    password    CHAR(16)	NOT NULL,
+    password    CHAR(64)	NOT NULL,
     birth_month CHAR(4)		NOT NULL,
     birth_day   CHAR(2)		NOT NULL,
     birth_year  CHAR(4)		NOT NULL,

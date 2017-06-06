@@ -123,7 +123,7 @@ $profile_pic = "../rsrc/img/photos/default-profile.png";
 			  					<input type="text" name="search" class="navbar__search-input form-control" placeholder="Search">
                                 <!--TODO: send a GET request to search.php -->
                                   <!-- <a href=# class="linka"><i class="fa fa-search"></i></a> -->
-                                <input type="submit" value="Q" class="fa fa-search">
+                                <input type="submit" value="Search" class="fa fa-search">
 				  			<!-- </div> -->
 						</form>
 					</li>
