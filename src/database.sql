@@ -23,6 +23,7 @@ CREATE TABLE info (
     current_city    VARCHAR(50),
     hometown        VARCHAR(50),
     relationship    VARCHAR(50),
+    description     VARCHAR(50),
 
     PRIMARY KEY(id, email),
     FOREIGN KEY(email) REFERENCES users (email)

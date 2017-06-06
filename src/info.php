@@ -7,6 +7,7 @@ class Info {
     private $current_city;
     private $relationship;
     private $hometown;
+    private $description;   // describe who you are
 
 
     function set_email($arg) {
@@ -27,6 +28,9 @@ class Info {
     function set_hometown($arg) {
         $this->hometown = $arg;
     }
+    function set_description($arg) {
+        $this->description = $arg;
+    }
 
     function get_email() {
         return $this->email;
@@ -45,6 +49,9 @@ class Info {
     }
     function get_hometown() {
         return $this->hometown;
+    }
+    function get_description() {
+        return $this->description;
     }
 
 }
