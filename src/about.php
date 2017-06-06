@@ -14,48 +14,7 @@ $info = $_SESSION['user_info'];
 $pdo = connect();
 
 // if a form is sent to self, handle it
-if (isset($_POST) && (isset($_POST["workspace"]) || isset($_POST["education"]) || isset($_POST["current_city"]) ||
-    isset($_POST["hometown"]) || isset($_POST["relationship"]) || isset($_POST["description"]))) {
-// if($_SERVER["REQUEST_METHOD"] == "POST") {
-    if (isset($_POST["workspace"]))
-        $info->set_workspace($_POST["workspace"]);
-    else if (isset($_POST["education"]))
-        $info->set_education($_POST["education"]);
-    else if (isset($_POST["current_city"]))
-        $info->set_current_city($_POST["current_city"]);
-    else if (isset($_POST["hometown"]))
-        $info->set_hometown($_POST["hometown"]);
-    else if (isset($_POST["relationship"]))
-        $info->set_relationship($_POST["relationship"]);
-    else if (isset($_POST["description"]))
-        $info->set_description($_POST["description"]);
-    save_info_to_db($user->get_email(), $info, $pdo);
-}
 
-if(isset($_POST) && isset($_POST['post_content']) && ("" != trim($_POST['post_content']))) {
-    if(!savePostToDB($user->get_email(), $pdo, $_POST['post_content'])) {
-        echo "Error occurred while saving posting <br>";
-    }
-    // prevent resubmission of POST
-    unset($_POST);
-    var_dump($_POST);
-    header('Location:' . $_SERVER['PHP_SELF']);
-}
-
-if(isset($_POST) && isset($_POST['post_comment_content']) && ("" != trim($_POST['post_comment_content']))) {
-    //FIXME: $user->get_email() <= not really, $user can be anyone
-    if(!saveCommentToDB($user->get_email(), $_POST['post__id'], $pdo, $_POST['post_comment_content'])){
-        echo "Error occurred while commenting <br>";
-    }
-
-    var_dump($_POST);
-
-    unset($_POST);
-
-    var_dump($_POST);
-    header('Location:'.$_SERVER['PHP_SELF']);
-
-}
 
 // default profile picture
 $profile_pic = "../rsrc/img/photos/default-profile.png";
