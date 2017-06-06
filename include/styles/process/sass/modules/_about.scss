@@ -1,0 +1,17 @@
+.about {
+	color: $content-position;
+    h2 {
+        padding-bottom: 10px;
+    }
+    .about__title{
+    	padding: 0;
+    	margin: 0;
+    }
+
+    .about__title--font {
+    	color: lighten($black, 30%);
+    	font-size: 1.2em;
+    	font-weight: 400;
+    }
+
+}

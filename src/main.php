@@ -274,16 +274,16 @@ $profile_pic = "../rsrc/img/photos/default-profile.png";
             <!-- left side -->
             <div class="left__intro">
                 <h2 class="content__title content__title--font"><i class="fa fa-pencil-square-o content__icon content__icon--bg" aria-hidden="true"></i>Intro</h2>
-                <div>
                     <?php
-                    if(!empty($info->get_current_city())) {
-                            echo '<p class="intro__detail"><i class="fa fa-home"></i> Lives in ' . $info->get_current_city() . '</p>';
-                    } 
-                    if (!empty($info->get_hometown())) {
-                            echo '<p class="intro__detail"><i class="fa fa-map-marker"></i> From ' . $info->get_hometown() . '</p>';
-                    } 
+                    if(!empty($info->get_description())) {
+                        echo '<p class="intro__detail text-center" id="description">' . $info->get_description() . '</p>';
+                    }
+                    if(!empty($info->get_current_city()))
+                        echo '<p class="intro__detail"><i class="fa fa-home"></i> Lives in ' . $info->get_current_city() . '</p>';
+                    if(!empty($info->get_hometown())) 
+                        echo '<p class="intro__detail"><i class="fa fa-map-marker"></i> From ' . $info->get_hometown() . '</p>';
+                    
                     ?>
-                </div>
                 <button class="intro__update-btn--font intro__update-btn--bg" onclick="show_update_info_page()">update info</button>
             </div>
 
@@ -375,7 +375,7 @@ $profile_pic = "../rsrc/img/photos/default-profile.png";
                     </li>
 
                     <li class="col-xs-3 col-sm-3 col-md-3 col-lg-3">
-                        <a href="#">
+                        <a href="about.php">
                             <i class="fa fa-user-circle timeline__icon"></i class="fa fa-user-circle timeline__icon">
                                 about
                             </a>
