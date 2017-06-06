@@ -297,23 +297,15 @@ function addFriend($friendA, $friendB, $pdo) {
     return $stmt->execute(['A' => $friendA, 'B' => $friendB]);
 }
 
-//TODO: get list of friends
 function loadFriends($user_email, $pdo) {
-    // $query = "SELECT u.first_name, u.last_name, u.email FROM "
-    //     . USERS_TABLE . " AS u, "
-    //     . FRIENDS_TABLE . " AS f "
-    //     . "WHERE :email=f.friendA OR :email=f.friendB";
-    
     $query = "SELECT friendA FROM " . FRIENDS_TABLE . " WHERE friendB = ?"
         . " UNION "
         . "SELECT friendB FROM " . FRIENDS_TABLE . " WHERE friendA = ?;";
     $stmt = $pdo->prepare($query);
     $stmt->execute([$user_email, $user_email]);
-    // return $stmt->fetchAll(PDO::FETCH_ASSOC);
     return $stmt->fetch();
 }
 
-//TODO: function that adds friend to record
 //TODO: function that removes friend from record
 
 

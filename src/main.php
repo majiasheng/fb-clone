@@ -320,7 +320,7 @@ $profile_pic = "../rsrc/img/photos/default-profile.png";
             <!-- ********************** left: friends ********************** -->
             <div class="left__friends">
                 <!-- TODO: redirect to user's friends -->
-                <a href=#><h2 class="content__title content__title--font">
+                <a href="friends.php"><h2 class="content__title content__title--font">
                     <i class="fa fa-user-plus content__icon content__icon--bg" aria-hidden="true"></i>
                     Friends
                 </h2></a>
@@ -328,8 +328,16 @@ $profile_pic = "../rsrc/img/photos/default-profile.png";
                 <div class="row photos__container">
 
                     <?php
-                    //TODO: load 3x3 friends(' profile pictures)
-                    
+                    $friends = loadFriends($user->get_email(), $pdo);
+                    $_SESSION['friends'] = $friends;
+                    $counter = 0;
+                    foreach($friends as $f) {
+                        if($counter > 8) {
+                            break;
+                        }
+                        //TODO: display profile picture instead
+                        echo "<a href=#>" . getUserNameByEmail($f, $pdo) . "</a>";
+                    }
                     ?>
                     <!-- <div class="col-xs-4 col-sm-4 col-md-4 col-lg-4"><img src="../rsrc/img/friends/cat11.jpeg"></div>
                     <div class="col-xs-4 col-sm-4 col-md-4 col-lg-4"><img src="../rsrc/img/friends/cat1.png"></div>
@@ -557,11 +565,8 @@ $profile_pic = "../rsrc/img/photos/default-profile.png";
         <!-- ********************** right: online contacts bar ********************** -->
             <div class="right__contacts">
                 <?php
-                //TODO: load contacts
-                $friends = loadFriends($user->get_email(), $pdo);
-                foreach($friends as $f) {
-                    echo "<a>" . getUserNameByEmail($f, $pdo) . "</a>";
-                }
+                //TODO: load online contacts/friends
+
 
                 ?>
                 <!-- <a href="#"><img src="../rsrc/img/friends/cat1.png" alt="friends"></a>
