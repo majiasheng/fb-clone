@@ -9,23 +9,16 @@
     
     .left__intro {
         color: $content-position;
-
-        .intro__position {
-        	margin-top: 10px;
-        	font-size: 0.9em;
-        	color: lighten($black, 30%);
+        h2 {
+            padding-bottom: 10px;
         }
 
-        .intro__address--font {
-        	font-size: 0.8em;
-        	font-weight: 300;
-        	color: lighten($black, 60%);
-        }
-
-        .intro__country--font {
-        	font-size: 0.8em;
-        	font-weight: 300;
-        	color: lighten($black, 60%);
+        .intro__detail {
+            margin-bottom: 10px;
+            padding: 0;
+            font-size: 0.9em;
+            font-weight: 300;
+            color: lighten($black, 20%);
         }
 
         .intro__update-btn--font {

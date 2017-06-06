@@ -82,7 +82,8 @@ function save_user_to_db($user, $pdo) {
         "'" . $user->get_birth_month()	. "'," .
         "'" . $user->get_birth_day() 	. "'," .
         "'" . $user->get_birth_year()	. "'," .
-        "'" . $user->get_gender() . "'" );
+        "'" . $user->get_gender()       . "'" );
+
 	$query .= ");";
 
 	return $pdo->query($query);
@@ -94,7 +95,7 @@ function save_info_to_db($user_email, $info, $pdo) {
 	$query .= "INSERT INTO " . INFO_TABLE . " (";
 	// fields of user class
 	$query .= "email, workspace, education, current_city, ";
-	$query .= "hometown, relationship";
+	$query .= "hometown, relationship, description";
 	$query .= ") VALUES (";
 
 	$query .= ( 
@@ -103,7 +104,8 @@ function save_info_to_db($user_email, $info, $pdo) {
 				"'" . $info->get_education() 		. "'," .
 				"'" . $info->get_current_city() 	. "'," .
 				"'" . $info->get_hometown()			. "'," .
-				"'" . $info->get_relationship() 	. "'" );
+                "'" . $info->get_relationship()         . "'," .
+				"'" . $info->get_description() 	. "'" );
 	$query .= ") ";
 	$query .= (
                 "ON DUPLICATE KEY UPDATE " . 
@@ -111,7 +113,8 @@ function save_info_to_db($user_email, $info, $pdo) {
                 "education = '" . $info->get_education() . "', " .
                 "current_city = '" . $info->get_current_city() . "', " .
                 "hometown = '" . $info->get_hometown() . "', " .
-                "relationship = '" . $info->get_relationship() . "';" );
+                "relationship = '" . $info->get_relationship() . "', " .
+                "description = '" . $info->get_description() . "';" );
     
 	return $pdo->query($query);
 }
@@ -173,6 +176,7 @@ function load_user_info($user_email, $pdo) {
         $info->set_current_city("");
         $info->set_relationship("");
         $info->set_hometown("");
+        $info->set_description("");
         return $info;
     } else {
         $info = new Info;
@@ -182,6 +186,7 @@ function load_user_info($user_email, $pdo) {
         $info->set_current_city($user_info['current_city']);
         $info->set_relationship($user_info['relationship']);
         $info->set_hometown($user_info['hometown']);
+        $info->set_description($user_info['description']);
         return $info;
     }
 

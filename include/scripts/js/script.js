@@ -31,6 +31,14 @@ function close_update_info_page() {
 
 }
 // TODO: NO REPETITIVE CODE
+function show_modal_input0() {
+	var container = document.getElementById('modal__page--input0');
+	container.style.display = "block";
+}
+function close_modal_input0() {
+	var container = document.getElementById('modal__page--input0');
+	container.style.display = "none";
+}
 function show_modal_input1() {
 	var container = document.getElementById('modal__page--input1');
 	container.style.display = "block";
