@@ -558,7 +558,11 @@ $profile_pic = "../rsrc/img/photos/default-profile.png";
             <div class="right__contacts">
                 <?php
                 //TODO: load contacts
-                    
+                $friends = loadFriends($user->get_email(), $pdo);
+                foreach($friends as $f) {
+                    echo "<a>" . getUserNameByEmail($f, $pdo) . "</a>";
+                }
+
                 ?>
                 <!-- <a href="#"><img src="../rsrc/img/friends/cat1.png" alt="friends"></a>
                 <a href="#"><img src="../rsrc/img/friends/cat2.jpeg" alt="friends"></a>

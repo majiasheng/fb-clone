@@ -261,7 +261,7 @@ function getUserNameByEmail($email, $pdo) {
         . " WHERE email = :email";
     $stmt = $pdo->prepare($query);
     $stmt->execute(['email' => $email]);
-    $rtval = $stmt->fetchAll(PDO::FETCH_ASSOC);
+    $rtval = $stmt->fetch(PDO::FETCH_ASSOC);
     return $rtval['first_name'] . " " . $rtval['last_name'];
 }
 
@@ -286,12 +286,31 @@ function getUserIfMatch($keyword, $pdo) {
 //     return $pdo->query($query)->fetch();
 }
 
+/**
+ * Adds friend to table
+ * return True on sucess, False otherwise
+ */
+function addFriend($friendA, $friendB, $pdo) {
+    $query = "INSERT INTO " . FRIENDS_TABLE . " (friendA, friendB) "
+        . "VALUES(:A, :B);";
+    $stmt = $pdo->prepare($query);
+    return $stmt->execute(['A' => $friendA, 'B' => $friendB]);
+}
+
 //TODO: get list of friends
 function loadFriends($user_email, $pdo) {
     // $query = "SELECT u.first_name, u.last_name, u.email FROM "
     //     . USERS_TABLE . " AS u, "
     //     . FRIENDS_TABLE . " AS f "
     //     . "WHERE :email=f.friendA OR :email=f.friendB";
+    
+    $query = "SELECT friendA FROM " . FRIENDS_TABLE . " WHERE friendB = ?"
+        . " UNION "
+        . "SELECT friendB FROM " . FRIENDS_TABLE . " WHERE friendA = ?;";
+    $stmt = $pdo->prepare($query);
+    $stmt->execute([$user_email, $user_email]);
+    // return $stmt->fetchAll(PDO::FETCH_ASSOC);
+    return $stmt->fetch();
 }
 
 //TODO: function that adds friend to record
