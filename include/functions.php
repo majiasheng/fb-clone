@@ -308,7 +308,7 @@ function getUserIfMatch($keyword, $pdo) {
         . " OR last_name LIKE ?";
     $stmt = $pdo->prepare($query);
     $stmt->execute(array("%$keyword%", "%$keyword%"));
-    return $stmt->fetch(PDO::FETCH_ASSOC);
+    return $stmt->fetchAll(PDO::FETCH_ASSOC);
 // $query = "SELECT first_name, last_name, email FROM "
 //     . USERS_TABLE
 //     . " WHERE first_name LIKE '%". $keyword . "%'"
@@ -333,7 +333,7 @@ function loadFriends($user_email, $pdo) {
         . "SELECT friendB FROM " . FRIENDS_TABLE . " WHERE friendA = ?;";
     $stmt = $pdo->prepare($query);
     $stmt->execute([$user_email, $user_email]);
-    return $stmt->fetch();
+    return $stmt->fetchAll(PDO::FETCH_COLUMN);
 }
 
 //TODO: function that removes friend from record

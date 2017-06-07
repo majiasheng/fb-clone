@@ -19,14 +19,15 @@ $pdo = connect();
 $user = loadUserProfile($_GET['user'], $pdo);
 $info = $user->get_info();
 
+$full_user_name = $user->get_first_name() . " " . $user->get_last_name();
+
 // if the user to redirect to is the user, then go to the main page instead
-if(strcmp($_GET['user'], $user->get_email())) {
+if(strcmp($_GET['user'], $_SESSION['user']->get_email()) == 0) {
     header("Location: main.php");
 }
 
 // default profile picture
 $profile_pic = "../rsrc/img/photos/default-profile.png";
-
 
 ?>
 
@@ -36,7 +37,7 @@ $profile_pic = "../rsrc/img/photos/default-profile.png";
   <meta charset="UTF-8">
   <title>
   <?php 
-  echo $user->get_first_name() . " " . $user->get_last_name();
+  echo $full_user_name;
   ?>
   </title>
   <link rel="stylesheet" href="../include/styles/css/style.css">
@@ -58,7 +59,7 @@ $profile_pic = "../rsrc/img/photos/default-profile.png";
                     <li class="header__username">
                         <a href="#">
                         <?php 
-                        echo $user->get_first_name() . " " . $user->get_last_name();
+                        echo $full_user_name;
                         ?>
                         </a>
                     </li>
@@ -81,7 +82,7 @@ $profile_pic = "../rsrc/img/photos/default-profile.png";
                         </ul>
 
                     </li>
-                    
+
                 </div>
                 <!-- search bar -->
                 <div class="col-md-4 col-sm-12">
@@ -127,7 +128,7 @@ $profile_pic = "../rsrc/img/photos/default-profile.png";
                 alt="profile photo" class="cover__photo"/>
                 <div class="cover__username">
                     <?php 
-                    echo $user->get_first_name() . " " . $user->get_last_name();
+                    echo $full_user_name;
                     ?>
                 </div>
                 <div class="cover__update-info cover__update-info--decor" id="update-info-btn" onclick="show_update_info_page()">update info</div>
@@ -269,8 +270,8 @@ $profile_pic = "../rsrc/img/photos/default-profile.png";
 
             <!-- ********************** left: friends ********************** -->
             <div class="left__friends">
-                <!-- TODO: redirect to user's friends -->
-                <a href="friends.php"><h2 class="content__title content__title--font">
+                <!-- TODO: redirect to NPC's friends -->
+                <a href="friends.php?user="><h2 class="content__title content__title--font">
                     <i class="fa fa-user-plus content__icon content__icon--bg" aria-hidden="true"></i>
                     Friends
                 </h2></a>
@@ -287,6 +288,7 @@ $profile_pic = "../rsrc/img/photos/default-profile.png";
                             }
                             //TODO: display profile picture instead
                             echo "<a href=\"NPC.php?user=". $f . "\">" . getUserNameByEmail($f, $pdo) . "</a>";
+                            echo "&nbsp;";
                         }
                     } else {
                         echo "Lonely person :(";
@@ -371,7 +373,7 @@ $profile_pic = "../rsrc/img/photos/default-profile.png";
                 <!-- TODO: post on wall -->
                 <form action="" method="POST" id="post_form">
                 <textarea placeholder="Write something to <?php 
-                echo $user->get_first_name() . " " . $user->get_last_name(); 
+                echo $full_user_name;
                 ?>" 
                 rows="3" name="post_content" form="post_form"></textarea>
                 <input type="submit" Value="Post">
@@ -390,7 +392,7 @@ $profile_pic = "../rsrc/img/photos/default-profile.png";
                     echo '<div class="post__header">';
                     echo '<img src="' . $profile_pic . '" class="post__header__author-photo">';
                     echo '<p class="post__header__info info__author"><a class="">' 
-                        . $user->get_first_name() . " " . $user->get_last_name() . '</a>';
+                        . $full_user_name . '</a>';
                     if($p->getIsEdited()) {
                         echo " Edited";
                     }

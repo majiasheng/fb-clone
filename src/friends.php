@@ -1,4 +1,7 @@
 <?php
+/**
+ * For listing all friends, used in user profile
+ */
 session_start();
 require_once("../include/functions.php");
 $pdo = connect();

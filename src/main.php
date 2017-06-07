@@ -330,13 +330,21 @@ $profile_pic = "../rsrc/img/photos/default-profile.png";
                     <?php
                     $friends = loadFriends($user->get_email(), $pdo);
                     $_SESSION['friends'] = $friends;
-                    $counter = 0;
-                    foreach($friends as $f) {
-                        if($counter > 8) {
-                            break;
+
+                    if($friends){
+                        $counter = 0;
+                        foreach($friends as $f) {
+                            if($counter > 8) {
+                                break;
+                            }
+                            //TODO: display profile picture instead
+                            echo "<a href=\"NPC.php?user=". $f . "\">" . getUserNameByEmail($f, $pdo) . "</a>";
+                            echo "&nbsp;";
+                            $counter++;
+                            
                         }
-                        //TODO: display profile picture instead
-                        echo "<a href=\"NPC.php?user=". $f . "\">" . getUserNameByEmail($f, $pdo) . "</a>";
+                    } else {
+                        echo "Lonely person :(";
                     }
                     ?>
                     <!-- <div class="col-xs-4 col-sm-4 col-md-4 col-lg-4"><img src="../rsrc/img/friends/cat11.jpeg"></div>
