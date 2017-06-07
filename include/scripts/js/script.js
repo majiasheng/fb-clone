@@ -8,7 +8,7 @@ function show_setting_menu() {
 	    dropdown.style.display = "block";
 	  }
 }
-
+// click anythere to close 
 window.onclick = function(event) {
  	if (!event.target.matches('.fa-caret-down')) {
 
@@ -21,127 +21,42 @@ window.onclick = function(event) {
 }
 
 /* Update Info Page */
-function show_update_info_page() {
-	var modal = document.getElementById('update-info-page');				// get the page
-	modal.style.display = "block";
+function show_modal(clicked_id) {
+	document.getElementById(clicked_id).style.display = "block";
 }
-function close_update_info_page() {
-	var modal = document.getElementById('update-info-page');
-	modal.style.display = "none";
-
-}
-// TODO: NO REPETITIVE CODE
-function show_modal_input0() {
-	var container = document.getElementById('modal__page--input0');
-	container.style.display = "block";
-}
-function close_modal_input0() {
-	var container = document.getElementById('modal__page--input0');
-	container.style.display = "none";
-}
-function show_modal_input1() {
-	var container = document.getElementById('modal__page--input1');
-	container.style.display = "block";
-}
-function close_modal_input1() {
-	var container = document.getElementById('modal__page--input1');
-	container.style.display = "none";
-}
-function show_modal_input2() {
-	var container = document.getElementById('modal__page--input2');
-	container.style.display = "block";
-}
-function close_modal_input2() {
-	var container = document.getElementById('modal__page--input2');
-	container.style.display = "none";
-}
-function show_modal_input3() {
-	var container = document.getElementById('modal__page--input3');
-	container.style.display = "block";
-}
-function close_modal_input3() {
-	var container = document.getElementById('modal__page--input3');
-	container.style.display = "none";
-}
-function show_modal_input4() {
-	var container = document.getElementById('modal__page--input4');
-	container.style.display = "block";
-}
-function close_modal_input4() {
-	var container = document.getElementById('modal__page--input4');
-	container.style.display = "none";
-}
-function show_modal_input5() {
-	var container = document.getElementById('modal__page--input5');
-	container.style.display = "block";
-}
-function close_modal_input5() {
-	var container = document.getElementById('modal__page--input5');
-	container.style.display = "none";
+function close_modal(clicked_id) {
+	document.getElementById(clicked_id).style.display = "none";
 }
 
 // about page
-function show_overview() {
-	document.getElementById('page--overview').style.display = "block";
-	document.getElementById('page--work-edu').style.display = "none";
-	document.getElementById('page--places').style.display = "none";
-	document.getElementById('page--contact').style.display = "none";
-	document.getElementById('page--family').style.display = "none";
-	document.getElementById('page--events').style.display = "none";
-}
-function show_work_edu() {
-	document.getElementById('page--overview').style.display = "none";
-	document.getElementById('page--work-edu').style.display = "block";
-	document.getElementById('page--places').style.display = "none";
-	document.getElementById('page--contact').style.display = "none";
-	document.getElementById('page--family').style.display = "none";
-	document.getElementById('page--details').style.display = "none";
-	document.getElementById('page--events').style.display = "none";
-}
-function show_places() {
-	document.getElementById('page--overview').style.display = "none";
-	document.getElementById('page--work-edu').style.display = "none";
-	document.getElementById('page--places').style.display = "block";
-	document.getElementById('page--contact').style.display = "none";
-	document.getElementById('page--family').style.display = "none";
-	document.getElementById('page--details').style.display = "none";
-	document.getElementById('page--events').style.display = "none";
-}
-function show_contact() {
-	document.getElementById('page--overview').style.display = "none";
-	document.getElementById('page--work-edu').style.display = "none";
-	document.getElementById('page--places').style.display = "none";
-	document.getElementById('page--contact').style.display = "block";
-	document.getElementById('page--family').style.display = "none";
-	document.getElementById('page--details').style.display = "none";
-	document.getElementById('page--events').style.display = "none";
-}
-function show_family() {
-	document.getElementById('page--overview').style.display = "none";
-	document.getElementById('page--work-edu').style.display = "none";
-	document.getElementById('page--places').style.display = "none";
-	document.getElementById('page--contact').style.display = "none";
-	document.getElementById('page--family').style.display = "block";
-	document.getElementById('page--details').style.display = "none";
-	document.getElementById('page--events').style.display = "none";
-}
-function show_details() {
-	document.getElementById('page--overview').style.display = "none";
-	document.getElementById('page--work-edu').style.display = "none";
-	document.getElementById('page--places').style.display = "none";
-	document.getElementById('page--contact').style.display = "none";
-	document.getElementById('page--family').style.display = "none";
-	document.getElementById('page--details').style.display = "block";
-	document.getElementById('page--events').style.display = "none";
-}
-function show_events() {
-	document.getElementById('page--overview').style.display = "none";
-	document.getElementById('page--work-edu').style.display = "none";
-	document.getElementById('page--places').style.display = "none";
-	document.getElementById('page--contact').style.display = "none";
-	document.getElementById('page--family').style.display = "none";
-	document.getElementById('page--details').style.display = "none";
-	document.getElementById('page--events').style.display = "block";
-}
+function show_about_page(link_id) {
+	// create an object with all ids and correponding pages
+	var links_to_pages = {
+							'link--overview': 'page--overview',
+							'link--work-edu': 'page--work-edu',
+							'link--places'	: 'page--places',
+							'link--contact' : 'page--contact',
+							'link--family'	: 'page--family',
+							'link--events'	: 'page--events', 
+							'link--details'	: 'page--details'
+							};
 
+	// set style of the clicked element
+	document.getElementById(link_id).style.color = "black";
+	document.getElementById(link_id).style.fontWeight = "500";
+	document.getElementById(links_to_pages[link_id]).style.display = "block";
+	// remove the clicked element from the object
+	var page = links_to_pages[link_id];
+	delete links_to_pages[link_id];
+
+	// remove all elements' style
+	for (var key in links_to_pages) {
+		document.getElementById(key).style.color = "gray";
+		document.getElementById(key).style.fontWeight = "400";
+		document.getElementById(links_to_pages[key]).style.display = "none";
+	}
+
+	// add the removed element back to the array
+	links_to_pages[link_id] = page;
+}
 

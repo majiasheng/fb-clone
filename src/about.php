@@ -247,18 +247,18 @@ $profile_pic = "../rsrc/img/photos/default-profile.png";
 
         <div class="content__left col-md-4">
             <!-- left side -->
-            <div class="about">
+            <nav class="about">
                 <h2 class="about__title about__title--font">About</h2>
                 <ul class="about__nav">
-                    <li><a href="#page--timeline" id="link--overview" onclick="show_overview()">Overview</a></li>
-                    <li><a href="#page--timeline" id="link--work-edu" onclick="show_work_edu()">Work and Education</a></li>
-                    <li><a href="#page--timeline" id="link--places" onclick="show_places()">Places You've Lived</a></li>
-                    <li><a href="#page--timeline" id="link--contact" onclick="show_contact()">Contact and Basic Info</a></li>
-                    <li><a href="#page--timeline" id="link--family" onclick="show_family()">Family and Relationships</a></li>
-                    <li><a href="#page--timeline" id="link--details" onclick="show_details()">Details About You</a></li>
-                    <li><a href="#page--timeline" id="link--events" onclick="show_events()">Life Events</a></li>
+                    <li><a href="#page--timeline" id="link--overview" onclick="show_about_page(this.id)">Overview</a></li>
+                    <li><a href="#page--timeline" id="link--work-edu" onclick="show_about_page(this.id)">Work and Education</a></li>
+                    <li><a href="#page--timeline" id="link--places" onclick="show_about_page(this.id)">Places You've Lived</a></li>
+                    <li><a href="#page--timeline" id="link--contact" onclick="show_about_page(this.id)">Contact and Basic Info</a></li>
+                    <li><a href="#page--timeline" id="link--family" onclick="show_about_page(this.id)">Family and Relationships</a></li>
+                    <li><a href="#page--timeline" id="link--details" onclick="show_about_page(this.id)">Details About You</a></li>
+                    <li><a href="#page--timeline" id="link--events" onclick="show_about_page(this.id)">Life Events</a></li>
                 </ul>
-            </div>
+            </nav>
 
             <div class=""></div> <!-- WARNING: keep this line, need an extra child to hold css style -->
         </div> <!-- end left column -->
@@ -299,11 +299,11 @@ $profile_pic = "../rsrc/img/photos/default-profile.png";
         <!-- ********************** Overview ********************** -->
         <div class="about__overview" id="page--overview">
             <ul>
-                <li><span>+</span>Add a workplace</li>
-                <li><span>+</span>Add a school</li>
-                <li><span>+</span>Add your current city</li>
-                <li><span>+</span>Add a your hometown</li>
-                <li><span>+</span>Add a relationship</li>
+                <li><a href="#page--work-edu" onclick="show_work_edu()"><span>+</span>Add a workplace</a></li>
+                <li><a href="#page--work-edu" onclick="show_work_edu()"><span>+</span>Add a school</a></li>
+                <li><a href="#page--places" onclick="show_places()"><span>+</span>Add your current city</a></li>
+                <li><a href="#page--places" onclick="show_places()"><span>+</span>Add a your hometown</a></li>
+                <li><a href="#page--family" onclick="show_family()"><span>+</span>Add a relationship</a></li>
             </ul>
         </div>
         <!-- ********************** End Overview ********************** -->

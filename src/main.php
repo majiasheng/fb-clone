@@ -171,95 +171,95 @@ $profile_pic = "../rsrc/img/photos/default-profile.png";
             <div id="update-info-page" class="update-info__modal">
                   <!-- page content -->
                   <div class="modal__page">
-                        <span onclick="close_update_info_page()" class="modal__page-close">&times;</span>
+                        <span onclick="close_modal(this.id)" class="modal__page-close">&times;</span>
 
                         <p class="modal__page--titles">Describe who you are</p>
                 <!-- describe who you are-->
                         <?php
                         if(!empty($info->get_description())) {
                             // foreach($info->get_workplace() as $workplace) {
-                            echo '<p class="modal__page--add" onclick="show_modal_input0()">'. $info->get_description() .'</p>';
+                            echo '<p class="modal__page--add" onclick="show_modal(this.id)">'. $info->get_description() .'</p>';
                             // }
                         } else {
-                            echo '<p class="modal__page--add" onclick="show_modal_input0()"><i class="fa fa-pencil"></i></p>';
+                            echo '<p class="modal__page--add" onclick="show_modal(this.id)"><i class="fa fa-pencil"></i></p>';
                         }
                         ?>
                         <form method="POST" action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]);?>" id="modal__page--input0">
                             <input type="text" name="description" class="modal__page--text">
                             <button type="submit" class="btn btn-primary modal__page--btn">Save</button>
-                            <button type="button"class="btn btn-secondary modal__page--btn" onclick="close_modal_input1()">Cancel</button>
+                            <button type="button"class="btn btn-secondary modal__page--btn" onclick="close_modal(this.id)">Cancel</button>
                         </form>
                         <p class="modal__page--titles">workplace</p>
                 <!-- echo all workplaces and schools-->
                         <?php
                         if(!empty($info->get_workplace())) {
                             // foreach($info->get_workplace() as $workplace) {
-                            echo '<p class="modal__page--add" onclick="show_modal_input1()">'. $info->get_workplace() .'</p>';
+                            echo '<p class="modal__page--add" onclick="show_modal(this.id)">'. $info->get_workplace() .'</p>';
                             // }
                         } else {
-                            echo '<p class="modal__page--add" onclick="show_modal_input1()">Add Workplace</p>';
+                            echo '<p class="modal__page--add" onclick="show_modal(this.id)">Add Workplace</p>';
                         }
                         ?>
                         <form method="POST" action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]);?>" id="modal__page--input1">
                             <input type="text" name="workplace" class="modal__page--text">
                             <button type="submit" name="input_save" class="btn btn-primary modal__page--btn">Save</button>
-                            <button type="button"class="btn btn-secondary modal__page--btn" onclick="close_modal_input1()">Cancel</button>
+                            <button type="button"class="btn btn-secondary modal__page--btn" onclick="close_modal(this.id)">Cancel</button>
                         </form>
 
                         <p class="modal__page--titles">Education</p>
                         <?php
                         if(!empty($info->get_education())) {
                             // foreach($info->get_education() as $education) {
-                                echo '<p class="modal__page--add" onclick="show_modal_input2()">'. $info->get_education() .'</p>';
+                                echo '<p class="modal__page--add" onclick="show_modal(this.id)">'. $info->get_education() .'</p>';
                             // }   
                         } else {
-                            echo '<p class="modal__page--add" onclick="show_modal_input2()">Add education</p>';
+                            echo '<p class="modal__page--add" onclick="show_modal(this.id)">Add education</p>';
                         }
                         ?>
                         <form method="POST" action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]);?>" id="modal__page--input2">
                             <input type="text" name="education" class="modal__page--text">
                             <button type="submit" class="btn btn-primary modal__page--btn">Save</button>
-                            <button type="button" class="btn btn-secondary modal__page--btn" onclick="close_modal_input2()">Cancel</button>
+                            <button type="button" class="btn btn-secondary modal__page--btn" onclick="close_modal(this.id)">Cancel</button>
                         </form>
                 <!-- echo current city, hometown, and relationship -->
                         <p class="modal__page--titles">Current City</p>
                         <?php
                         if(empty($info->get_current_city())) {
-                            echo '<p class="modal__page--add" onclick="show_modal_input3()">Add current city</p>';
+                            echo '<p class="modal__page--add" onclick="show_modal(this.id)">Add current city</p>';
                         } else {
-                            echo '<p class="modal__page--add" onclick="show_modal_input3()">' . $info->get_current_city() . '</p>';
+                            echo '<p class="modal__page--add" onclick="show_modal(this.id)">' . $info->get_current_city() . '</p>';
                         }
                         ?>
                         <form method="POST" action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]);?>" id="modal__page--input3">
                             <input type="text" name="current_city" class="modal__page--text">
                             <button type="submit" class="btn btn-primary modal__page--btn">Save</button>
-                            <button type="button" class="btn btn-secondary modal__page--btn" onclick="close_modal_input3()">Cancel</button>
+                            <button type="button" class="btn btn-secondary modal__page--btn" onclick="close_modal(this.id)">Cancel</button>
                         </form>
                         <p class="modal__page--titles">Hometown</p>
                         <?php
                         if(empty($info->get_hometown())) {
-                            echo '<p class="modal__page--add" onclick="show_modal_input4()">Add hometown</p>';
+                            echo '<p class="modal__page--add" onclick="show_modal(this.id)">Add hometown</p>';
                         } else {
-                            echo '<p class="modal__page--add" onclick="show_modal_input4()">' . $info->get_hometown() . '</p>';
+                            echo '<p class="modal__page--add" onclick="show_modal(this.id)">' . $info->get_hometown() . '</p>';
                         }
                         ?>
                         <form method="POST" action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]);?>" id="modal__page--input4">
                             <input type="text" name="hometown" class="modal__page--text">
                             <button type="submit" class="btn btn-primary modal__page--btn">Save</button>
-                            <button type="button" class="btn btn-secondary modal__page--btn" onclick="close_modal_input4()">Cancel</button>
+                            <button type="button" class="btn btn-secondary modal__page--btn" onclick="close_modal(this.id)">Cancel</button>
                         </form>
                         <p class="modal__page--titles">Relationship</p>
                         <?php
                         if(empty($info->get_relationship())) {
-                            echo '<p class="modal__page--add" onclick="show_modal_input5()">Add relationship</p>';
+                            echo '<p class="modal__page--add" onclick="show_modal(this.id)">Add relationship</p>';
                         } else {
-                            echo '<p class="modal__page--add" onclick="show_modal_input5()">' . $info->get_relationship() . '</p>';
+                            echo '<p class="modal__page--add" onclick="show_modal(this.id)">' . $info->get_relationship() . '</p>';
                         }
                         ?>
                         <form method="POST" action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]);?>" id="modal__page--input5">
                             <input type="text" name="relationship" class="modal__page--text">
                             <button type="submit" class="btn btn-primary modal__page--btn">Save</button>
-                            <button type="button" class="btn btn-secondary modal__page--btn" onclick="close_modal_input5()">Cancel</button>
+                            <button type="button" class="btn btn-secondary modal__page--btn" onclick="close_modal(this.id)">Cancel</button>
                         </form>
                         <p class="modal__page--titles">About Info</p>
                         <p class="modal__page--add">Edit Your About Info</p>
@@ -284,7 +284,7 @@ $profile_pic = "../rsrc/img/photos/default-profile.png";
                         echo '<p class="intro__detail"><i class="fa fa-map-marker"></i> From ' . $info->get_hometown() . '</p>';
                     
                     ?>
-                <button class="intro__update-btn--font intro__update-btn--bg" onclick="show_update_info_page()">update info</button>
+                <button class="intro__update-btn--font intro__update-btn--bg" onclick="show_modal(this.id)">update info</button>
             </div>
 
             <!-- ********************** left: photos ********************** -->

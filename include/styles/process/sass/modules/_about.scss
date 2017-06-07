@@ -36,16 +36,19 @@
     }
 }
 .about__overview {
-	color: $link-blue;
 	padding: 10px;
 	font-size: 1.1em;
 	margin-bottom: 50%;
 
 	li {
-		padding: 25px 0;
-		margin-left: 15px;
-		cursor: pointer;
-
+			padding: 25px 0;
+		a {
+			padding: 25px 0;
+			margin-left: 15px;
+			cursor: pointer;
+			text-decoration: none;
+			color: $link-blue;
+		}
 		span{
 			padding: 5px 10px;
 			margin-right: 15px;
