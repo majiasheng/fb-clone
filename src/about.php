@@ -14,7 +14,23 @@ $info = $_SESSION['user_info'];
 $pdo = connect();
 
 // if a form is sent to self, handle it
-
+if (isset($_POST) && (isset($_POST["workplace"]) || isset($_POST["education"]) || isset($_POST["current_city"]) ||
+    isset($_POST["hometown"]) || isset($_POST["relationship"]) || isset($_POST["description"]))) {
+// if($_SERVER["REQUEST_METHOD"] == "POST") {
+    if (isset($_POST["workplace"]))
+        $info->set_workplace($_POST["workplace"]);
+    else if (isset($_POST["education"]))
+        $info->set_education($_POST["education"]);
+    else if (isset($_POST["current_city"]))
+        $info->set_current_city($_POST["current_city"]);
+    else if (isset($_POST["hometown"]))
+        $info->set_hometown($_POST["hometown"]);
+    else if (isset($_POST["relationship"]))
+        $info->set_relationship($_POST["relationship"]);
+    else if (isset($_POST["description"]))
+        $info->set_description($_POST["description"]);
+    save_info_to_db($user->get_email(), $info, $pdo);
+}
 
 // default profile picture
 $profile_pic = "../rsrc/img/photos/default-profile.png";
@@ -136,7 +152,7 @@ $profile_pic = "../rsrc/img/photos/default-profile.png";
                 <!-- describe who you are-->
                         <?php
                         if(!empty($info->get_description())) {
-                            // foreach($info->get_workspace() as $workspace) {
+                            // foreach($info->get_workplace() as $workplace) {
                             echo '<p class="modal__page--add" onclick="show_modal_input0()">'. $info->get_description() .'</p>';
                             // }
                         } else {
@@ -148,19 +164,19 @@ $profile_pic = "../rsrc/img/photos/default-profile.png";
                             <button type="submit" class="btn btn-primary modal__page--btn">Save</button>
                             <button type="button"class="btn btn-secondary modal__page--btn" onclick="close_modal_input1()">Cancel</button>
                         </form>
-                        <p class="modal__page--titles">Workspace</p>
+                        <p class="modal__page--titles">workplace</p>
                 <!-- echo all workplaces and schools-->
                         <?php
-                        if(!empty($info->get_workspace())) {
-                            // foreach($info->get_workspace() as $workspace) {
-                            echo '<p class="modal__page--add" onclick="show_modal_input1()">'. $info->get_workspace() .'</p>';
+                        if(!empty($info->get_workplace())) {
+                            // foreach($info->get_workplace() as $workplace) {
+                            echo '<p class="modal__page--add" onclick="show_modal_input1()">'. $info->get_workplace() .'</p>';
                             // }
                         } else {
-                            echo '<p class="modal__page--add" onclick="show_modal_input1()">Add workspace</p>';
+                            echo '<p class="modal__page--add" onclick="show_modal_input1()">Add workplace</p>';
                         }
                         ?>
                         <form method="POST" action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]);?>" id="modal__page--input1">
-                            <input type="text" name="workspace" class="modal__page--text">
+                            <input type="text" name="workplace" class="modal__page--text">
                             <button type="submit" name="input_save" class="btn btn-primary modal__page--btn">Save</button>
                             <button type="button"class="btn btn-secondary modal__page--btn" onclick="close_modal_input1()">Cancel</button>
                         </form>
@@ -233,7 +249,15 @@ $profile_pic = "../rsrc/img/photos/default-profile.png";
             <!-- left side -->
             <div class="about">
                 <h2 class="about__title about__title--font">About</h2>
-                    
+                <ul class="about__nav">
+                    <li><a href="#page--timeline" id="link--overview" onclick="show_overview()">Overview</a></li>
+                    <li><a href="#page--timeline" id="link--work-edu" onclick="show_work_edu()">Work and Education</a></li>
+                    <li><a href="#page--timeline" id="link--places" onclick="show_places()">Places You've Lived</a></li>
+                    <li><a href="#page--timeline" id="link--contact" onclick="show_contact()">Contact and Basic Info</a></li>
+                    <li><a href="#page--timeline" id="link--family" onclick="show_family()">Family and Relationships</a></li>
+                    <li><a href="#page--timeline" id="link--details" onclick="show_details()">Details About You</a></li>
+                    <li><a href="#page--timeline" id="link--events" onclick="show_events()">Life Events</a></li>
+                </ul>
             </div>
 
             <div class=""></div> <!-- WARNING: keep this line, need an extra child to hold css style -->
@@ -241,7 +265,7 @@ $profile_pic = "../rsrc/img/photos/default-profile.png";
 
         <!-- ********************** middle: post panel ********************** -->
         <div class="content__middle col-md-6">
-            <div class="middle__timeline">
+            <div class="middle__timeline" id="page--timeline">
                 <ul class="row">
                     <li class="col-xs-3 col-sm-3 col-md-3 col-lg-3">
                         <a href="main.php">
@@ -272,8 +296,101 @@ $profile_pic = "../rsrc/img/photos/default-profile.png";
                     </li>
                 </ul>
             </div>
+        <!-- ********************** Overview ********************** -->
+        <div class="about__overview" id="page--overview">
+            <ul>
+                <li><span>+</span>Add a workplace</li>
+                <li><span>+</span>Add a school</li>
+                <li><span>+</span>Add your current city</li>
+                <li><span>+</span>Add a your hometown</li>
+                <li><span>+</span>Add a relationship</li>
+            </ul>
+        </div>
+        <!-- ********************** End Overview ********************** -->
 
+        <!-- ********************** Work and Education ********************** -->
+        <div class="about__work-edu" id="page--work-edu">
+            <ul>
+                <li>work</li>
+                <li><span>+</span>Add a workplace</li>
+                <li>professional skills</li>
+                <li><span>+</span>Add a professional skill</li>
+                <li>college</li>
+                <li><span>+</span>Add a college</li>
+                <li>high school</li>
+                <li><span>+</span>Add a high school</li>
+            </ul>
+        </div>
+        
+        <!-- ********************** End Work and Education ********************** -->
 
+        <!-- ********************** Places You've Lived ********************** -->
+        <div class="about__places" id="page--places">
+            <ul>
+                <li>current city and hometown</li>
+                <li><span>+</span>Add your current city</li>
+                <li><span>+</span>Add your hometown</li>
+                <li>other places lived</li>
+                <li><span>+</span>Add a place</li>
+            </ul>
+        </div>
+        <!-- ********************** End Places You've Lived ********************** -->
+
+        <!-- ********************** Contact and Basic Info ********************** -->
+        <div class="about__contact" id="page--contact">
+            <ul>
+                <li>contact information</li>
+                <li><span>+</span>Add a email</li>
+                <li><span>+</span>Add a mobile phone</li>
+                <li><span>+</span>Add your address</li>
+                <li><span>+</span>Add a public key</li>
+                <li>websites and social links</li>
+                <li><span>+</span>Add a website</li>
+                <li><span>+</span>Add a social link</li>
+                <li>basic information</li>
+                <li><span>+</span>Add a who you're interested in</li>
+                <li><span>+</span>Add a language</li>
+                <li><span>+</span>Add a your religious views</li>
+                <li><span>+</span>Add a political views</li>
+            </ul>
+        </div>
+        <!-- ********************** End Contact and Basic Info ********************** -->
+
+        <!-- ********************** Family and Relationships ********************** -->
+        <div class="about__family" id="page--family">
+            <ul>
+                <li>relationship</li>
+                <li><span>+</span>Add your relationship status</li>
+                
+                <li>family members</li>
+                <li><span>+</span>Add a family member</li>
+            </ul>
+        </div>
+        <!-- ********************** End Family and Relationships ********************** -->
+
+        <!-- ********************** Details About You ********************** -->
+        <div class="about__details" id="page--details">
+            <ul>
+                <li>about you</li>
+                <li><span>+</span>Write some details about yourself</li>
+                <li>name pronunciation</li>
+                <li><span>+</span>How do you pronounce your name?</li>
+                <li>other names</li>
+                <li><span>+</span>Add a nickname, a birth name...</li>
+                <li>favorite quotes</li>
+                <li><span>+</span>Add your favorite quotations</li>
+            </ul>
+        </div>
+        <!-- ********************** End Details About You ********************** -->
+
+        <!-- ********************** Life Events ********************** -->
+        <div class="about__events" id="page--events">
+            <ul>
+                <li>life events</li>
+                <li><span>+</span>Add a life event</li>
+            </ul>
+        </div>
+        <!-- ********************** End Life Events ********************** -->
               
         </div> <!-- ********************** end middle bar ********************** -->
 

@@ -14,11 +14,11 @@ $info = $_SESSION['user_info'];
 $pdo = connect();
 
 // if a form is sent to self, handle it
-if (isset($_POST) && (isset($_POST["workspace"]) || isset($_POST["education"]) || isset($_POST["current_city"]) ||
+if (isset($_POST) && (isset($_POST["workplace"]) || isset($_POST["education"]) || isset($_POST["current_city"]) ||
     isset($_POST["hometown"]) || isset($_POST["relationship"]) || isset($_POST["description"]))) {
 // if($_SERVER["REQUEST_METHOD"] == "POST") {
-    if (isset($_POST["workspace"]))
-        $info->set_workspace($_POST["workspace"]);
+    if (isset($_POST["workplace"]))
+        $info->set_workplace($_POST["workplace"]);
     else if (isset($_POST["education"]))
         $info->set_education($_POST["education"]);
     else if (isset($_POST["current_city"]))
@@ -177,7 +177,7 @@ $profile_pic = "../rsrc/img/photos/default-profile.png";
                 <!-- describe who you are-->
                         <?php
                         if(!empty($info->get_description())) {
-                            // foreach($info->get_workspace() as $workspace) {
+                            // foreach($info->get_workplace() as $workplace) {
                             echo '<p class="modal__page--add" onclick="show_modal_input0()">'. $info->get_description() .'</p>';
                             // }
                         } else {
@@ -189,19 +189,19 @@ $profile_pic = "../rsrc/img/photos/default-profile.png";
                             <button type="submit" class="btn btn-primary modal__page--btn">Save</button>
                             <button type="button"class="btn btn-secondary modal__page--btn" onclick="close_modal_input1()">Cancel</button>
                         </form>
-                        <p class="modal__page--titles">Workspace</p>
+                        <p class="modal__page--titles">workplace</p>
                 <!-- echo all workplaces and schools-->
                         <?php
-                        if(!empty($info->get_workspace())) {
-                            // foreach($info->get_workspace() as $workspace) {
-                            echo '<p class="modal__page--add" onclick="show_modal_input1()">'. $info->get_workspace() .'</p>';
+                        if(!empty($info->get_workplace())) {
+                            // foreach($info->get_workplace() as $workplace) {
+                            echo '<p class="modal__page--add" onclick="show_modal_input1()">'. $info->get_workplace() .'</p>';
                             // }
                         } else {
-                            echo '<p class="modal__page--add" onclick="show_modal_input1()">Add workspace</p>';
+                            echo '<p class="modal__page--add" onclick="show_modal_input1()">Add Workplace</p>';
                         }
                         ?>
                         <form method="POST" action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]);?>" id="modal__page--input1">
-                            <input type="text" name="workspace" class="modal__page--text">
+                            <input type="text" name="workplace" class="modal__page--text">
                             <button type="submit" name="input_save" class="btn btn-primary modal__page--btn">Save</button>
                             <button type="button"class="btn btn-secondary modal__page--btn" onclick="close_modal_input1()">Cancel</button>
                         </form>

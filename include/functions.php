@@ -94,13 +94,13 @@ function save_info_to_db($user_email, $info, $pdo) {
 	$query = "";
 	$query .= "INSERT INTO " . INFO_TABLE . " (";
 	// fields of user class
-	$query .= "email, workspace, education, current_city, ";
+	$query .= "email, workplace, education, current_city, ";
 	$query .= "hometown, relationship, description";
 	$query .= ") VALUES (";
 
 	$query .= ( 
 				"'" . $info->get_email() 			. "'," .
-				"'" . $info->get_workspace() 		. "'," .
+				"'" . $info->get_workplace() 		. "'," .
 				"'" . $info->get_education() 		. "'," .
 				"'" . $info->get_current_city() 	. "'," .
 				"'" . $info->get_hometown()			. "'," .
@@ -109,7 +109,7 @@ function save_info_to_db($user_email, $info, $pdo) {
 	$query .= ") ";
 	$query .= (
                 "ON DUPLICATE KEY UPDATE " . 
-                "workspace = '" . $info->get_workspace() . "', " .
+                "workplace = '" . $info->get_workplace() . "', " .
                 "education = '" . $info->get_education() . "', " .
                 "current_city = '" . $info->get_current_city() . "', " .
                 "hometown = '" . $info->get_hometown() . "', " .
@@ -172,7 +172,7 @@ function load_user_info($user_email, $pdo) {
         $info = new Info;
         $info->set_email($user_email);
         $info->set_education("");
-        $info->set_workspace("");
+        $info->set_workplace("");
         $info->set_current_city("");
         $info->set_relationship("");
         $info->set_hometown("");
@@ -182,7 +182,7 @@ function load_user_info($user_email, $pdo) {
         $info = new Info;
         $info->set_email($user_email);
         $info->set_education($user_info['education']);
-        $info->set_workspace($user_info['workspace']);
+        $info->set_workplace($user_info['workplace']);
         $info->set_current_city($user_info['current_city']);
         $info->set_relationship($user_info['relationship']);
         $info->set_hometown($user_info['hometown']);

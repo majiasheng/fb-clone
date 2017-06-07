@@ -3,7 +3,7 @@
 class Info {
     private $email;
     private $education;
-    private $workspace;
+    private $workplace;
     private $current_city;
     private $relationship;
     private $hometown;
@@ -16,8 +16,8 @@ class Info {
     function set_education($arg) {
         $this->education = $arg;
     }
-    function set_workspace($arg) {
-        $this->workspace = $arg;
+    function set_workplace($arg) {
+        $this->workplace = $arg;
     }
     function set_current_city($arg) {
         $this->current_city = $arg;
@@ -38,8 +38,8 @@ class Info {
     function get_education() {
         return $this->education;
     }
-    function get_workspace() {
-        return $this->workspace;
+    function get_workplace() {
+        return $this->workplace;
     }
     function get_current_city() {
         return $this->current_city;

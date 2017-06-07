@@ -79,3 +79,69 @@ function close_modal_input5() {
 	var container = document.getElementById('modal__page--input5');
 	container.style.display = "none";
 }
+
+// about page
+function show_overview() {
+	document.getElementById('page--overview').style.display = "block";
+	document.getElementById('page--work-edu').style.display = "none";
+	document.getElementById('page--places').style.display = "none";
+	document.getElementById('page--contact').style.display = "none";
+	document.getElementById('page--family').style.display = "none";
+	document.getElementById('page--events').style.display = "none";
+}
+function show_work_edu() {
+	document.getElementById('page--overview').style.display = "none";
+	document.getElementById('page--work-edu').style.display = "block";
+	document.getElementById('page--places').style.display = "none";
+	document.getElementById('page--contact').style.display = "none";
+	document.getElementById('page--family').style.display = "none";
+	document.getElementById('page--details').style.display = "none";
+	document.getElementById('page--events').style.display = "none";
+}
+function show_places() {
+	document.getElementById('page--overview').style.display = "none";
+	document.getElementById('page--work-edu').style.display = "none";
+	document.getElementById('page--places').style.display = "block";
+	document.getElementById('page--contact').style.display = "none";
+	document.getElementById('page--family').style.display = "none";
+	document.getElementById('page--details').style.display = "none";
+	document.getElementById('page--events').style.display = "none";
+}
+function show_contact() {
+	document.getElementById('page--overview').style.display = "none";
+	document.getElementById('page--work-edu').style.display = "none";
+	document.getElementById('page--places').style.display = "none";
+	document.getElementById('page--contact').style.display = "block";
+	document.getElementById('page--family').style.display = "none";
+	document.getElementById('page--details').style.display = "none";
+	document.getElementById('page--events').style.display = "none";
+}
+function show_family() {
+	document.getElementById('page--overview').style.display = "none";
+	document.getElementById('page--work-edu').style.display = "none";
+	document.getElementById('page--places').style.display = "none";
+	document.getElementById('page--contact').style.display = "none";
+	document.getElementById('page--family').style.display = "block";
+	document.getElementById('page--details').style.display = "none";
+	document.getElementById('page--events').style.display = "none";
+}
+function show_details() {
+	document.getElementById('page--overview').style.display = "none";
+	document.getElementById('page--work-edu').style.display = "none";
+	document.getElementById('page--places').style.display = "none";
+	document.getElementById('page--contact').style.display = "none";
+	document.getElementById('page--family').style.display = "none";
+	document.getElementById('page--details').style.display = "block";
+	document.getElementById('page--events').style.display = "none";
+}
+function show_events() {
+	document.getElementById('page--overview').style.display = "none";
+	document.getElementById('page--work-edu').style.display = "none";
+	document.getElementById('page--places').style.display = "none";
+	document.getElementById('page--contact').style.display = "none";
+	document.getElementById('page--family').style.display = "none";
+	document.getElementById('page--details').style.display = "none";
+	document.getElementById('page--events').style.display = "block";
+}
+
+

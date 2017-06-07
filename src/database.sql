@@ -18,7 +18,7 @@ CREATE TABLE users (
 CREATE TABLE info (
     id              INTEGER     NOT NULL AUTO_INCREMENT,
     email           VARCHAR(50) NOT NULL UNIQUE,
-    workspace       VARCHAR(50),
+    workplace       VARCHAR(50),
     education       VARCHAR(50),
     current_city    VARCHAR(50),
     hometown        VARCHAR(50),

@@ -1,17 +1,104 @@
 .about {
 	color: $content-position;
-    h2 {
-        padding-bottom: 10px;
-    }
-    .about__title{
-    	padding: 0;
-    	margin: 0;
-    }
+	margin: 0;
+	padding: 0;
 
+    .about__title{
+    	margin: -20px;
+    	padding: 20px;
+    	background-color: lighten(black, 97%);
+    }
     .about__title--font {
     	color: lighten($black, 30%);
     	font-size: 1.2em;
     	font-weight: 400;
     }
+    .about__nav {
+    	margin: 20px 0;
+    	font-size: 1.0em;
+    	li {
+	    	padding-top: 15px;
 
+	    	a {
+		    	padding: 10px;
+		    	color: lighten(black, 50%);
+		    	text-decoration: none;
+		    }
+		    a:hover {
+		    	font-weight: 500;
+		    	color: black;
+		    }
+		    a:active {
+		    	font-weight: 500;
+		    	color: black;
+		    }
+    	}
+    }
 }
+.about__overview {
+	color: $link-blue;
+	padding: 10px;
+	font-size: 1.1em;
+	margin-bottom: 50%;
+
+	li {
+		padding: 25px 0;
+		margin-left: 15px;
+		cursor: pointer;
+
+		span{
+			padding: 5px 10px;
+			margin-right: 15px;
+			border: 1px dashed $link-blue;
+		}
+	}
+	li:not(:last-child)  {
+		border-bottom: 1px solid lighten(black, 90%);
+	}
+}
+
+.about__work-edu, .about__places, .about__contact, .about__family, .about__details, .about__events {
+	display: none;
+	padding: 10px;
+	margin-bottom: 50%;
+	li:nth-child(1) {
+		margin-top: 20px;
+	}
+}
+
+// add buttons
+.about__work-edu li:nth-child(even),
+.about__places li:nth-child(2), .about__places li:nth-child(3), .about__places li:nth-child(5),
+.about__contact li:nth-child(2), .about__contact li:nth-child(3), .about__contact li:nth-child(5), .about__contact li:nth-child(7), .about__contact li:nth-child(8), .about__contact li:nth-child(10), .about__contact li:nth-child(11), .about__contact li:nth-child(12), .about__contact li:nth-child(13),
+.about__family li:nth-child(2), .about__family li:nth-child(4),
+.about__details li:nth-child(2), .about__details li:nth-child(4), .about__details li:nth-child(6), .about__details li:nth-child(8),
+.about__events li:not(:first-of-type)
+{
+	color: $link-blue;
+	font-size: 1.1em;
+	padding: 25px 0 40px;
+	margin-left: 15px;
+	cursor: pointer;
+	span{
+		padding: 5px 10px;
+		margin-right: 15px;
+		border: 1px dashed $link-blue;
+	}
+}
+// titles
+.about__work-edu li:nth-child(odd),
+.about__places li:nth-child(1), .about__places li:nth-child(4),
+.about__contact li:nth-child(1), .about__contact li:nth-child(4), .about__contact li:nth-child(6),.about__contact li:nth-child(9),
+.about__family li:nth-child(1), .about__family li:nth-child(3),
+.about__details li:nth-child(1), .about__details li:nth-child(3), .about__details li:nth-child(5), .about__details li:nth-child(7),
+.about__events li:first-of-type
+{
+	color: lighten(black, 70%);
+	padding-bottom: 5px;
+	text-transform: uppercase;
+	font-weight: 500;
+	font-size: 0.8em;
+	margin-left: 15px;
+	border-bottom: 1px solid lighten(black, 90%);
+}
+
