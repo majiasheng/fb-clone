@@ -1,3 +1,8 @@
+/** 
+	author: Melanie Lin 
+
+**/
+
 /* Drop-down Menu */
 function show_setting_menu() {
 	var dropdown = document.getElementsByClassName("icon-setting--dropdown")[0];
@@ -44,7 +49,9 @@ function show_about_page(link_id) {
 	// set style of the clicked element
 	document.getElementById(link_id).style.color = "black";
 	document.getElementById(link_id).style.fontWeight = "500";
+	document.getElementById(link_id).style.borderLeft = "2px solid black";
 	document.getElementById(links_to_pages[link_id]).style.display = "block";
+	
 	// remove the clicked element from the object
 	var page = links_to_pages[link_id];
 	delete links_to_pages[link_id];
@@ -53,10 +60,15 @@ function show_about_page(link_id) {
 	for (var key in links_to_pages) {
 		document.getElementById(key).style.color = "gray";
 		document.getElementById(key).style.fontWeight = "400";
+		document.getElementById(key).style.borderLeft = "none";
 		document.getElementById(links_to_pages[key]).style.display = "none";
 	}
 
-	// add the removed element back to the array
+	// add the removed element back to the obj
 	links_to_pages[link_id] = page;
+}
+
+function choose_file() {
+	document.getElementById('file_upload').click();
 }
 

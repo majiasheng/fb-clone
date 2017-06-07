@@ -252,11 +252,11 @@ $profile_pic = "../rsrc/img/photos/default-profile.png";
                 <ul class="about__nav">
                     <li><a href="#page--timeline" id="link--overview" onclick="show_about_page(this.id)">Overview</a></li>
                     <li><a href="#page--timeline" id="link--work-edu" onclick="show_about_page(this.id)">Work and Education</a></li>
-                    <li><a href="#page--timeline" id="link--places" onclick="show_about_page(this.id)">Places You've Lived</a></li>
-                    <li><a href="#page--timeline" id="link--contact" onclick="show_about_page(this.id)">Contact and Basic Info</a></li>
-                    <li><a href="#page--timeline" id="link--family" onclick="show_about_page(this.id)">Family and Relationships</a></li>
-                    <li><a href="#page--timeline" id="link--details" onclick="show_about_page(this.id)">Details About You</a></li>
-                    <li><a href="#page--timeline" id="link--events" onclick="show_about_page(this.id)">Life Events</a></li>
+                    <li><a href="#page--timeline" id="link--places"   onclick="show_about_page(this.id)">Places You've Lived</a></li>
+                    <li><a href="#page--timeline" id="link--contact"  onclick="show_about_page(this.id)">Contact and Basic Info</a></li>
+                    <li><a href="#page--timeline" id="link--family"   onclick="show_about_page(this.id)">Family and Relationships</a></li>
+                    <li><a href="#page--timeline" id="link--details"  onclick="show_about_page(this.id)">Details About You</a></li>
+                    <li><a href="#page--timeline" id="link--events"   onclick="show_about_page(this.id)">Life Events</a></li>
                 </ul>
             </nav>
 
@@ -299,11 +299,11 @@ $profile_pic = "../rsrc/img/photos/default-profile.png";
         <!-- ********************** Overview ********************** -->
         <div class="about__overview" id="page--overview">
             <ul>
-                <li><a href="#page--work-edu" onclick="show_work_edu()"><span>+</span>Add a workplace</a></li>
-                <li><a href="#page--work-edu" onclick="show_work_edu()"><span>+</span>Add a school</a></li>
-                <li><a href="#page--places" onclick="show_places()"><span>+</span>Add your current city</a></li>
-                <li><a href="#page--places" onclick="show_places()"><span>+</span>Add a your hometown</a></li>
-                <li><a href="#page--family" onclick="show_family()"><span>+</span>Add a relationship</a></li>
+                <li><a href="#page--work-edu" id="link--work-edu" onclick="show_about_page(this.id)"><span>+</span>Add a workplace</a></li>
+                <li><a href="#page--work-edu" id="link--work-edu" onclick="show_about_page(this.id)"><span>+</span>Add a school</a></li>
+                <li><a href="#page--places"   id="link--places"   onclick="show_about_page(this.id)"><span>+</span>Add your current city</a></li>
+                <li><a href="#page--places"   id="link--places"   onclick="show_about_page(this.id)"><span>+</span>Add a your hometown</a></li>
+                <li><a href="#page--family"   id="link--family"   onclick="show_about_page(this.id)"><span>+</span>Add a relationship</a></li>
             </ul>
         </div>
         <!-- ********************** End Overview ********************** -->
@@ -312,11 +312,20 @@ $profile_pic = "../rsrc/img/photos/default-profile.png";
         <div class="about__work-edu" id="page--work-edu">
             <ul>
                 <li>work</li>
-                <li><span>+</span>Add a workplace</li>
+                <li><span>+</span>Add a workplace
+                    <form>
+                    </form>
+                </li>
+            </ul>
+            <ul>
                 <li>professional skills</li>
                 <li><span>+</span>Add a professional skill</li>
+            </ul>
+            <ul>
                 <li>college</li>
                 <li><span>+</span>Add a college</li>
+            </ul>
+            <ul>
                 <li>high school</li>
                 <li><span>+</span>Add a high school</li>
             </ul>
@@ -330,6 +339,8 @@ $profile_pic = "../rsrc/img/photos/default-profile.png";
                 <li>current city and hometown</li>
                 <li><span>+</span>Add your current city</li>
                 <li><span>+</span>Add your hometown</li>
+            </ul>
+            <ul>
                 <li>other places lived</li>
                 <li><span>+</span>Add a place</li>
             </ul>
@@ -344,9 +355,13 @@ $profile_pic = "../rsrc/img/photos/default-profile.png";
                 <li><span>+</span>Add a mobile phone</li>
                 <li><span>+</span>Add your address</li>
                 <li><span>+</span>Add a public key</li>
+            </ul>
+            <ul>
                 <li>websites and social links</li>
                 <li><span>+</span>Add a website</li>
                 <li><span>+</span>Add a social link</li>
+            </ul>
+            <ul>
                 <li>basic information</li>
                 <li><span>+</span>Add a who you're interested in</li>
                 <li><span>+</span>Add a language</li>
@@ -361,7 +376,8 @@ $profile_pic = "../rsrc/img/photos/default-profile.png";
             <ul>
                 <li>relationship</li>
                 <li><span>+</span>Add your relationship status</li>
-                
+            </ul>
+            <ul>
                 <li>family members</li>
                 <li><span>+</span>Add a family member</li>
             </ul>
@@ -373,10 +389,16 @@ $profile_pic = "../rsrc/img/photos/default-profile.png";
             <ul>
                 <li>about you</li>
                 <li><span>+</span>Write some details about yourself</li>
+            </ul>
+            <ul>
                 <li>name pronunciation</li>
                 <li><span>+</span>How do you pronounce your name?</li>
+            </ul>
+            <ul>
                 <li>other names</li>
                 <li><span>+</span>Add a nickname, a birth name...</li>
+            </ul>
+            <ul>
                 <li>favorite quotes</li>
                 <li><span>+</span>Add your favorite quotations</li>
             </ul>

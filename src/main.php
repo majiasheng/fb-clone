@@ -16,7 +16,6 @@ $pdo = connect();
 // if a form is sent to self, handle it
 if (isset($_POST) && (isset($_POST["workplace"]) || isset($_POST["education"]) || isset($_POST["current_city"]) ||
     isset($_POST["hometown"]) || isset($_POST["relationship"]) || isset($_POST["description"]))) {
-// if($_SERVER["REQUEST_METHOD"] == "POST") {
     if (isset($_POST["workplace"]))
         $info->set_workplace($_POST["workplace"]);
     else if (isset($_POST["education"]))
@@ -54,7 +53,10 @@ if(isset($_POST) && isset($_POST['post_comment_content']) && ("" != trim($_POST[
 
     var_dump($_POST);
     header('Location:'.$_SERVER['PHP_SELF']);
+}
 
+if(isset($_POST) && isset($_POST['file_upload'])) {
+    echo 'hello';
 }
 
 // default profile picture
@@ -135,17 +137,23 @@ $profile_pic = "../rsrc/img/photos/default-profile.png";
     <!-- cover image section -->
     <div class="cover">
         <div class="cover__container">
-            
-            <?php 
-            if(empty($user->get_cover_photo())) {
-                    // set default profile picture
-                    echo '<img src="../rsrc/img/cover/default-cover.jpg">';
-                } else {
-                    // load user cover picture
-                    //TODO:
-                    
-                }
-            ?>
+            <form method="POST" action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]);?>" enctype="multipart/form-data"  class="cover__pic">
+                <!-- div: hide the upload file button -->
+                <div style="height:0px; overflow=hidden;">  
+                <input type="file" name="file_upload" id="file_upload">
+                </div>
+                <?php 
+                if(empty($user->get_cover_photo())) {
+                        // set default profile picture
+                        echo '<img src="../rsrc/img/cover/default-cover.jpg" onclick="choose_file()" style="cursor:pointer">';
+                    } else {
+                        // load user cover picture
+                        //TODO:
+                        
+                    }
+                ?>
+               
+            </form>
             <div class="cover__profile-container">
                 <?php
                 // load user profile picture

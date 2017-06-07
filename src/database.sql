@@ -53,14 +53,15 @@ CREATE TABLE comments (
     FOREIGN KEY (post_id) REFERENCES posts(id)
 );
 
--- CREATE TABLE user_pics (
---     id             INTEGER     NOT NULL AUTO_INCREMENT,
---     profile        LONGBLOB,
---     cover        LONGBLOB,
---
---     PRIMARY KEY(id),
---     FOREIGN KEY (id) REFERENCES users(id)
--- );
+CREATE TABLE user_pics (
+    id              INTEGER     NOT NULL AUTO_INCREMENT,
+    email           VARCHAR(50) NOT NULL UNIQUE,
+    profile         LONGBLOB,
+    cover           LONGBLOB,
+
+    PRIMARY KEY(id, email),
+    FOREIGN KEY (email) REFERENCES users(email)
+);
 
 CREATE TABLE notification (
     id          INTEGER NOT NULL AUTO_INCREMENT,

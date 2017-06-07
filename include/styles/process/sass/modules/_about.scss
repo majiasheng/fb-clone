@@ -70,12 +70,12 @@
 }
 
 // add buttons
-.about__work-edu li:nth-child(even),
-.about__places li:nth-child(2), .about__places li:nth-child(3), .about__places li:nth-child(5),
-.about__contact li:nth-child(2), .about__contact li:nth-child(3), .about__contact li:nth-child(5), .about__contact li:nth-child(7), .about__contact li:nth-child(8), .about__contact li:nth-child(10), .about__contact li:nth-child(11), .about__contact li:nth-child(12), .about__contact li:nth-child(13),
-.about__family li:nth-child(2), .about__family li:nth-child(4),
-.about__details li:nth-child(2), .about__details li:nth-child(4), .about__details li:nth-child(6), .about__details li:nth-child(8),
-.about__events li:not(:first-of-type)
+.about__work-edu ul li:not(:first-of-type),
+.about__places ul li:not(:first-of-type),
+.about__contact ul li:not(:first-of-type),
+.about__family ul li:not(:first-of-type),
+.about__details ul li:not(:first-of-type),
+.about__events ul li:not(:first-of-type)
 {
 	color: $link-blue;
 	font-size: 1.1em;
@@ -89,11 +89,11 @@
 	}
 }
 // titles
-.about__work-edu li:nth-child(odd),
-.about__places li:nth-child(1), .about__places li:nth-child(4),
-.about__contact li:nth-child(1), .about__contact li:nth-child(4), .about__contact li:nth-child(6),.about__contact li:nth-child(9),
-.about__family li:nth-child(1), .about__family li:nth-child(3),
-.about__details li:nth-child(1), .about__details li:nth-child(3), .about__details li:nth-child(5), .about__details li:nth-child(7),
+.about__work-edu ul li:first-of-type,
+.about__places ul li:first-of-type, 
+.about__contact ul li:first-of-type, 
+.about__family ul li:first-of-type, 
+.about__details ul li:first-of-type, 
 .about__events li:first-of-type
 {
 	color: lighten(black, 70%);
