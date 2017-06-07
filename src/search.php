@@ -1,3 +1,4 @@
+<!-- author: Jia Sheng Ma <jiasheng.ma@yahoo.com> -->
 <?php
 require_once("../include/functions.php");
 session_start();
@@ -12,9 +13,6 @@ if(!isset($_GET['search'])) {
 }
 $pdo = connect();
 $keyword = $_GET['search'];
-/*TODO: run sql query on names or emails in database
-        to match with the GET request
-*/
 //TODO: exclude self
 $matches = getUserIfMatch($keyword, $pdo);
 
@@ -25,9 +23,10 @@ if(count($matches) == 0) {
     echo "<ul>";
     foreach($matches as $m) {
         echo "<li>";
+        //TODO: echo profile pic
         // echo 
         // TODO: href to user's home page
-        echo "<a href=#>" . $m['first_name'] . " " . $m['last_name'] . "</a>";
+        echo "<a href=\"NPC.php?user=". $m['email'] . "\">" . $m['first_name'] . " " . $m['last_name'] . "</a>";
         echo "</li>";
     }
     echo "</ul>";

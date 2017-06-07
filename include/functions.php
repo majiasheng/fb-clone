@@ -120,10 +120,10 @@ function save_info_to_db($user_email, $info, $pdo) {
 }
 
 /**
- * Retrieves user info from database whose email is $user_email
+ * Verifies account and passowrd and retrieves
+ * user info from database whose email is $user_email
  */
 function loadUser($user_email, $password, $pdo) {
-
 
     $query = "SELECT * FROM " . USERS_TABLE .
     " WHERE email = :email";
@@ -146,7 +146,34 @@ function loadUser($user_email, $password, $pdo) {
     } else {
     	return NULL;
     }
+}
 
+/**
+ * Load user profile/info
+ * returns a user object
+ */
+function loadUserProfile($user_email, $pdo) {
+    $query = "SELECT * FROM " . USERS_TABLE .
+    " WHERE email = :email";
+    $stmt = $pdo->prepare($query);
+
+    $stmt->execute(['email' => $user_email]);
+    $user_data = $stmt->fetch(PDO::FETCH_ASSOC);
+
+    $user = new User;
+    $user->set_first_name($user_data['first_name']);
+    $user->set_last_name($user_data['last_name']);
+    $user->set_email($user_data['email']);
+    $user->set_password($user_data['password']);
+    $user->set_birth_month($user_data['birth_month']);
+    $user->set_birth_day($user_data['birth_day']);
+    $user->set_birth_year($user_data['birth_year']);
+    $user->set_gender($user_data['gender']);
+
+    $info = load_user_info($user->get_email(), $pdo);
+    $user->set_info($info);
+
+    return $user;
 }
 
 function saveCommentToDB($author_email, $post_id, $pdo, $comment){
@@ -261,7 +288,7 @@ function getUserNameByEmail($email, $pdo) {
         . " WHERE email = :email";
     $stmt = $pdo->prepare($query);
     $stmt->execute(['email' => $email]);
-    $rtval = $stmt->fetchAll(PDO::FETCH_ASSOC);
+    $rtval = $stmt->fetch(PDO::FETCH_ASSOC);
     return $rtval['first_name'] . " " . $rtval['last_name'];
 }
 
@@ -270,6 +297,9 @@ function getAllUsers($pdo) {
     return $pdo->query($query);
 }
 
+/**
+ * For performing search
+ */
 function getUserIfMatch($keyword, $pdo) {
 
     $query = "SELECT first_name, last_name, email FROM "
@@ -286,7 +316,26 @@ function getUserIfMatch($keyword, $pdo) {
 //     return $pdo->query($query)->fetch();
 }
 
-//TODO: function that adds friend to record
+/**
+ * Adds friend to table
+ * return True on sucess, False otherwise
+ */
+function addFriend($friendA, $friendB, $pdo) {
+    $query = "INSERT INTO " . FRIENDS_TABLE . " (friendA, friendB) "
+        . "VALUES(:A, :B);";
+    $stmt = $pdo->prepare($query);
+    return $stmt->execute(['A' => $friendA, 'B' => $friendB]);
+}
+
+function loadFriends($user_email, $pdo) {
+    $query = "SELECT friendA FROM " . FRIENDS_TABLE . " WHERE friendB = ?"
+        . " UNION "
+        . "SELECT friendB FROM " . FRIENDS_TABLE . " WHERE friendA = ?;";
+    $stmt = $pdo->prepare($query);
+    $stmt->execute([$user_email, $user_email]);
+    return $stmt->fetchAll(PDO::FETCH_COLUMN);
+}
+
 //TODO: function that removes friend from record
 
 

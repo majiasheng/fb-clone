@@ -12,13 +12,14 @@ class User {
     private $birth_year;
     private $gender;
     private $date_joined;
-    
+
     // cover 
     private $cover_photo;
     private $profile_picture;
     // post 
     private $posts = array();
 
+    private $info;
 
 	// setters
 	function set_first_name($arg) {
@@ -57,7 +58,9 @@ class User {
     function set_date_joined($arg) {
     	$this->time_joined = $arg;
     }
-    
+    function set_info($info) {
+        $this->info = $info;
+    }
 
 	// getters
 	function get_first_name() {
@@ -94,8 +97,11 @@ class User {
         return $this->profile_picture;
     }
  	function get_date_joined() {
- 		return $this->date_joined;
- 	}
+        return $this->date_joined;
+    }
+    function get_info() {
+        return $this->info;
+    }
  	
 
 }
