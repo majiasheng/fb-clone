@@ -120,10 +120,10 @@ function save_info_to_db($user_email, $info, $pdo) {
 }
 
 /**
- * Retrieves user info from database whose email is $user_email
+ * Verifies account and passowrd and retrieves
+ * user info from database whose email is $user_email
  */
 function loadUser($user_email, $password, $pdo) {
-
 
     $query = "SELECT * FROM " . USERS_TABLE .
     " WHERE email = :email";
@@ -146,7 +146,34 @@ function loadUser($user_email, $password, $pdo) {
     } else {
     	return NULL;
     }
+}
 
+/**
+ * Load user profile/info
+ * returns a user object
+ */
+function loadUserProfile($user_email, $pdo) {
+    $query = "SELECT * FROM " . USERS_TABLE .
+    " WHERE email = :email";
+    $stmt = $pdo->prepare($query);
+
+    $stmt->execute(['email' => $user_email]);
+    $user_data = $stmt->fetch(PDO::FETCH_ASSOC);
+
+    $user = new User;
+    $user->set_first_name($user_data['first_name']);
+    $user->set_last_name($user_data['last_name']);
+    $user->set_email($user_data['email']);
+    $user->set_password($user_data['password']);
+    $user->set_birth_month($user_data['birth_month']);
+    $user->set_birth_day($user_data['birth_day']);
+    $user->set_birth_year($user_data['birth_year']);
+    $user->set_gender($user_data['gender']);
+
+    $info = load_user_info($user->get_email(), $pdo);
+    $user->set_info($info);
+
+    return $user;
 }
 
 function saveCommentToDB($author_email, $post_id, $pdo, $comment){
@@ -270,6 +297,9 @@ function getAllUsers($pdo) {
     return $pdo->query($query);
 }
 
+/**
+ * For performing search
+ */
 function getUserIfMatch($keyword, $pdo) {
 
     $query = "SELECT first_name, last_name, email FROM "
@@ -278,7 +308,7 @@ function getUserIfMatch($keyword, $pdo) {
         . " OR last_name LIKE ?";
     $stmt = $pdo->prepare($query);
     $stmt->execute(array("%$keyword%", "%$keyword%"));
-    return $stmt->fetchAll(PDO::FETCH_ASSOC);
+    return $stmt->fetch(PDO::FETCH_ASSOC);
 // $query = "SELECT first_name, last_name, email FROM "
 //     . USERS_TABLE
 //     . " WHERE first_name LIKE '%". $keyword . "%'"

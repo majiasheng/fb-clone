@@ -1,64 +1,32 @@
-<!-- author:    Melanie Lin
-                Jia Sheng Ma 
--->
+
 <?php
+/**
+ * NPC: non player character
+ *      This file is name this way because I couldn't find a better name for:
+ *      not the logged in user
+ *
+ *      This file redirects to a specified user
+ */
+
 require_once("../include/functions.php");
 session_start();
-// TODO: use user data to populate main.php
 
-if ($_SESSION['loggedin'] !== TRUE) {
-   header("Location: index.php");
+if(!isset($_GET['user'])) {
+    header("Location: main.php");
 }
-$user = $_SESSION['user'];
-$info = $_SESSION['user_info'];
+// $_GET['user'] = user email
 $pdo = connect();
+$user = loadUserProfile($_GET['user'], $pdo);
+$info = $user->get_info();
 
-// if a form is sent to self, handle it
-if (isset($_POST) && (isset($_POST["workspace"]) || isset($_POST["education"]) || isset($_POST["current_city"]) ||
-    isset($_POST["hometown"]) || isset($_POST["relationship"]) || isset($_POST["description"]))) {
-// if($_SERVER["REQUEST_METHOD"] == "POST") {
-    if (isset($_POST["workspace"]))
-        $info->set_workspace($_POST["workspace"]);
-    else if (isset($_POST["education"]))
-        $info->set_education($_POST["education"]);
-    else if (isset($_POST["current_city"]))
-        $info->set_current_city($_POST["current_city"]);
-    else if (isset($_POST["hometown"]))
-        $info->set_hometown($_POST["hometown"]);
-    else if (isset($_POST["relationship"]))
-        $info->set_relationship($_POST["relationship"]);
-    else if (isset($_POST["description"]))
-        $info->set_description($_POST["description"]);
-    save_info_to_db($user->get_email(), $info, $pdo);
-}
-
-if(isset($_POST) && isset($_POST['post_content']) && ("" != trim($_POST['post_content']))) {
-    if(!savePostToDB($user->get_email(), $pdo, $_POST['post_content'])) {
-        echo "Error occurred while saving posting <br>";
-    }
-    // prevent resubmission of POST
-    unset($_POST);
-    var_dump($_POST);
-    header('Location:' . $_SERVER['PHP_SELF']);
-}
-
-if(isset($_POST) && isset($_POST['post_comment_content']) && ("" != trim($_POST['post_comment_content']))) {
-    //FIXME: $user->get_email() <= not really, $user can be anyone
-    if(!saveCommentToDB($user->get_email(), $_POST['post__id'], $pdo, $_POST['post_comment_content'])){
-        echo "Error occurred while commenting <br>";
-    }
-
-    var_dump($_POST);
-
-    unset($_POST);
-
-    var_dump($_POST);
-    header('Location:'.$_SERVER['PHP_SELF']);
-
+// if the user to redirect to is the user, then go to the main page instead
+if(strcmp($_GET['user'], $user->get_email())) {
+    header("Location: main.php");
 }
 
 // default profile picture
 $profile_pic = "../rsrc/img/photos/default-profile.png";
+
 
 ?>
 
@@ -95,42 +63,42 @@ $profile_pic = "../rsrc/img/photos/default-profile.png";
                         </a>
                     </li>
 
-			  		<li class="header__home"><a href="#">Home</a></li>
-		  		</div>
-		  		<!-- friends, messages, and alerts -->
-		  		<div class="col-md-2 col-sm-12 navbar__header">
-			  		<li class="header__friends header--icon-setting"><a href="#"><i class="fa fa-user"></i></a></li>
-			 		<li class="header__message header--icon-setting"><a href="#"><i class="fa fa-comments"></i></a></li>
-			  		<li class="header__alert header--icon-setting"><a href="#"><i class="fa fa-globe"></i></a></li>
-		  		</div>
-		  		<!-- privacy and settings (with a dropdown menu)-->
-		  		<div class="col-md-1 col-sm-12">
-			 		<li class="header__privacy header--icon-setting"><a href="#"><i class="fa fa-lock"></i></a></li>
-			  		<li class="header__setting header--icon-setting"><a href="#"><i class="fa fa-caret-down" onclick="show_setting_menu()"></i></a>
-			  			<ul class="icon-setting--dropdown">
-		                    <li><a href="settings.php">Settings</a></li>
-		                    <li><a href="logout.php">Log Out</a></li>
-		                </ul>
+                    <li class="header__home"><a href="#">Home</a></li>
+                </div>
+                <!-- friends, messages, and alerts -->
+                <div class="col-md-2 col-sm-12 navbar__header">
+                    <li class="header__friends header--icon-setting"><a href="#"><i class="fa fa-user"></i></a></li>
+                    <li class="header__message header--icon-setting"><a href="#"><i class="fa fa-comments"></i></a></li>
+                    <li class="header__alert header--icon-setting"><a href="#"><i class="fa fa-globe"></i></a></li>
+                </div>
+                <!-- privacy and settings (with a dropdown menu)-->
+                <div class="col-md-1 col-sm-12">
+                    <li class="header__privacy header--icon-setting"><a href="#"><i class="fa fa-lock"></i></a></li>
+                    <li class="header__setting header--icon-setting"><a href="#"><i class="fa fa-caret-down" onclick="show_setting_menu()"></i></a>
+                        <ul class="icon-setting--dropdown">
+                            <li><a href="settings.php">Settings</a></li>
+                            <li><a href="logout.php">Log Out</a></li>
+                        </ul>
 
-			  		</li>
-		  			
-		  		</div>
-		  		<!-- search bar -->
-		  		<div class="col-md-4 col-sm-12">
-	                <li class="navbar__form">
-			  			<form class="navbar__search-form form-inline" role="search" action="search.php" method="GET">
-			 				<!-- <div class="navbar__search-container form-group"> -->
-			  					<input type="text" name="search" class="navbar__search-input form-control" placeholder="Search">
+                    </li>
+                    
+                </div>
+                <!-- search bar -->
+                <div class="col-md-4 col-sm-12">
+                    <li class="navbar__form">
+                        <form class="navbar__search-form form-inline" role="search" action="search.php" method="GET">
+                            <!-- <div class="navbar__search-container form-group"> -->
+                                <input type="text" name="search" class="navbar__search-input form-control" placeholder="Search">
                                 <!--TODO: send a GET request to search.php -->
                                   <!-- <a href=# class="linka"><i class="fa fa-search"></i></a> -->
                                 <input type="submit" value="Search" class="fa fa-search">
-				  			<!-- </div> -->
-						</form>
-					</li>
-				</div>
+                            <!-- </div> -->
+                        </form>
+                    </li>
+                </div>
 
-		  	</ul> 
-		</div>
+            </ul> 
+        </div>
     </nav>
     <!-- cover image section -->
     <div class="cover">
@@ -161,11 +129,11 @@ $profile_pic = "../rsrc/img/photos/default-profile.png";
                     <?php 
                     echo $user->get_first_name() . " " . $user->get_last_name();
                     ?>
-	    		</div>
-	    		<div class="cover__update-info cover__update-info--decor" id="update-info-btn" onclick="show_update_info_page()">update info</div>
-	    		<div class="cover__view-at cover__update-info--decor">view activity</div>
+                </div>
+                <div class="cover__update-info cover__update-info--decor" id="update-info-btn" onclick="show_update_info_page()">update info</div>
+                <div class="cover__view-at cover__update-info--decor">view activity</div>
 
-	    	</div>
+            </div>
 
             <!-- update info page -->
             <div id="update-info-page" class="update-info__modal">
@@ -291,30 +259,12 @@ $profile_pic = "../rsrc/img/photos/default-profile.png";
             <div class="left__photos">
                 <a href=#><h2 class="content__title content__title--font">
                     <i class="fa fa-picture-o content__icon content__icon--bg" aria-hidden="true"></i>
-                    <!-- TODO: redirect to a photo upload page -->
                     Photos
                 </h2></a>
 
                 <?php
-                //TODO: load 3x3 user photos if there's any
-                // prompt user to upload otherwise
                 ?>
 
-<!--                <div class="row photos__container">
-                    <div class="col-xs-4 col-sm-4 col-md-4 col-lg-4"><img src="../rsrc/img/photos/p1.jpeg"></div>
-                    <div class="col-xs-4 col-sm-4 col-md-4 col-lg-4"><img src="../rsrc/img/photos/p2.jpeg"></div>
-                    <div class="col-xs-4 col-sm-4 col-md-4 col-lg-4"><img src="../rsrc/img/photos/p3.jpeg"></div>
-                </div> -->
-                <!-- <div class="row photos__container">
-                    <div class="col-xs-4 col-sm-4 col-md-4 col-lg-4"><img src="../rsrc/img/photos/p4.jpeg"></div>
-                    <div class="col-xs-4 col-sm-4 col-md-4 col-lg-4"><img src="../rsrc/img/photos/p5.png"></div>
-                    <div class="col-xs-4 col-sm-4 col-md-4 col-lg-4"><img src="../rsrc/img/photos/p6.jpeg"></div>
-                </div>
-                <div class="row photos__container">
-                    <div class="col-xs-4 col-sm-4 col-md-4 col-lg-4"><img src="../rsrc/img/photos/p7.jpeg"></div>
-                    <div class="col-xs-4 col-sm-4 col-md-4 col-lg-4"><img src="../rsrc/img/photos/p8.jpeg"></div>
-                    <div class="col-xs-4 col-sm-4 col-md-4 col-lg-4"><img src="../rsrc/img/photos/p9.jpeg"></div>
-                </div> -->
             </div> <!-- ********************** end photos ********************** -->
 
             <!-- ********************** left: friends ********************** -->
@@ -329,30 +279,20 @@ $profile_pic = "../rsrc/img/photos/default-profile.png";
 
                     <?php
                     $friends = loadFriends($user->get_email(), $pdo);
-                    $_SESSION['friends'] = $friends;
-                    $counter = 0;
-                    foreach($friends as $f) {
-                        if($counter > 8) {
-                            break;
+                    if($friends){
+                        $counter = 0;
+                        foreach($friends as $f) {
+                            if($counter > 8) {
+                                break;
+                            }
+                            //TODO: display profile picture instead
+                            echo "<a href=\"NPC.php?user=". $f . "\">" . getUserNameByEmail($f, $pdo) . "</a>";
                         }
-                        //TODO: display profile picture instead
-                        echo "<a href=\"NPC.php?user=". $f . "\">" . getUserNameByEmail($f, $pdo) . "</a>";
+                    } else {
+                        echo "Lonely person :(";
                     }
                     ?>
-                    <!-- <div class="col-xs-4 col-sm-4 col-md-4 col-lg-4"><img src="../rsrc/img/friends/cat11.jpeg"></div>
-                    <div class="col-xs-4 col-sm-4 col-md-4 col-lg-4"><img src="../rsrc/img/friends/cat1.png"></div>
-                    <div class="col-xs-4 col-sm-4 col-md-4 col-lg-4"><img src="../rsrc/img/friends/cat3.jpeg"></div> -->
                 </div>
-                <!-- <div class="row photos__container">
-                    <div class="col-xs-4 col-sm-4 col-md-4 col-lg-4"><img src="../rsrc/img/friends/cat4.jpeg"></div>
-                    <div class="col-xs-4 col-sm-4 col-md-4 col-lg-4"><img src="../rsrc/img/friends/cat5.jpeg"></div>
-                    <div class="col-xs-4 col-sm-4 col-md-4 col-lg-4"><img src="../rsrc/img/friends/cat6.jpeg"></div>
-                </div>
-                <div class="row photos__container">
-                    <div class="col-xs-4 col-sm-4 col-md-4 col-lg-4"><img src="../rsrc/img/friends/cat7.jpeg"></div>
-                    <div class="col-xs-4 col-sm-4 col-md-4 col-lg-4"><img src="../rsrc/img/friends/cat8.jpeg"></div>
-                    <div class="col-xs-4 col-sm-4 col-md-4 col-lg-4"><img src="../rsrc/img/friends/cat9.jpeg"></div>
-                </div> -->
             </div> <!-- ********************** end friends ********************** -->
 
             <!-- ********************** left footer ********************** -->
@@ -428,8 +368,12 @@ $profile_pic = "../rsrc/img/photos/default-profile.png";
                 </ul>
 
 
+                <!-- TODO: post on wall -->
                 <form action="" method="POST" id="post_form">
-                <textarea placeholder="What's on your mind?" rows="3" name="post_content" form="post_form"></textarea>
+                <textarea placeholder="Write something to <?php 
+                echo $user->get_first_name() . " " . $user->get_last_name(); 
+                ?>" 
+                rows="3" name="post_content" form="post_form"></textarea>
                 <input type="submit" Value="Post">
                 </form>
             </div> <!-- ********************** end panel ********************** -->
@@ -451,7 +395,7 @@ $profile_pic = "../rsrc/img/photos/default-profile.png";
                         echo " Edited";
                     }
                     echo '</p>';
-                    
+
                     echo '<p class="post__header__info info__date">' 
                         . $p->getPostTime() // load post's time
                         . '</p></div>';
@@ -492,71 +436,8 @@ $profile_pic = "../rsrc/img/photos/default-profile.png";
                     echo'
                     </div>
                     </div> <br><br>';
-
-                    // echo '<div class="post__actions">
-                    // <div class="actions--setting actions--decor"><i class="fa fa-thumbs-up"></i></div>
-                    // <div class="actions--setting actions--decor"><i class="fa fa-share"></i></div>
-                    // <div class="actions--setting actions--decor actions__comment"></div>
-                    // <div class="actions--setting actions--decor actions__comment"><i class="fa fa-comment"></i></div>
-                    // </div> ';
-
                 }
-                //TODO: load comments, likes, shares
-                //FIXME: when refreshing page, post should not be resent to db
                 ?>
-
-                <!-- <div class="post__header">
-                    <img src="../rsrc/img/photos/p11.jpeg" class="post__header__author-photo">
-                    <p class="post__header__info info__author"><a class="">Meow Meow</a> shared a link</p>
-                    <p class="post__header__info info__date">Jan 14 at 14:17 PM via Instagram</p>
-                </div>
-                <div class="post__content">
-                    <p class="post__content__p">meow meow, meow meow meow meow, meow meow meow meow meow meow, meow meow!!!! meow meow meow meow!</p>
-                    <img src="../rsrc/img/posts/p2.jpeg" alt="post content" class="post__content__img" />
-                </div>
-                <div class="post__actions">
-                    <div class="actions--setting actions--decor"><i class="fa fa-thumbs-up"></i></div>
-                    <div class="actions--setting actions--decor"><i class="fa fa-share"></i></div>
-                    <div class="actions--setting actions--decor actions__comment">1</div>
-                    <div class="actions--setting actions--decor actions__comment"><i class="fa fa-comment"></i></div>
-                </div> -->
-                    <!-- ********************** end post ********************** -->
-
-<!--            <div class="middle__posts">
-                <div class="post__header">
-                    <img src="../rsrc/img/photos/p11.jpeg" class="post__header__author-photo">
-                    <p class="post__header__info info__author"><a class="">Meow Meow</a> shared a link</p>
-                    <p class="post__header__info info__date">Jan 14 at 14:17 PM via Instagram</p>
-                </div>
-                <div class="post__content">
-                    <p class="post__content__p">My kingdom</p>
-                    <img src="../rsrc/img/posts/p3.jpeg" alt="post content" class="post__content__img" />
-                </div>
-                <div class="post__actions">
-                    <div class="actions--setting actions--decor"><i class="fa fa-thumbs-up"></i></div>
-                    <div class="actions--setting actions--decor"><i class="fa fa-share"></i></div>
-                    <div class="actions--setting actions--decor actions__comment">1</div>
-                    <div class="actions--setting actions--decor actions__comment"><i class="fa fa-comment"></i></div>
-                </div>
-            </div>
-
-            <div class="middle__posts">
-                <div class="post__header">
-                    <img src="../rsrc/img/photos/p11.jpeg" class="post__header__author-photo">
-                    <p class="post__header__info info__author"><a class="">Meow Meow</a> shared a link</p>
-                    <p class="post__header__info info__date">Jan 14 at 14:17 PM via Instagram</p>
-                </div>
-                <div class="post__content">
-                    <p class="post__content__p">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vestibulum sollicitudin, mauris ut tincidunt elementum, lacus nisl egestas augue, quis porta arcu lacus congue orci. </p>
-                    <img src="../rsrc/img/posts/p5.jpeg" alt="post content" class="post__content__img" />
-                </div>
-                <div class="post__actions">
-                    <div class="actions--setting actions--decor"><i class="fa fa-thumbs-up"></i></div>
-                    <div class="actions--setting actions--decor"><i class="fa fa-share"></i></div>
-                    <div class="actions--setting actions--decor actions__comment">1</div>
-                    <div class="actions--setting actions--decor actions__comment"><i class="fa fa-comment"></i></div>
-                </div>
-            </div> -->
 
         </div> <!-- end middle column -->
 
@@ -569,15 +450,9 @@ $profile_pic = "../rsrc/img/photos/default-profile.png";
 
 
                 ?>
-                <!-- <a href="#"><img src="../rsrc/img/friends/cat1.png" alt="friends"></a>
-                <a href="#"><img src="../rsrc/img/friends/cat2.jpeg" alt="friends"></a>
-                <a href="#"><img src="../rsrc/img/friends/cat3.jpeg" alt="friends"></a>
-                <a href="#"><img src="../rsrc/img/friends/cat4.jpeg" alt="friends"></a>
-                <a href="#"><img src="../rsrc/img/friends/cat5.jpeg" alt="friends"></a>
-                <a href="#"><img src="../rsrc/img/friends/cat6.jpeg" alt="friends"></a>
-                <a href="#"><img src="../rsrc/img/friends/cat7.jpeg" alt="friends"></a>
-                <a href="#"><img src="../rsrc/img/friends/cat8.jpeg" alt="friends"></a>
-                <a href="#"><img src="../rsrc/img/friends/cat9.jpeg" alt="friends"></a> -->
+                <!-- 
+                <a href="#"><img src="../rsrc/img/friends/cat1.png" alt="friends"></a>
+                -->
 
 
                 <a href="#" class="contacts__setting"><i class="fa fa-cog"></i></a>
@@ -593,3 +468,4 @@ $profile_pic = "../rsrc/img/photos/default-profile.png";
   <script src="../include/scripts/js/script.js"></script>
 </body>
 </html>
+
