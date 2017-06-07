@@ -26,6 +26,14 @@ window.onclick = function(event) {
 }
 
 /* Update Info Page */
+function show_update_info_page() {
+	var modal = document.getElementById('update-info-page');				// get the page
+	modal.style.display = "block";
+}
+function close_update_info_page() {
+	var modal = document.getElementById('update-info-page');
+	modal.style.display = "none";
+}
 function show_modal(clicked_id) {
 	document.getElementById(clicked_id).style.display = "block";
 }

@@ -55,8 +55,21 @@ if(isset($_POST) && isset($_POST['post_comment_content']) && ("" != trim($_POST[
     header('Location:'.$_SERVER['PHP_SELF']);
 }
 
-if(isset($_POST) && isset($_POST['file_upload'])) {
-    echo 'hello';
+// TEST: save image
+if(isset($_FILES['cover_img']) && $_FILES['cover_img']['size'] > 0) {
+    $tmp_name = $_FILES['cover_img']['tmp_name'];
+
+    // read the file
+    $fp = fopen($tmp_name, 'r');
+    $data = fread($fp, filesize($tmp_name));
+    $data = addslashes($data);
+    fclose($fp);
+
+    // create query and insert into db
+    $query = "INSERT INTO " . IMAGE_TABLE . " ";
+    $query .= "(email, cover) VALUES ('" . $user->get_email(). "'," . "'" . $data . "')";
+    $pdo->query($query);
+
 }
 
 // default profile picture
@@ -139,20 +152,20 @@ $profile_pic = "../rsrc/img/photos/default-profile.png";
         <div class="cover__container">
             <form method="POST" action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]);?>" enctype="multipart/form-data"  class="cover__pic">
                 <!-- div: hide the upload file button -->
-                <div style="height:0px; overflow=hidden;">  
-                <input type="file" name="file_upload" id="file_upload">
-                </div>
+                <!-- <div style="height:0px; overflow=hidden;">   -->
+                <input type="file" name="cover_img" id="cover_img">
+                <input type="submit">
+                <!-- </div> -->
                 <?php 
                 if(empty($user->get_cover_photo())) {
                         // set default profile picture
-                        echo '<img src="../rsrc/img/cover/default-cover.jpg" onclick="choose_file()" style="cursor:pointer">';
+                        echo '<input type="image" name="cover_submit" id="cover_photo" src="../rsrc/img/cover/default-cover.jpg" >';
                     } else {
                         // load user cover picture
                         //TODO:
                         
                     }
                 ?>
-               
             </form>
             <div class="cover__profile-container">
                 <?php
@@ -179,7 +192,7 @@ $profile_pic = "../rsrc/img/photos/default-profile.png";
             <div id="update-info-page" class="update-info__modal">
                   <!-- page content -->
                   <div class="modal__page">
-                        <span onclick="close_modal(this.id)" class="modal__page-close">&times;</span>
+                        <span onclick="close_update_info_page()" class="modal__page-close">&times;</span>
 
                         <p class="modal__page--titles">Describe who you are</p>
                 <!-- describe who you are-->
@@ -292,7 +305,7 @@ $profile_pic = "../rsrc/img/photos/default-profile.png";
                         echo '<p class="intro__detail"><i class="fa fa-map-marker"></i> From ' . $info->get_hometown() . '</p>';
                     
                     ?>
-                <button class="intro__update-btn--font intro__update-btn--bg" onclick="show_modal(this.id)">update info</button>
+                <button class="intro__update-btn--font intro__update-btn--bg" onclick="show_update_info_page()">update info</button>
             </div>
 
             <!-- ********************** left: photos ********************** -->

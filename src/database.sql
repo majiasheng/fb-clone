@@ -53,7 +53,7 @@ CREATE TABLE comments (
     FOREIGN KEY (post_id) REFERENCES posts(id)
 );
 
-CREATE TABLE user_pics (
+CREATE TABLE images (
     id              INTEGER     NOT NULL AUTO_INCREMENT,
     email           VARCHAR(50) NOT NULL UNIQUE,
     profile         LONGBLOB,

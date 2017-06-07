@@ -338,5 +338,19 @@ function loadFriends($user_email, $pdo) {
 
 //TODO: function that removes friend from record
 
+/**
+ * Save images
+ */
+function saveCoverPhoto($pdo, $email) {
+    $image_name = $_FILES["cover_upload"]["name"];
+    $image_tmp = addslashes(file_get_contents($_FILES["cover_upload"]["tmp_name"]));
+
+    $query = "INSERT INTO " . IMAGE_TABLE . " (";
+    $query .= "email, cover";
+    $query .= ") VALUES (";
+    $query .= "'" . $email . "', '" . $image_name . "');";
+
+    $pdo->query($query);
+}
 
 ?>
