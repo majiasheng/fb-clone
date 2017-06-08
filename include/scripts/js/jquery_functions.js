@@ -1,34 +1,34 @@
 $(document).ready(function(){
 
-	$('#post_form').submit(function(e){
+	// $('#post_form').submit(function(e){
 
-		e.preventDefault(); // Prevent Default Submission
+	// 	e.preventDefault(); // Prevent Default Submission
 
-		$.post('../src/submit_post.php', $(this).serialize() )
-		.done(function(data){
-			$('.middle__posts').fadeOut('fast', function(){
-				$('.middle__posts').fadeIn('fast').html(data);
-			});
-			$("#post_form")[0].reset();
-		})
-		.fail(function(){
-			alert('Post submit Failed ...');
-		});
+	// 	$.post('../src/submit_post.php', $(this).serialize() )
+	// 	.done(function(data){
+	// 		$('.middle__posts').fadeOut('fast', function(){
+	// 			$('.middle__posts').fadeIn('fast').html(data);
+	// 		});
+	// 		$("#post_form")[0].reset();
+	// 	})
+	// 	.fail(function(){
+	// 		alert('Post submit Failed ...');
+	// 	});
 
-	});
+	// });
 
 
-	$('#post_comment_form').submit(function(e){
+	$('#post_comment_form').submit(function(event){
 
-		e.preventDefault(); // Prevent Default Submission
+		event.preventDefault(); // Prevent Default Submission
 
 		$.post('../src/submit_comment.php', $(this).serialize() )
 		.done(function(data){
-			$('.comment__content').fadeOut('fast', function(){
-				$('.comment__content').fadeIn('fast').html(data);
+			$('.comment_content').fadeOut('fast', function(){
+				$('.comment_content').fadeIn('fast').html(data);
 			});
 			// $("#post_comment_forms")[0].reset();
-			console.log(data);
+			alert("hi");
 		})
 		.fail(function(){
 			alert('Comment submit Failed ...');
