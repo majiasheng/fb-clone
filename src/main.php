@@ -427,56 +427,51 @@
  -->
 
                 <div class="middle__posts">
-                    <?php
+                <?php
                 //load user's posts if there's any
                 // if there's none, set up a prompt maybe?
                 $posts = loadPosts($user->get_email(), $pdo);
-                // var_dump($posts);
-                foreach($posts as $p) {
-                    // header: user pic, user name
-                    echo '<div class="post__header">';
-                    echo '<img src="' . $profile_pic . '" class="post__header__author-photo">';
-                    echo '<p class="post__header__info info__author"><a class="">' 
-                        . $user->get_first_name() . " " . $user->get_last_name() . '</a>';
-                    if($p->getIsEdited()) {
-                        echo " Edited";
-                    }
-                    echo '</p>';
-                    
-                    echo '<p class="post__header__info info__date">' 
-                        . $p->getPostTime() // load post's time
-                        . '</p></div>';
-                    // content
-                    echo '<div class="post__content"> <p class="post__content__p">';
-                    echo $p->getContent() . "<br></p></div>";
+                foreach($posts as $p):
                     $comments = load_comments($p->getPostID(), $pdo);
-                    //comment content
-                    foreach($comments as $c){
-                        echo ' <div class="comment_content"> &nbsp&nbsp'. $c->getCommentContent()  . '------('. $c->getAuthor() .')----------' . $c->getCommentTime() . '</div>';
+                ?>
+
+                <div class="post__header">
+                    <img src="../rsrc/img/photos/default-profile.png" class="post__header__author-photo">
+                    <p class="post__header__info info__author"><a class=""><?php echo $user->get_first_name() . " " . $user->get_last_name() ?></a></p>
+                    <p class="post__header__info info__date"><?php echo $p->getPostTime() ?></p>
+                </div>
+                <div class="post__content">
+                    <p class="post__content__p"><?php echo $p->getContent() ?></p>
+                </div>
+
+                <div class="comment__content" id="<?php echo 'post__' . $p->getPostID() . ''?>">
+                <?php
+                    foreach ($comments as $c) {
+                        echo '<div class="comment__content__p"> ' . $c->getCommentContent() . '</div>';
                     }
-                    // footer/actions: like, comment, share
-                    echo '<div class="post__actions">
+                ?>
+                </div>
+
+
+                <div class="post__actions">
                     <div class="actions--setting actions--decor"><i class="fa fa-thumbs-up"></i></div>
                     <div class="actions--setting actions--decor"><i class="fa fa-share"></i></div>
                     <div class="actions--setting actions--decor actions__comment"></div>
-                    <div class="actions--setting actions--decor actions__comment">';
-                          
-                          
-                    echo '
-                    <form action="" method="POST" id="post_comment_form">
+
+                    <form action="" method="POST" class="post_comment_form">
                         <input type="text" name="post_comment_content" placeholder="Write some comment"/>
-                        <input type="hidden" name="post__id" value="'  . $p->getPostId()  . '" >
+                        <input type="hidden" name="post__id" value="<?php echo $p->getPostId(); ?>" />
                         <button type="submit">
                             <i class="fa fa-comment"></i>
                         </button>
-                    </form>';
-                    echo'
-                    </div>
-                    </div> <br><br>';
-                  
-                }
-                
-                ?>
+                    </form>
+
+                    <!-- <div class="actions--setting actions--decor actions__comment"><i class="fa fa-comment"></i></div> -->
+                </div>
+                <br><br>
+
+                <?php endforeach ?>
+
 
                 </div>
 

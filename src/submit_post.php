@@ -32,10 +32,10 @@ $posts = loadPosts($user->get_email(), $pdo);
 		<p class="post__content__p"><?php echo $p->getContent() ?></p>
 	</div>
 
-	<div class="comment__content">
+	<div class="comment__content" id="<?php echo 'post__' . $p->getPostID() . ''?>">
 	<?php
 		foreach ($comments as $c) {
-			echo '<div class="comment__content__p"> &nbsp&nbsp' . $c->getCommentContent() . '</div>';
+			echo '<div class="comment__content__p">'. $c->getCommentContent()  .'</div>';
 		}
 	?>
 	</div>
@@ -46,9 +46,9 @@ $posts = loadPosts($user->get_email(), $pdo);
 		<div class="actions--setting actions--decor"><i class="fa fa-share"></i></div>
 		<div class="actions--setting actions--decor actions__comment"></div>
 
-		<form action="" method="POST" id="post_comment_form">
+		<form action="" method="POST" class="post_comment_form">
 			<input type="text" name="post_comment_content" placeholder="Write some comment"/>
-			<input type="hidden" name="post__id" value="<?php $p->getPostId(); ?>" />
+			<input type="hidden" name="post__id" value="<?php echo $p->getPostID() ?>" />
 			<button type="submit">
 				<i class="fa fa-comment"></i>
 			</button>
