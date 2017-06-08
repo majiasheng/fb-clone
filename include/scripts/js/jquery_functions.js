@@ -22,19 +22,31 @@ $(document).ready(function(){
 
 		event.preventDefault(); // Prevent Default Submission
 
-		var id = $(this).find("input[type=hidden]").val();
-		var name = 'post__' + id;
+		// var text = $.trim($(this).find('input[type=hidden]').val());
+		// console.log(text);
 
-		$.post('../src/submit_comment.php', $(this).serialize() )
-		.done(function(data){
-			$('#' + name).fadeOut('fast', function(){
-				$('#' + name).fadeIn('fast').html(data);
+		// if(text == ''){
+		// 	alert("Can't input spaces...");
+		// }
+		// else{
+
+			var id = $(this).find("input[type=hidden]").val();
+			var name = 'post__' + id;
+
+			$.post('../src/submit_comment.php', $(this).serialize() )
+			.done(function(data){
+				$('#' + name).fadeOut('fast', function(){
+					$('#' + name).fadeIn('fast').html(data);
+				});
+				$('.post_comment_form').trigger("reset");
+			})
+			.fail(function(){
+				alert('Comment submit Failed ...');
 			});
-			$('.post_comment_form').trigger("reset");
-		})
-		.fail(function(){
-			alert('Comment submit Failed ...');
-		});
+
+		// }
+
+		
 
 	});
 

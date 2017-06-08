@@ -47,7 +47,7 @@ $posts = loadPosts($user->get_email(), $pdo);
 		<div class="actions--setting actions--decor actions__comment"></div>
 
 		<form action="" method="POST" class="post_comment_form">
-			<input type="text" name="post_comment_content" placeholder="Write some comment"/>
+			<input type="text" name="post_comment_content" placeholder="Write some comment" required="true" oninvalid="this.setCustomValidity('Say something ...')"/>
 			<input type="hidden" name="post__id" value="<?php echo $p->getPostID() ?>" />
 			<button type="submit">
 				<i class="fa fa-comment"></i>
