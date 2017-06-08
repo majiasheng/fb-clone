@@ -37,7 +37,7 @@ if(isset($_POST) && isset($_POST['post_content']) && ("" != trim($_POST['post_co
     }
     // prevent resubmission of POST
     unset($_POST);
-    var_dump($_POST);
+    // var_dump($_POST);
     header('Location:' . $_SERVER['PHP_SELF']);
 }
 
@@ -47,11 +47,7 @@ if(isset($_POST) && isset($_POST['post_comment_content']) && ("" != trim($_POST[
         echo "Error occurred while commenting <br>";
     }
 
-    var_dump($_POST);
-
     unset($_POST);
-
-    var_dump($_POST);
     header('Location:'.$_SERVER['PHP_SELF']);
 }
 

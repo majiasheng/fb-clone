@@ -249,7 +249,7 @@ $profile_pic = "../rsrc/img/photos/default-profile.png";
         echo '<input type="button" value="Add Friend"> ';
     }
     ?>
-    
+
     </div>
 
     <div class="row content">

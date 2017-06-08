@@ -14,7 +14,7 @@ foreach($friends as $f) {
     // display profile picture 
     // echo 
     //TODO: href to user's home page
-    echo "<a href=#>" . getUserNameByEmail($f, $pdo) . "</a>";
+    echo "<a href=\"NPC.php?user=" . $f . "\">". getUserNameByEmail($f, $pdo) . "</a>";
     echo "</li>";
 }
 echo "</ul>";

@@ -67,7 +67,7 @@ CREATE TABLE notification (
     id          INTEGER NOT NULL AUTO_INCREMENT,
     user_email  VARCHAR(50) NOT NULL,
     content     TEXT NOT NULL,
-    processed   TINYINT
+    processed   TINYINT DEFAULT 0
 );
 
 
