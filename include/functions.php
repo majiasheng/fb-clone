@@ -357,7 +357,11 @@ function isFriend($A, $B, $pdo) {
  * A sends request to B, and B receives notification
  */
 function sendFriendRequest($A, $B, $pdo) {
-    $query = "INSERT INTO " . NOTIFICATION_TABLE . " WHERE "
+    $query = "INSERT INTO " . FRIEND_REQUEST_TABLE
+        . "(sender, receiver) VALUES (?, ?);";
+    $stmt = $pdo->prepare($query);
+    return $stmt->execute([$A, $B]);
+
 }
 
 function acceptFriendRequest() {
