@@ -410,7 +410,7 @@
 
                 <!-- ********************** middle: post ********************** -->
 
-                <div class="middle__posts">
+<!--                 <div class="middle__posts">
                     <div class="post__header">
                     </div>
                     <div class="post__content">
@@ -424,6 +424,61 @@
                     </div>
                 </div>
 
+ -->
+
+                <div class="middle__posts">
+                    <?php
+                //load user's posts if there's any
+                // if there's none, set up a prompt maybe?
+                $posts = loadPosts($user->get_email(), $pdo);
+                // var_dump($posts);
+                foreach($posts as $p) {
+                    // header: user pic, user name
+                    echo '<div class="post__header">';
+                    echo '<img src="' . $profile_pic . '" class="post__header__author-photo">';
+                    echo '<p class="post__header__info info__author"><a class="">' 
+                        . $user->get_first_name() . " " . $user->get_last_name() . '</a>';
+                    if($p->getIsEdited()) {
+                        echo " Edited";
+                    }
+                    echo '</p>';
+                    
+                    echo '<p class="post__header__info info__date">' 
+                        . $p->getPostTime() // load post's time
+                        . '</p></div>';
+                    // content
+                    echo '<div class="post__content"> <p class="post__content__p">';
+                    echo $p->getContent() . "<br></p></div>";
+                    $comments = load_comments($p->getPostID(), $pdo);
+                    //comment content
+                    foreach($comments as $c){
+                        echo ' <div class="comment_content"> &nbsp&nbsp'. $c->getCommentContent()  . '------('. $c->getAuthor() .')----------' . $c->getCommentTime() . '</div>';
+                    }
+                    // footer/actions: like, comment, share
+                    echo '<div class="post__actions">
+                    <div class="actions--setting actions--decor"><i class="fa fa-thumbs-up"></i></div>
+                    <div class="actions--setting actions--decor"><i class="fa fa-share"></i></div>
+                    <div class="actions--setting actions--decor actions__comment"></div>
+                    <div class="actions--setting actions--decor actions__comment">';
+                          
+                          
+                    echo '
+                    <form action="" method="POST" id="post_comment_form">
+                        <input type="text" name="post_comment_content" placeholder="Write some comment"/>
+                        <input type="hidden" name="post__id" value="'  . $p->getPostId()  . '" >
+                        <button type="submit">
+                            <i class="fa fa-comment"></i>
+                        </button>
+                    </form>';
+                    echo'
+                    </div>
+                    </div> <br><br>';
+                  
+                }
+                
+                ?>
+
+                </div>
 
                 <div class="content__right col-md-2">
                     <!-- ********************** right: online contacts bar ********************** -->

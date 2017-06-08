@@ -19,15 +19,12 @@ $posts = loadPosts($user->get_email(), $pdo);
 ?>
 
 <?php foreach($posts as $p):  
-
 	$comments = load_comments($p->getPostID(), $pdo);
-
-
 ?>
 
 	<!-- <div class="middle__posts"> -->
 	<div class="post__header">
-		<img src="../rsrc/img/photos/p11.jpeg" class="post__header__author-photo">
+		<img src="../rsrc/img/photos/default-profile.png" class="post__header__author-photo">
 		<p class="post__header__info info__author"><a class=""><?php echo $user->get_first_name() . " " . $user->get_last_name() ?></a></p>
 		<p class="post__header__info info__date"><?php echo $p->getPostTime() ?></p>
 	</div>
@@ -36,8 +33,11 @@ $posts = loadPosts($user->get_email(), $pdo);
 	</div>
 
 	<div class="comment__content">
-		<p class="comment__content__p"></p>
-		<p><?php echo $p->getPostId()?></p>
+	<?php
+		foreach ($comments as $c) {
+			echo '<div class="comment__content__p"> &nbsp&nbsp' . $c->getCommentContent() . '</div>';
+		}
+	?>
 	</div>
 
 
