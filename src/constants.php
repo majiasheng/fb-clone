@@ -11,4 +11,5 @@ define("COMMENTS_TABLE", "comments");
 define("CHARSET","utf8");
 define("FRIENDS_TABLE", "friend_with");
 define("IMAGE_TABLE", "images");
+define("FRIEND_REQUEST_TABLE", "friend_request");
 ?>
