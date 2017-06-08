@@ -63,11 +63,22 @@ CREATE TABLE images (
     FOREIGN KEY (email) REFERENCES users(email)
 );
 
+CREATE TABLE friend_request (
+    id              INTEGER NOT NULL AUTO_INCREMENT,
+    sender          VARCHAR(50) NOT NULL,
+    receiver        VARCHAR(50) NOT NULL,
+    time_received   TIMESTAMP   DEFAULT CURRENT_TIMESTAMP,
+    PRIMARY KEY (sender, receiver)
+
+);
+
 CREATE TABLE notification (
-    id          INTEGER NOT NULL AUTO_INCREMENT,
-    user_email  VARCHAR(50) NOT NULL,
-    content     TEXT NOT NULL,
-    processed   TINYINT DEFAULT 0
+    id              INTEGER NOT NULL AUTO_INCREMENT,
+    sender          VARCHAR(50) NOT NULL,
+    receiver        VARCHAR(50) NOT NULL,
+    content         TEXT NOT NULL,
+    time_received   TIMESTAMP   DEFAULT CURRENT_TIMESTAMP,
+    processed       TINYINT DEFAULT 0
 );
 
 

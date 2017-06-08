@@ -353,6 +353,24 @@ function isFriend($A, $B, $pdo) {
     return count($rtval);
 }
 
+/**
+ * A sends request to B, and B receives notification
+ */
+function sendFriendRequest($A, $B, $pdo) {
+    $query = "INSERT INTO " . NOTIFICATION_TABLE . " WHERE "
+}
+
+function acceptFriendRequest() {
+    /*TODO: 
+        - add friend to friend_with table
+        - remove friend request from friend_request table
+    */
+}
+
+function rejectFriendRequest() {
+    //TODO:
+}
+
 //TODO: function that removes friend from record
 
 /**

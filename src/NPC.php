@@ -31,6 +31,16 @@ if(strcmp($_GET['user'], $_SESSION['user']->get_email()) == 0) {
     header("Location: main.php");
 }
 
+// 
+if(isset($_POST['friend_quest'])) {
+    /*  add notification to the to-be friend, 
+        and the to-be friend would need to refresh page 
+        to get notified (for now)
+    */
+    // "you" send friend request to "NPC"
+    sendFriendRequest($_SESSION['user']->get_email(), $user, $pdo);
+}
+
 // default profile picture
 $profile_pic = "../rsrc/img/photos/default-profile.png";
 
@@ -242,11 +252,17 @@ $profile_pic = "../rsrc/img/photos/default-profile.png";
             </div>
     </div>
     
+
+    
     <?php
+
     //if it is not friend, then add a "Add Friend" button to send a friend request
     if(!isFriend($_GET['user'], $_SESSION['user']->get_email(), $pdo)) {
         //TODO: on press, disable button, change text to "request sent"
-        echo '<input type="button" value="Add Friend"> ';
+        echo '<form action="" method="POST">';
+        echo '<input type="submit" name="friend_quest" value="Add Friend"> ';
+        //TODO: disable button
+        echo '</form>';
     }
     ?>
 
