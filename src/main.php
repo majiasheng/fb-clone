@@ -55,23 +55,6 @@ if(isset($_POST) && isset($_POST['post_comment_content']) && ("" != trim($_POST[
     header('Location:'.$_SERVER['PHP_SELF']);
 }
 
-// TEST: save image
-if(isset($_FILES['cover_img']) && $_FILES['cover_img']['size'] > 0) {
-    $tmp_name = $_FILES['cover_img']['tmp_name'];
-
-    // read the file
-    $fp = fopen($tmp_name, 'r');
-    $data = fread($fp, filesize($tmp_name));
-    $data = addslashes($data);
-    fclose($fp);
-
-    // create query and insert into db
-    $query = "INSERT INTO " . IMAGE_TABLE . " ";
-    $query .= "(email, cover) VALUES ('" . $user->get_email(). "'," . "'" . $data . "')";
-    $pdo->query($query);
-
-}
-
 // default profile picture
 $profile_pic = "../rsrc/img/photos/default-profile.png";
 
@@ -153,8 +136,8 @@ $profile_pic = "../rsrc/img/photos/default-profile.png";
             <form method="POST" action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]);?>" enctype="multipart/form-data"  class="cover__pic">
                 <!-- div: hide the upload file button -->
                 <!-- <div style="height:0px; overflow=hidden;">   -->
-                <input type="file" name="cover_img" id="cover_img">
-                <input type="submit">
+<!--                 <input type="file" name="cover_img" id="cover_img">
+                <input type="submit"> -->
                 <!-- </div> -->
                 <?php 
                 if(empty($user->get_cover_photo())) {

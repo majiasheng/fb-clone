@@ -6,7 +6,7 @@ require_once("../src/user.php");
 require_once("../src/Post.php");
 require_once("../src/info.php");
 require_once("../src/comments.php");
-
+// TODO: use prepare statement to insert into db
 /**
  * Establishes connection with db
  */
@@ -341,16 +341,16 @@ function loadFriends($user_email, $pdo) {
 /**
  * Save images
  */
-function saveCoverPhoto($pdo, $email) {
-    $image_name = $_FILES["cover_upload"]["name"];
-    $image_tmp = addslashes(file_get_contents($_FILES["cover_upload"]["tmp_name"]));
+// function saveCoverPhoto($pdo, $email) {
+//     $image_name = $_FILES["cover_upload"]["name"];
+//     $image_tmp = addslashes(file_get_contents($_FILES["cover_upload"]["tmp_name"]));
 
-    $query = "INSERT INTO " . IMAGE_TABLE . " (";
-    $query .= "email, cover";
-    $query .= ") VALUES (";
-    $query .= "'" . $email . "', '" . $image_name . "');";
+//     $query = "INSERT INTO " . IMAGE_TABLE . " (";
+//     $query .= "email, cover";
+//     $query .= ") VALUES (";
+//     $query .= "'" . $email . "', '" . $image_name . "');";
 
-    $pdo->query($query);
-}
+//     $pdo->query($query);
+// }
 
 ?>
