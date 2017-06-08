@@ -159,6 +159,10 @@ function loadUserProfile($user_email, $pdo) {
 
     $stmt->execute(['email' => $user_email]);
     $user_data = $stmt->fetch(PDO::FETCH_ASSOC);
+    
+    if(!$user_data) {
+        return False;
+    }
 
     $user = new User;
     $user->set_first_name($user_data['first_name']);
@@ -334,6 +338,19 @@ function loadFriends($user_email, $pdo) {
     $stmt = $pdo->prepare($query);
     $stmt->execute([$user_email, $user_email]);
     return $stmt->fetchAll(PDO::FETCH_COLUMN);
+}
+
+/**
+ * Returns 1 if A and B are friends (undirected)
+ * 0 otherwise
+ */
+function isFriend($A, $B, $pdo) {
+    $query = "SELECT * FROM " . FRIENDS_TABLE . " WHERE friendA = ? "
+        . "AND friendB = ? OR friendA = ? AND friendB = ?;";
+    $stmt = $pdo->prepare($query);
+    $stmt->execute([$A, $B, $B, $A]);
+    $rtval = $stmt->fetchAll(PDO::FETCH_COLUMN);
+    return count($rtval);
 }
 
 //TODO: function that removes friend from record

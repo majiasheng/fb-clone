@@ -17,6 +17,11 @@ if(!isset($_GET['user'])) {
 // $_GET['user'] = user email
 $pdo = connect();
 $user = loadUserProfile($_GET['user'], $pdo);
+
+// if user doesn't exist in db, then redirect back to main
+if(!$user) {
+    header("Location: main.php");
+}
 $info = $user->get_info();
 
 $full_user_name = $user->get_first_name() . " " . $user->get_last_name();
@@ -161,7 +166,7 @@ $profile_pic = "../rsrc/img/photos/default-profile.png";
                         <p class="modal__page--titles">Workspace</p>
                 <!-- echo all workplaces and schools-->
                         <?php
-                        if(!empty($info->get_workspace())) {
+                        if(!empty($info->get_workplace())) {
                             // foreach($info->get_workspace() as $workspace) {
                             echo '<p class="modal__page--add" onclick="show_modal_input1()">'. $info->get_workspace() .'</p>';
                             // }
@@ -236,7 +241,17 @@ $profile_pic = "../rsrc/img/photos/default-profile.png";
               <!-- </form> -->
             </div>
     </div>
+    
+    <?php
+    //if it is not friend, then add a "Add Friend" button to send a friend request
+    if(!isFriend($_GET['user'], $_SESSION['user']->get_email(), $pdo)) {
+        //TODO: on press, disable button, change text to "request sent"
+        echo '<input type="button" value="Add Friend"> ';
+    }
+    ?>
+    
     </div>
+
     <div class="row content">
 
         <div class="content__left col-md-4">
