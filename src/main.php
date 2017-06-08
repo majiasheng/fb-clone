@@ -1,17 +1,17 @@
 <!-- author:    Melanie Lin
                 Jia Sheng Ma 
--->
-<?php
-require_once("../include/functions.php");
-session_start();
+            -->
+            <?php
+            require_once("../include/functions.php");
+            session_start();
 // TODO: use user data to populate main.php
 
-if ($_SESSION['loggedin'] !== TRUE) {
-   header("Location: index.php");
-}
-$user = $_SESSION['user'];
-$info = $_SESSION['user_info'];
-$pdo = connect();
+            if ($_SESSION['loggedin'] !== TRUE) {
+             header("Location: index.php");
+         }
+         $user = $_SESSION['user'];
+         $info = $_SESSION['user_info'];
+         $pdo = connect();
 
 // if a form is sent to self, handle it
 if (isset($_POST) && (isset($_POST["workplace"]) || isset($_POST["education"]) || isset($_POST["current_city"]) ||
@@ -31,274 +31,239 @@ if (isset($_POST) && (isset($_POST["workplace"]) || isset($_POST["education"]) |
     save_info_to_db($user->get_email(), $info, $pdo);
 }
 
-if(isset($_POST) && isset($_POST['post_content']) && ("" != trim($_POST['post_content']))) {
-    if(!savePostToDB($user->get_email(), $pdo, $_POST['post_content'])) {
-        echo "Error occurred while saving posting <br>";
-    }
-    // prevent resubmission of POST
-    unset($_POST);
-    // var_dump($_POST);
-    header('Location:' . $_SERVER['PHP_SELF']);
-}
 
-if(isset($_POST) && isset($_POST['post_comment_content']) && ("" != trim($_POST['post_comment_content']))) {
-    //FIXME: $user->get_email() <= not really, $user can be anyone
-    if(!saveCommentToDB($user->get_email(), $_POST['post__id'], $pdo, $_POST['post_comment_content'])){
-        echo "Error occurred while commenting <br>";
-    }
-
-    unset($_POST);
-    header('Location:'.$_SERVER['PHP_SELF']);
-}
 
 // default profile picture
-$profile_pic = "../rsrc/img/photos/default-profile.png";
+        $profile_pic = "../rsrc/img/photos/default-profile.png";
 
-?>
+        ?>
 
-<!doctype html>
-<html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <title>
-  <?php 
-  echo $user->get_first_name() . " " . $user->get_last_name();
-  ?>
-  </title>
-  <link rel="stylesheet" href="../include/styles/css/style.css">
-  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.6/css/bootstrap.min.css">
-  <link rel="stylesheet" type="text/css" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-</head>
-<body>
-<div class="container-fluid">
-    <nav class="navbar" role="navigation">
-        <div class="navbar__container">
-            <ul class="row">
-                <!-- brand icon -->
-                <div class="col-md-2 col-sm-12">
-                    <li class="header__brand"><a href="main.php"><i class="fa fa-facebook"></i></a></li>
-                    </div>
-                <!-- username and home button -->
-                <div class="col-md-3 col-sm-12 navbar__header">
-                    <li class="header__username">
-                        <a href="#">
-                        <?php 
-                        echo $user->get_first_name() . " " . $user->get_last_name();
-                        ?>
-                        </a>
-                    </li>
+        <!doctype html>
+        <html lang="en">
+        <head>
+          <meta charset="UTF-8">
+          <title>
+              <?php echo $user->get_first_name() . " " . $user->get_last_name(); ?>
+          </title>
+          <link rel="stylesheet" href="../include/styles/css/style.css">
+          <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.6/css/bootstrap.min.css">
+          <link rel="stylesheet" type="text/css" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
 
-			  		<li class="header__home"><a href="#">Home</a></li>
-		  		</div>
-		  		<!-- friends, messages, and alerts -->
-		  		<div class="col-md-2 col-sm-12 navbar__header">
-			  		<li class="header__friends header--icon-setting"><a href="#"><i class="fa fa-user"></i></a></li>
-			 		<li class="header__message header--icon-setting"><a href="#"><i class="fa fa-comments"></i></a></li>
-			  		<li class="header__alert header--icon-setting"><a href="#"><i class="fa fa-globe"></i></a></li>
-		  		</div>
-		  		<!-- privacy and settings (with a dropdown menu)-->
-		  		<div class="col-md-1 col-sm-12">
-			 		<li class="header__privacy header--icon-setting"><a href="#"><i class="fa fa-lock"></i></a></li>
-			  		<li class="header__setting header--icon-setting"><a href="#"><i class="fa fa-caret-down" onclick="show_setting_menu()"></i></a>
-			  			<ul class="icon-setting--dropdown">
-		                    <li><a href="settings.php">Settings</a></li>
-		                    <li><a href="logout.php">Log Out</a></li>
-		                </ul>
+          <meta name="viewport" content="width=device-width, initial-scale=1">
+      </head>
+      <body>
+        <div class="container-fluid">
+            <nav class="navbar" role="navigation">
+                <div class="navbar__container">
+                    <ul class="row">
+                        <!-- brand icon -->
+                        <div class="col-md-2 col-sm-12">
+                            <li class="header__brand"><a href="main.php"><i class="fa fa-facebook"></i></a></li>
+                        </div>
+                        <!-- username and home button -->
+                        <div class="col-md-3 col-sm-12 navbar__header">
+                            <li class="header__username">
+                                <a href="#">
+                                    <?php echo $user->get_first_name() . " " . $user->get_last_name(); ?>
+                                </a>
+                            </li>
 
-			  		</li>
-		  			
-		  		</div>
-		  		<!-- search bar -->
-		  		<div class="col-md-4 col-sm-12">
-	                <li class="navbar__form">
-			  			<form class="navbar__search-form form-inline" role="search" action="search.php" method="GET">
-			 				<!-- <div class="navbar__search-container form-group"> -->
-			  					<input type="text" name="search" class="navbar__search-input form-control" placeholder="Search">
-                                <!--TODO: send a GET request to search.php -->
-                                  <!-- <a href=# class="linka"><i class="fa fa-search"></i></a> -->
-                                <input type="submit" value="Search" class="fa fa-search">
-				  			<!-- </div> -->
-						</form>
-					</li>
-				</div>
+                            <li class="header__home"><a href="#">Home</a></li>
+                        </div>
+                        <!-- friends, messages, and alerts -->
+                        <div class="col-md-2 col-sm-12 navbar__header">
+                         <li class="header__friends header--icon-setting"><a href="#"><i class="fa fa-user"></i></a></li>
+                         <li class="header__message header--icon-setting"><a href="#"><i class="fa fa-comments"></i></a></li>
+                         <li class="header__alert header--icon-setting"><a href="#"><i class="fa fa-globe"></i></a></li>
+                     </div>
+                     <!-- privacy and settings (with a dropdown menu)-->
+                     <div class="col-md-1 col-sm-12">
+                      <li class="header__privacy header--icon-setting"><a href="#"><i class="fa fa-lock"></i></a></li>
+                      <li class="header__setting header--icon-setting"><a href="#"><i class="fa fa-caret-down" onclick="show_setting_menu()"></i></a>
+                        <ul class="icon-setting--dropdown">
+                          <li><a href="settings.php">Settings</a></li>
+                          <li><a href="logout.php">Log Out</a></li>
+                      </ul>
 
-		  	</ul> 
-		</div>
-    </nav>
-    <!-- cover image section -->
-    <div class="cover">
-        <div class="cover__container">
-            <form method="POST" action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]);?>" enctype="multipart/form-data"  class="cover__pic">
-                <!-- div: hide the upload file button -->
-                <!-- <div style="height:0px; overflow=hidden;">   -->
-<!--                 <input type="file" name="cover_img" id="cover_img">
-                <input type="submit"> -->
-                <!-- </div> -->
-                <?php 
-                if(empty($user->get_cover_photo())) {
-                        // set default profile picture
-                        echo '<input type="image" name="cover_submit" id="cover_photo" src="../rsrc/img/cover/default-cover.jpg" >';
-                    } else {
-                        // load user cover picture
-                        //TODO:
-                        
-                    }
-                ?>
-            </form>
-            <div class="cover__profile-container">
-                <?php
+                  </li>
+
+              </div>
+              <!-- search bar -->
+              <div class="col-md-4 col-sm-12">
+               <li class="navbar__form">
+                <form class="navbar__search-form form-inline" role="search" action="search.php" method="GET">
+                    <!-- <div class="navbar__search-container form-group"> -->
+                    <input type="text" name="search" class="navbar__search-input form-control" placeholder="Search">
+                    <!--TODO: send a GET request to search.php -->
+                    <!-- <a href=# class="linka"><i class="fa fa-search"></i></a> -->
+                    <input type="submit" value="Search" class="fa fa-search">
+                    <!-- </div> -->
+                </form>
+            </li>
+        </div>
+
+    </ul> 
+</div>
+</nav>
+<!-- cover image section -->
+<div class="cover">
+    <div class="cover__container">
+
+        <?php 
+        if(empty($user->get_cover_photo())) {
+                    // set default profile picture
+            echo '<img src="../rsrc/img/cover/default-cover.jpg">';
+        } else {
+                    // load user cover picture
+                    //TODO:
+
+        }
+        ?>
+        <div class="cover__profile-container">
+            <?php
                 // load user profile picture
-                if(! empty($user->get_profile_picture())) {
+            if(! empty($user->get_profile_picture())) {
                     //TODO: 
                     // $profile_pic = 
-                }
-                echo '<img src="'. $profile_pic . '" ';
+            }
+            echo '<img src="'. $profile_pic . '" ';
 
+            ?>
+            alt="profile photo" class="cover__photo"/>
+            <div class="cover__username">
+                <?php 
+                echo $user->get_first_name() . " " . $user->get_last_name();
                 ?>
-                alt="profile photo" class="cover__photo"/>
-                <div class="cover__username">
-                    <?php 
-                    echo $user->get_first_name() . " " . $user->get_last_name();
-                    ?>
-	    		</div>
-	    		<div class="cover__update-info cover__update-info--decor" id="update-info-btn" onclick="show_update_info_page()">update info</div>
-	    		<div class="cover__view-at cover__update-info--decor">view activity</div>
+            </div>
+            <div class="cover__update-info cover__update-info--decor" id="update-info-btn" onclick="show_update_info_page()">update info</div>
+            <div class="cover__view-at cover__update-info--decor">view activity</div>
 
-	    	</div>
+        </div>
 
-            <!-- update info page -->
-            <div id="update-info-page" class="update-info__modal">
-                  <!-- page content -->
-                  <div class="modal__page">
-                        <span onclick="close_update_info_page()" class="modal__page-close">&times;</span>
+        <!-- update info page -->
+        <div id="update-info-page" class="update-info__modal">
+          <!-- page content -->
+          <div class="modal__page">
+            <span onclick="close_modal(this.id)" class="modal__page-close">&times;</span>
 
-                        <p class="modal__page--titles">Describe who you are</p>
-                <!-- describe who you are-->
-                        <?php
-                        if(!empty($info->get_description())) {
+            <p class="modal__page--titles">Describe who you are</p>
+            <!-- describe who you are-->
+
+            <form method="POST" action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]);?>" id="modal__page--input0">
+                <input type="text" name="description" class="modal__page--text">
+                <button type="submit" class="btn btn-primary modal__page--btn">Save</button>
+                <button type="button"class="btn btn-secondary modal__page--btn" onclick="close_modal(this.id)">Cancel</button>
+            </form>
+            <p class="modal__page--titles">workplace</p>
+            <!-- echo all workplaces and schools-->
+            <?php
+            if(!empty($info->get_workplace())) {
                             // foreach($info->get_workplace() as $workplace) {
-                            echo '<p class="modal__page--add" onclick="show_modal(this.id)">'. $info->get_description() .'</p>';
+                echo '<p class="modal__page--add" onclick="show_modal(this.id)">'. $info->get_workplace() .'</p>';
                             // }
-                        } else {
-                            echo '<p class="modal__page--add" onclick="show_modal(this.id)"><i class="fa fa-pencil"></i></p>';
-                        }
-                        ?>
-                        <form method="POST" action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]);?>" id="modal__page--input0">
-                            <input type="text" name="description" class="modal__page--text">
-                            <button type="submit" class="btn btn-primary modal__page--btn">Save</button>
-                            <button type="button"class="btn btn-secondary modal__page--btn" onclick="close_modal(this.id)">Cancel</button>
-                        </form>
-                        <p class="modal__page--titles">workplace</p>
-                <!-- echo all workplaces and schools-->
-                        <?php
-                        if(!empty($info->get_workplace())) {
-                            // foreach($info->get_workplace() as $workplace) {
-                            echo '<p class="modal__page--add" onclick="show_modal(this.id)">'. $info->get_workplace() .'</p>';
-                            // }
-                        } else {
-                            echo '<p class="modal__page--add" onclick="show_modal(this.id)">Add Workplace</p>';
-                        }
-                        ?>
-                        <form method="POST" action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]);?>" id="modal__page--input1">
-                            <input type="text" name="workplace" class="modal__page--text">
-                            <button type="submit" name="input_save" class="btn btn-primary modal__page--btn">Save</button>
-                            <button type="button"class="btn btn-secondary modal__page--btn" onclick="close_modal(this.id)">Cancel</button>
-                        </form>
+            } else {
+                echo '<p class="modal__page--add" onclick="show_modal(this.id)">Add Workplace</p>';
+            }
+            ?>
+            <form method="POST" action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]);?>" id="modal__page--input1">
+                <input type="text" name="workplace" class="modal__page--text">
+                <button type="submit" name="input_save" class="btn btn-primary modal__page--btn">Save</button>
+                <button type="button"class="btn btn-secondary modal__page--btn" onclick="close_modal(this.id)">Cancel</button>
+            </form>
 
-                        <p class="modal__page--titles">Education</p>
-                        <?php
-                        if(!empty($info->get_education())) {
+            <p class="modal__page--titles">Education</p>
+            <?php
+            if(!empty($info->get_education())) {
                             // foreach($info->get_education() as $education) {
-                                echo '<p class="modal__page--add" onclick="show_modal(this.id)">'. $info->get_education() .'</p>';
+                echo '<p class="modal__page--add" onclick="show_modal(this.id)">'. $info->get_education() .'</p>';
                             // }   
-                        } else {
-                            echo '<p class="modal__page--add" onclick="show_modal(this.id)">Add education</p>';
-                        }
-                        ?>
-                        <form method="POST" action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]);?>" id="modal__page--input2">
-                            <input type="text" name="education" class="modal__page--text">
-                            <button type="submit" class="btn btn-primary modal__page--btn">Save</button>
-                            <button type="button" class="btn btn-secondary modal__page--btn" onclick="close_modal(this.id)">Cancel</button>
-                        </form>
-                <!-- echo current city, hometown, and relationship -->
-                        <p class="modal__page--titles">Current City</p>
-                        <?php
-                        if(empty($info->get_current_city())) {
-                            echo '<p class="modal__page--add" onclick="show_modal(this.id)">Add current city</p>';
-                        } else {
-                            echo '<p class="modal__page--add" onclick="show_modal(this.id)">' . $info->get_current_city() . '</p>';
-                        }
-                        ?>
-                        <form method="POST" action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]);?>" id="modal__page--input3">
-                            <input type="text" name="current_city" class="modal__page--text">
-                            <button type="submit" class="btn btn-primary modal__page--btn">Save</button>
-                            <button type="button" class="btn btn-secondary modal__page--btn" onclick="close_modal(this.id)">Cancel</button>
-                        </form>
-                        <p class="modal__page--titles">Hometown</p>
-                        <?php
-                        if(empty($info->get_hometown())) {
-                            echo '<p class="modal__page--add" onclick="show_modal(this.id)">Add hometown</p>';
-                        } else {
-                            echo '<p class="modal__page--add" onclick="show_modal(this.id)">' . $info->get_hometown() . '</p>';
-                        }
-                        ?>
-                        <form method="POST" action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]);?>" id="modal__page--input4">
-                            <input type="text" name="hometown" class="modal__page--text">
-                            <button type="submit" class="btn btn-primary modal__page--btn">Save</button>
-                            <button type="button" class="btn btn-secondary modal__page--btn" onclick="close_modal(this.id)">Cancel</button>
-                        </form>
-                        <p class="modal__page--titles">Relationship</p>
-                        <?php
-                        if(empty($info->get_relationship())) {
-                            echo '<p class="modal__page--add" onclick="show_modal(this.id)">Add relationship</p>';
-                        } else {
-                            echo '<p class="modal__page--add" onclick="show_modal(this.id)">' . $info->get_relationship() . '</p>';
-                        }
-                        ?>
-                        <form method="POST" action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]);?>" id="modal__page--input5">
-                            <input type="text" name="relationship" class="modal__page--text">
-                            <button type="submit" class="btn btn-primary modal__page--btn">Save</button>
-                            <button type="button" class="btn btn-secondary modal__page--btn" onclick="close_modal(this.id)">Cancel</button>
-                        </form>
-                        <p class="modal__page--titles">About Info</p>
-                        <p class="modal__page--add">Edit Your About Info</p>
-                  </div>
-              <!-- </form> -->
-            </div>
+            } else {
+                echo '<p class="modal__page--add" onclick="show_modal(this.id)">Add education</p>';
+            }
+            ?>
+            <form method="POST" action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]);?>" id="modal__page--input2">
+                <input type="text" name="education" class="modal__page--text">
+                <button type="submit" class="btn btn-primary modal__page--btn">Save</button>
+                <button type="button" class="btn btn-secondary modal__page--btn" onclick="close_modal(this.id)">Cancel</button>
+            </form>
+            <!-- echo current city, hometown, and relationship -->
+            <p class="modal__page--titles">Current City</p>
+            <?php
+            if(empty($info->get_current_city())) {
+                echo '<p class="modal__page--add" onclick="show_modal(this.id)">Add current city</p>';
+            } else {
+                echo '<p class="modal__page--add" onclick="show_modal(this.id)">' . $info->get_current_city() . '</p>';
+            }
+            ?>
+            <form method="POST" action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]);?>" id="modal__page--input3">
+                <input type="text" name="current_city" class="modal__page--text">
+                <button type="submit" class="btn btn-primary modal__page--btn">Save</button>
+                <button type="button" class="btn btn-secondary modal__page--btn" onclick="close_modal(this.id)">Cancel</button>
+            </form>
+            <p class="modal__page--titles">Hometown</p>
+            <?php
+            if(empty($info->get_hometown())) {
+                echo '<p class="modal__page--add" onclick="show_modal(this.id)">Add hometown</p>';
+            } else {
+                echo '<p class="modal__page--add" onclick="show_modal(this.id)">' . $info->get_hometown() . '</p>';
+            }
+            ?>
+            <form method="POST" action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]);?>" id="modal__page--input4">
+                <input type="text" name="hometown" class="modal__page--text">
+                <button type="submit" class="btn btn-primary modal__page--btn">Save</button>
+                <button type="button" class="btn btn-secondary modal__page--btn" onclick="close_modal(this.id)">Cancel</button>
+            </form>
+            <p class="modal__page--titles">Relationship</p>
+            <?php
+            if(empty($info->get_relationship())) {
+                echo '<p class="modal__page--add" onclick="show_modal(this.id)">Add relationship</p>';
+            } else {
+                echo '<p class="modal__page--add" onclick="show_modal(this.id)">' . $info->get_relationship() . '</p>';
+            }
+            ?>
+            <form method="POST" action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]);?>" id="modal__page--input5">
+                <input type="text" name="relationship" class="modal__page--text">
+                <button type="submit" class="btn btn-primary modal__page--btn">Save</button>
+                <button type="button" class="btn btn-secondary modal__page--btn" onclick="close_modal(this.id)">Cancel</button>
+            </form>
+            <p class="modal__page--titles">About Info</p>
+            <p class="modal__page--add">Edit Your About Info</p>
+        </div>
+        <!-- </form> -->
     </div>
-    </div>
-    <div class="row content">
+</div>
+</div>
+<div class="row content">
 
-        <div class="content__left col-md-4">
-            <!-- left side -->
-            <div class="left__intro">
-                <h2 class="content__title content__title--font"><i class="fa fa-pencil-square-o content__icon content__icon--bg" aria-hidden="true"></i>Intro</h2>
-                    <?php
-                    if(!empty($info->get_description())) {
-                        echo '<p class="intro__detail text-center" id="description">' . $info->get_description() . '</p>';
-                    }
-                    if(!empty($info->get_current_city()))
-                        echo '<p class="intro__detail"><i class="fa fa-home"></i> Lives in ' . $info->get_current_city() . '</p>';
-                    if(!empty($info->get_hometown())) 
-                        echo '<p class="intro__detail"><i class="fa fa-map-marker"></i> From ' . $info->get_hometown() . '</p>';
-                    
-                    ?>
-                <button class="intro__update-btn--font intro__update-btn--bg" onclick="show_update_info_page()">update info</button>
-            </div>
+    <div class="content__left col-md-4">
+        <!-- left side -->
+        <div class="left__intro">
+            <h2 class="content__title content__title--font"><i class="fa fa-pencil-square-o content__icon content__icon--bg" aria-hidden="true"></i>Intro</h2>
+            <?php
+            if(!empty($info->get_description())) {
+                echo '<p class="intro__detail text-center" id="description">' . $info->get_description() . '</p>';
+            }
+            if(!empty($info->get_current_city()))
+                echo '<p class="intro__detail"><i class="fa fa-home"></i> Lives in ' . $info->get_current_city() . '</p>';
+            if(!empty($info->get_hometown())) 
+                echo '<p class="intro__detail"><i class="fa fa-map-marker"></i> From ' . $info->get_hometown() . '</p>';
 
-            <!-- ********************** left: photos ********************** -->
-            <div class="left__photos">
-                <a href=#><h2 class="content__title content__title--font">
-                    <i class="fa fa-picture-o content__icon content__icon--bg" aria-hidden="true"></i>
-                    <!-- TODO: redirect to a photo upload page -->
-                    Photos
-                </h2></a>
+            ?>
+            <button class="intro__update-btn--font intro__update-btn--bg" onclick="show_modal(this.id)">update info</button>
+        </div>
 
-                <?php
+        <!-- ********************** left: photos ********************** -->
+        <div class="left__photos">
+            <a href=#><h2 class="content__title content__title--font">
+                <i class="fa fa-picture-o content__icon content__icon--bg" aria-hidden="true"></i>
+                <!-- TODO: redirect to a photo upload page -->
+                Photos
+            </h2></a>
+
+            <?php
                 //TODO: load 3x3 user photos if there's any
                 // prompt user to upload otherwise
-                ?>
+            ?>
 
 <!--                <div class="row photos__container">
                     <div class="col-xs-4 col-sm-4 col-md-4 col-lg-4"><img src="../rsrc/img/photos/p1.jpeg"></div>
@@ -395,188 +360,128 @@ $profile_pic = "../rsrc/img/photos/default-profile.png";
                             <i class="fa fa-user-circle timeline__icon"></i class="fa fa-user-circle timeline__icon">
                                 about
                             </a>
-                    </li>
-                    
-                    <li class="col-xs-3 col-sm-3 col-md-3 col-lg-3">
-                        <a href="#">
-                            <i class="fa fa-globe timeline__icon"></i>
-                            friends
-                        </a>
-                    </li>
+                        </li>
 
-                    <li class="col-xs-3 col-sm-3 col-md-3 col-lg-3">
-                        <a href="#">
-                            <i class="fa fa-camera timeline__icon"></i>
-                            photos
-                        </a>
-                    </li>
-                </ul>
-            </div>
-            
-            <div class="middle__status">
-                <ul class="row">
-                    <li class="col-xs-3 col-sm-3 col-md-3 col-lg-3 status--text">
-                        <i class="fa fa-pencil"></i>
-                        Status
-                    </li>
+                        <li class="col-xs-3 col-sm-3 col-md-3 col-lg-3">
+                            <a href="#">
+                                <i class="fa fa-globe timeline__icon"></i>
+                                friends
+                            </a>
+                        </li>
 
-                    <li class="col-xs-3 col-sm-3 col-md-3 col-lg-3 status--text">
-                        <i class="fa fa-camera-retro"></i>
-                        Photo / Video
-                    </li>
-                    <li class="col-xs-3 col-sm-3 col-md-3 col-lg-3 status--text">
-                        <i class="fa fa-video-camera"></i>
-                        Live Video
-                    </li>
+                        <li class="col-xs-3 col-sm-3 col-md-3 col-lg-3">
+                            <a href="#">
+                                <i class="fa fa-camera timeline__icon"></i>
+                                photos
+                            </a>
+                        </li>
+                    </ul>
+                </div>
 
-                    <li class="col-xs-3 col-sm-3 col-md-3 col-lg-3 status--text">
-                        <i class="fa fa-flag"></i>
-                        Life Events
-                    </li>
-                </ul>
+                <div class="middle__status">
+                    <ul class="row">
+                        <li class="col-xs-3 col-sm-3 col-md-3 col-lg-3 status--text">
+                            <i class="fa fa-pencil"></i>
+                            Status
+                        </li>
+
+                        <li class="col-xs-3 col-sm-3 col-md-3 col-lg-3 status--text">
+                            <i class="fa fa-camera-retro"></i>
+                            Photo / Video
+                        </li>
+                        <li class="col-xs-3 col-sm-3 col-md-3 col-lg-3 status--text">
+                            <i class="fa fa-video-camera"></i>
+                            Live Video
+                        </li>
+
+                        <li class="col-xs-3 col-sm-3 col-md-3 col-lg-3 status--text">
+                            <i class="fa fa-flag"></i>
+                            Life Events
+                        </li>
+                    </ul>
 
 
-                <form action="" method="POST" id="post_form">
-                <textarea placeholder="What's on your mind?" rows="3" name="post_content" form="post_form"></textarea>
-                <input type="submit" Value="Post">
-                </form>
-            </div> <!-- ********************** end panel ********************** -->
+                    <form action="" method="POST" id="post_form">
+                        <textarea placeholder="What's on your mind?" rows="3" name="post_content"></textarea>
+                        <input type="submit" Value="Post">
+                    </form>
+                </div> <!-- ********************** end panel ********************** -->
 
-            <!-- ********************** middle: post ********************** -->
-            <div class="middle__posts">
+                <!-- ********************** middle: post ********************** -->
+
+<!--                 <div class="middle__posts">
+                    <div class="post__header">
+                    </div>
+                    <div class="post__content">
+                    </div>
+                    <div class="comment__content">
+                    </div>
+                    <div class="post__actions">
+                        <div class="actions--setting actions--decor"><i class="fa fa-thumbs-up"></i></div>
+                        <div class="actions--setting actions--decor"><i class="fa fa-share"></i></div>
+                        <div class="actions--setting actions--decor actions__comment"><i class="fa fa-comment"></i></div>
+                    </div>
+                </div>
+
+ -->
+
+                <div class="middle__posts">
                 <?php
                 //load user's posts if there's any
                 // if there's none, set up a prompt maybe?
                 $posts = loadPosts($user->get_email(), $pdo);
-                // var_dump($posts);
-                foreach($posts as $p) {
-                    // header: user pic, user name
-                    echo '<div class="post__header">';
-                    echo '<img src="' . $profile_pic . '" class="post__header__author-photo">';
-                    echo '<p class="post__header__info info__author"><a class="">' 
-                        . $user->get_first_name() . " " . $user->get_last_name() . '</a>';
-                    if($p->getIsEdited()) {
-                        echo " Edited";
-                    }
-                    echo '</p>';
-                    
-                    echo '<p class="post__header__info info__date">' 
-                        . $p->getPostTime() // load post's time
-                        . '</p></div>';
-
-                    // content
-                    echo '<div class="post__content"> <p class="post__content__p">';
-                    echo $p->getContent() . "<br></p></div>";
-
+                foreach($posts as $p):
                     $comments = load_comments($p->getPostID(), $pdo);
+                ?>
 
+                <div class="post__header">
+                    <img src="../rsrc/img/photos/default-profile.png" class="post__header__author-photo">
+                    <p class="post__header__info info__author"><a class=""><?php echo $user->get_first_name() . " " . $user->get_last_name() ?></a></p>
+                    <p class="post__header__info info__date"><?php echo $p->getPostTime() ?></p>
+                </div>
+                <div class="post__content">
+                    <p class="post__content__p"><?php echo $p->getContent() ?></p>
+                </div>
 
-
-                    //comment content
-                    foreach($comments as $c){
-                        echo ' <div class="comment_content"> &nbsp&nbsp'. $c->getCommentContent()  . '------('. $c->getAuthor() .')----------' . $c->getCommentTime() . '</div>';
-
-
+                <div class="comment__content" id="<?php echo 'post__' . $p->getPostID() . ''?>">
+                <?php
+                    foreach ($comments as $c) {
+                        echo '<div class="comment__content__p"> ' . $c->getCommentContent() . '</div>';
                     }
+                ?>
+                </div>
 
-                    // footer/actions: like, comment, share
 
-                    echo '<div class="post__actions">
+                <div class="post__actions">
                     <div class="actions--setting actions--decor"><i class="fa fa-thumbs-up"></i></div>
                     <div class="actions--setting actions--decor"><i class="fa fa-share"></i></div>
                     <div class="actions--setting actions--decor actions__comment"></div>
-                    <div class="actions--setting actions--decor actions__comment">';
-                          
-                          
-                    echo '
-                    <form action="" method="POST" id="post_comment_form">
+
+                    <form action="" method="POST" class="post_comment_form">
                         <input type="text" name="post_comment_content" placeholder="Write some comment"/>
-                        <input type="hidden" name="post__id" value="'  . $p->getPostId()  . '" >
+                        <input type="hidden" name="post__id" value="<?php echo $p->getPostId(); ?>" />
                         <button type="submit">
                             <i class="fa fa-comment"></i>
                         </button>
-                    </form>';
+                    </form>
 
-                    echo'
-                    </div>
-                    </div> <br><br>';
-
-                    // echo '<div class="post__actions">
-                    // <div class="actions--setting actions--decor"><i class="fa fa-thumbs-up"></i></div>
-                    // <div class="actions--setting actions--decor"><i class="fa fa-share"></i></div>
-                    // <div class="actions--setting actions--decor actions__comment"></div>
-                    // <div class="actions--setting actions--decor actions__comment"><i class="fa fa-comment"></i></div>
-                    // </div> ';
-
-                }
-                //TODO: load comments, likes, shares
-                //FIXME: when refreshing page, post should not be resent to db
-                ?>
-
-                <!-- <div class="post__header">
-                    <img src="../rsrc/img/photos/p11.jpeg" class="post__header__author-photo">
-                    <p class="post__header__info info__author"><a class="">Meow Meow</a> shared a link</p>
-                    <p class="post__header__info info__date">Jan 14 at 14:17 PM via Instagram</p>
+                    <!-- <div class="actions--setting actions--decor actions__comment"><i class="fa fa-comment"></i></div> -->
                 </div>
-                <div class="post__content">
-                    <p class="post__content__p">meow meow, meow meow meow meow, meow meow meow meow meow meow, meow meow!!!! meow meow meow meow!</p>
-                    <img src="../rsrc/img/posts/p2.jpeg" alt="post content" class="post__content__img" />
-                </div>
-                <div class="post__actions">
-                    <div class="actions--setting actions--decor"><i class="fa fa-thumbs-up"></i></div>
-                    <div class="actions--setting actions--decor"><i class="fa fa-share"></i></div>
-                    <div class="actions--setting actions--decor actions__comment">1</div>
-                    <div class="actions--setting actions--decor actions__comment"><i class="fa fa-comment"></i></div>
-                </div> -->
-                    <!-- ********************** end post ********************** -->
+                <br><br>
 
-<!--            <div class="middle__posts">
-                <div class="post__header">
-                    <img src="../rsrc/img/photos/p11.jpeg" class="post__header__author-photo">
-                    <p class="post__header__info info__author"><a class="">Meow Meow</a> shared a link</p>
-                    <p class="post__header__info info__date">Jan 14 at 14:17 PM via Instagram</p>
-                </div>
-                <div class="post__content">
-                    <p class="post__content__p">My kingdom</p>
-                    <img src="../rsrc/img/posts/p3.jpeg" alt="post content" class="post__content__img" />
-                </div>
-                <div class="post__actions">
-                    <div class="actions--setting actions--decor"><i class="fa fa-thumbs-up"></i></div>
-                    <div class="actions--setting actions--decor"><i class="fa fa-share"></i></div>
-                    <div class="actions--setting actions--decor actions__comment">1</div>
-                    <div class="actions--setting actions--decor actions__comment"><i class="fa fa-comment"></i></div>
-                </div>
-            </div>
-
-            <div class="middle__posts">
-                <div class="post__header">
-                    <img src="../rsrc/img/photos/p11.jpeg" class="post__header__author-photo">
-                    <p class="post__header__info info__author"><a class="">Meow Meow</a> shared a link</p>
-                    <p class="post__header__info info__date">Jan 14 at 14:17 PM via Instagram</p>
-                </div>
-                <div class="post__content">
-                    <p class="post__content__p">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vestibulum sollicitudin, mauris ut tincidunt elementum, lacus nisl egestas augue, quis porta arcu lacus congue orci. </p>
-                    <img src="../rsrc/img/posts/p5.jpeg" alt="post content" class="post__content__img" />
-                </div>
-                <div class="post__actions">
-                    <div class="actions--setting actions--decor"><i class="fa fa-thumbs-up"></i></div>
-                    <div class="actions--setting actions--decor"><i class="fa fa-share"></i></div>
-                    <div class="actions--setting actions--decor actions__comment">1</div>
-                    <div class="actions--setting actions--decor actions__comment"><i class="fa fa-comment"></i></div>
-                </div>
-            </div> -->
-
-        </div> <!-- end middle column -->
+                <?php endforeach ?>
 
 
-        <div class="content__right col-md-2">
-        <!-- ********************** right: online contacts bar ********************** -->
-            <div class="right__contacts">
-                <?php
+                </div>
+
+                <div class="content__right col-md-2">
+                    <!-- ********************** right: online contacts bar ********************** -->
+                    <div class="right__contacts">
+                        <?php
                 //TODO: load online contacts/friends
 
 
-                ?>
+                        ?>
                 <!-- <a href="#"><img src="../rsrc/img/friends/cat1.png" alt="friends"></a>
                 <a href="#"><img src="../rsrc/img/friends/cat2.jpeg" alt="friends"></a>
                 <a href="#"><img src="../rsrc/img/friends/cat3.jpeg" alt="friends"></a>
@@ -597,7 +502,10 @@ $profile_pic = "../rsrc/img/photos/default-profile.png";
 
 </div>
 
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+<script src="https://cdn.jsdelivr.net/jquery.validation/1.16.0/jquery.validate.js"></script>
+<script src="../include/scripts/js/script.js"></script>
+<script src="../include/scripts/js/jquery_functions.js"></script>
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.6/js/bootstrap.min.js"></script>
-  <script src="../include/scripts/js/script.js"></script>
 </body>
 </html>
