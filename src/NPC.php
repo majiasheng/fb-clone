@@ -17,6 +17,11 @@ if(!isset($_GET['user'])) {
 // $_GET['user'] = user email
 $pdo = connect();
 $user = loadUserProfile($_GET['user'], $pdo);
+
+// if user doesn't exist in db, then redirect back to main
+if(!$user) {
+    header("Location: main.php");
+}
 $info = $user->get_info();
 
 $full_user_name = $user->get_first_name() . " " . $user->get_last_name();
@@ -24,6 +29,16 @@ $full_user_name = $user->get_first_name() . " " . $user->get_last_name();
 // if the user to redirect to is the user, then go to the main page instead
 if(strcmp($_GET['user'], $_SESSION['user']->get_email()) == 0) {
     header("Location: main.php");
+}
+
+// 
+if(isset($_POST['friend_quest'])) {
+    /*  add notification to the to-be friend, 
+        and the to-be friend would need to refresh page 
+        to get notified (for now)
+    */
+    // "you" send friend request to "NPC"
+    sendFriendRequest($_SESSION['user']->get_email(), $_GET['user'], $pdo);
 }
 
 // default profile picture
@@ -161,7 +176,7 @@ $profile_pic = "../rsrc/img/photos/default-profile.png";
                         <p class="modal__page--titles">Workspace</p>
                 <!-- echo all workplaces and schools-->
                         <?php
-                        if(!empty($info->get_workspace())) {
+                        if(!empty($info->get_workplace())) {
                             // foreach($info->get_workspace() as $workspace) {
                             echo '<p class="modal__page--add" onclick="show_modal_input1()">'. $info->get_workspace() .'</p>';
                             // }
@@ -236,7 +251,23 @@ $profile_pic = "../rsrc/img/photos/default-profile.png";
               <!-- </form> -->
             </div>
     </div>
+    
+
+    
+    <?php
+
+    //if it is not friend, then add a "Add Friend" button to send a friend request
+    if(!isFriend($_GET['user'], $_SESSION['user']->get_email(), $pdo)) {
+        //TODO: on press, disable button, change text to "request sent"
+        echo '<form action="" method="POST">';
+        echo '<input type="submit" name="friend_quest" value="Add Friend"> ';
+        //TODO: disable button
+        echo '</form>';
+    }
+    ?>
+
     </div>
+
     <div class="row content">
 
         <div class="content__left col-md-4">

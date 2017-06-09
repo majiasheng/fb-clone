@@ -13,6 +13,15 @@ function show_setting_menu() {
 	    dropdown.style.display = "block";
 	  }
 }
+function show_friend_requests() {
+    var dropdown = document.getElementsByClassName("friend-request--dropdown")[0];
+    if(dropdown.style.display == "block") { 
+        dropdown.style.display = "none";
+    }
+    else { 
+        dropdown.style.display = "block";
+    }
+}
 // click anythere to close 
 window.onclick = function(event) {
  	if (!event.target.matches('.fa-caret-down')) {

@@ -159,6 +159,10 @@ function loadUserProfile($user_email, $pdo) {
 
     $stmt->execute(['email' => $user_email]);
     $user_data = $stmt->fetch(PDO::FETCH_ASSOC);
+    
+    if(!$user_data) {
+        return False;
+    }
 
     $user = new User;
     $user->set_first_name($user_data['first_name']);
@@ -259,6 +263,19 @@ function loadPosts($user_email, $pdo) {
     return $post_objs;
 }
 
+function load_one_post($post_id, $pdo){
+    // $query = "SELECT author_email, id from" . POSTS_TABLE
+    // . " WHERE id = :id";
+
+    $query = "SELECT author_email, id from " . POSTS_TABLE
+    . " WHERE id = :id";
+    $stmt = $pdo->prepare($query);
+    $stmt->execute(['id' => $post_id]);
+    $post = $stmt->fetchAll(PDO::FETCH_ASSOC);
+
+    return $post;
+}
+
 function load_comments($post_id, $pdo){
     
     $query = "SELECT author_email, comment_time, comment_content from " . COMMENTS_TABLE 
@@ -298,6 +315,22 @@ function getAllUsers($pdo) {
 }
 
 /**
+* Update the liked post count
+*/
+function incLikesDB($post_id, $pdo){
+    $query = 'UPDATE' . LIKE_TABLE . ' SET like_count = like_count + 1 WHERE post= :post_id';
+    $stmt = $pdo->prepare($query);
+    $stmt->execute(['post_id' => $post_id]);
+}
+
+function decLikesDB($post_id, $pdo){
+    $query = 'UPDATE' . LIKE_TABLE . ' SET like_count = like_count - 1 WHERE like_count > 0 AND post= :post_id';
+    $stmt = $pdo->prepare($query);
+    $stmt->execute(['post_id' => $post_id]);
+}
+
+
+/**
  * For performing search
  */
 function getUserIfMatch($keyword, $pdo) {
@@ -317,7 +350,7 @@ function getUserIfMatch($keyword, $pdo) {
 }
 
 /**
- * Adds friend to table
+ * Adds friend to table, A sent request to B,
  * return True on sucess, False otherwise
  */
 function addFriend($friendA, $friendB, $pdo) {
@@ -325,6 +358,16 @@ function addFriend($friendA, $friendB, $pdo) {
         . "VALUES(:A, :B);";
     $stmt = $pdo->prepare($query);
     return $stmt->execute(['A' => $friendA, 'B' => $friendB]);
+}
+
+/**
+ * Removes friend from table, A sent request to B,
+ * return True on sucess, False otherwise
+ */
+function removeFriend($friendA, $friendB, $pdo) {
+    $query = "DELETE FROM " . FRIENDS_TABLE . " WHERE friendA = ? AND friendB = ?;";
+    $stmt = $pdo->prepare($query);
+    return $stmt->execute([$friendA, $friendB]);
 }
 
 function loadFriends($user_email, $pdo) {
@@ -336,7 +379,63 @@ function loadFriends($user_email, $pdo) {
     return $stmt->fetchAll(PDO::FETCH_COLUMN);
 }
 
-//TODO: function that removes friend from record
+/**
+ * Returns 1 if A and B are friends (undirected)
+ * 0 otherwise
+ */
+function isFriend($A, $B, $pdo) {
+    $query = "SELECT * FROM " . FRIENDS_TABLE . " WHERE friendA = ? "
+        . "AND friendB = ? OR friendA = ? AND friendB = ?;";
+    $stmt = $pdo->prepare($query);
+    $stmt->execute([$A, $B, $B, $A]);
+    $rtval = $stmt->fetchAll(PDO::FETCH_COLUMN);
+    return count($rtval);
+}
+
+/**
+ * A sends request to B, and B receives notification
+ */
+function sendFriendRequest($A, $B, $pdo) {
+    $query = "INSERT INTO " . FRIEND_REQUEST_TABLE
+        . " (sender, receiver) VALUES (?, ?);";
+    $stmt = $pdo->prepare($query);
+    return $stmt->execute([$A, $B]);
+}
+
+/**
+ * Remove friend request. A sent request to B, and B receives notification
+ */
+function removeFriendRequest($A, $B, $pdo) {
+    $query = "DELETE FROM " . FRIEND_REQUEST_TABLE
+        . " WHERE sender = ? AND receiver = ?;";
+    $stmt = $pdo->prepare($query);
+    return $stmt->execute([$A, $B]);
+}
+
+function loadFriendRequests($user_email, $pdo) {
+    $query = "SELECT sender FROM " . FRIEND_REQUEST_TABLE 
+        . " WHERE receiver = ?";
+    $stmt = $pdo->prepare($query);
+    $stmt->execute([$user_email]);
+    return $stmt->fetchAll(PDO::FETCH_COLUMN);
+}
+
+/**
+ * A sent request to B
+ */
+function acceptFriendRequest($A, $B, $pdo) {
+    /*TODO: 
+        - add friend to friend_with table
+        - remove friend request from friend_request table
+    */
+    addFriend($A, $B, $pdo) ;
+    removeFriendRequest($A, $B, $pdo);
+}
+
+function rejectFriendRequest($A, $B, $pdo) {
+    //TODO:
+    removeFriendRequest($A, $B, $pdo);
+}
 
 /**
  * Save images

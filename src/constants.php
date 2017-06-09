@@ -7,8 +7,10 @@ define("DB_NAME",		"fb_lets_go");
 define("USERS_TABLE", "users");
 define("POSTS_TABLE", "posts");
 define("INFO_TABLE", "info");
+define("LIKE_TABLE", "likes");
 define("COMMENTS_TABLE", "comments");
 define("CHARSET","utf8");
 define("FRIENDS_TABLE", "friend_with");
 define("IMAGE_TABLE", "images");
+define("FRIEND_REQUEST_TABLE", "friend_request");
 ?>

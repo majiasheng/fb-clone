@@ -36,6 +36,7 @@ CREATE TABLE posts (
 	content         TEXT        NOT NULL,
     post_time       TIMESTAMP   DEFAULT CURRENT_TIMESTAMP,
     edit_time       TIMESTAMP   DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+    liked           BOOLEAN     NOT NULL DEFAULT false,
 
 	PRIMARY KEY (id,author_email),
 	FOREIGN KEY (author_email) REFERENCES users (email)
@@ -53,21 +54,33 @@ CREATE TABLE comments (
     FOREIGN KEY (post_id) REFERENCES posts(id)
 );
 
--- CREATE TABLE images (
---     id              INTEGER     NOT NULL AUTO_INCREMENT,
---     email           VARCHAR(50) NOT NULL UNIQUE,
---     profile         LONGBLOB,
---     cover           LONGBLOB,
 
---     PRIMARY KEY(id, email),
---     FOREIGN KEY (email) REFERENCES users(email)
--- );
+CREATE TABLE likes(
+    id             INTEGER     NOT NULL AUTO_INCREMENT,
+    post_id        INTEGER     NOT NULL,
+    like_count     INTEGER     NOT NULL,
+
+    PRIMARY KEY(id, post_id),
+    FOREIGN KEY (post_id) REFERENCES posts(id)
+);
+
+
+
+CREATE TABLE friend_request (
+    id              INTEGER NOT NULL AUTO_INCREMENT,
+    sender          VARCHAR(50) NOT NULL,
+    receiver        VARCHAR(50) NOT NULL,
+    time_received   TIMESTAMP   DEFAULT CURRENT_TIMESTAMP,
+    PRIMARY KEY (id, sender, receiver)
+);
 
 CREATE TABLE notification (
-    id          INTEGER NOT NULL AUTO_INCREMENT,
-    user_email  VARCHAR(50) NOT NULL,
-    content     TEXT NOT NULL,
-    processed   TINYINT
+    id              INTEGER NOT NULL AUTO_INCREMENT,
+    sender          VARCHAR(50) NOT NULL,
+    receiver        VARCHAR(50) NOT NULL,
+    content         TEXT NOT NULL,
+    time_received   TIMESTAMP   DEFAULT CURRENT_TIMESTAMP,
+    processed       TINYINT DEFAULT 0
 );
 
 
