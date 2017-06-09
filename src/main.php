@@ -286,7 +286,7 @@ $profile_pic = "../rsrc/img/photos/default-profile.png";
         <div id="update-info-page" class="update-info__modal">
           <!-- page content -->
           <div class="modal__page">
-            <span onclick="close_modal(this.id)" class="modal__page-close">&times;</span>
+            <span onclick="close_update_info_page(this.id)" class="modal__page-close">&times;</span>
 
             <p class="modal__page--titles">Describe who you are</p>
             <!-- describe who you are-->
