@@ -68,8 +68,7 @@ CREATE TABLE friend_request (
     sender          VARCHAR(50) NOT NULL,
     receiver        VARCHAR(50) NOT NULL,
     time_received   TIMESTAMP   DEFAULT CURRENT_TIMESTAMP,
-    PRIMARY KEY (sender, receiver)
-
+    PRIMARY KEY (id, sender, receiver)
 );
 
 CREATE TABLE notification (

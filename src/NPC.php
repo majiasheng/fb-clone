@@ -38,7 +38,7 @@ if(isset($_POST['friend_quest'])) {
         to get notified (for now)
     */
     // "you" send friend request to "NPC"
-    sendFriendRequest($_SESSION['user']->get_email(), $user, $pdo);
+    sendFriendRequest($_SESSION['user']->get_email(), $_GET['user'], $pdo);
 }
 
 // default profile picture

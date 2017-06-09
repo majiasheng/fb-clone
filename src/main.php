@@ -1,21 +1,25 @@
 <!-- author:    Melanie Lin
-                Jia Sheng Ma 
-            -->
-            <?php
-            require_once("../include/functions.php");
-            session_start();
+Jia Sheng Ma 
+-->
+<?php
+require_once("../include/functions.php");
+session_start();
 // TODO: use user data to populate main.php
 
-            if ($_SESSION['loggedin'] !== TRUE) {
-             header("Location: index.php");
-         }
-         $user = $_SESSION['user'];
-         $info = $_SESSION['user_info'];
-         $pdo = connect();
+if ($_SESSION['loggedin'] !== TRUE) {
+    header("Location: index.php");
+}
+$user = $_SESSION['user'];
+$info = $_SESSION['user_info'];
+$pdo = connect();
 
 // if a form is sent to self, handle it
-if (isset($_POST) && (isset($_POST["workplace"]) || isset($_POST["education"]) || isset($_POST["current_city"]) ||
-    isset($_POST["hometown"]) || isset($_POST["relationship"]) || isset($_POST["description"]))) {
+if (isset($_POST) && (isset($_POST["workplace"]) 
+|| isset($_POST["education"]) 
+|| isset($_POST["current_city"]) 
+|| isset($_POST["hometown"]) 
+|| isset($_POST["relationship"]) 
+|| isset($_POST["description"]))) {
     if (isset($_POST["workplace"]))
         $info->set_workplace($_POST["workplace"]);
     else if (isset($_POST["education"]))
@@ -31,22 +35,50 @@ if (isset($_POST) && (isset($_POST["workplace"]) || isset($_POST["education"]) |
     save_info_to_db($user->get_email(), $info, $pdo);
 }
 
+// handle friend request
+if(isset($_POST['friend_request'])) {
+    if('Accept' == $_POST['friend_request']) {
+        acceptFriendRequest($_POST['sender'], $_POST['receiver'], $pdo);
+    } else if('Decline' == $_POST['friend_request']) {
+        rejectFriendRequest($_POST['sender'], $_POST['receiver'], $pdo);
+    } else {
+        echo "Something went wrong..";
+    }
+    unset($_POST);
+}
 
+// check if there's friend request 
+$friend_requests = loadFriendRequests($user->get_email(),$pdo);
+if(count($friend_requests)) {
+    echo "<ul>";
+    foreach($friend_requests as $fr) {
+        echo "<li>" . getUserNameByEmail($fr, $pdo) . " sent you a friend request ";
+        echo '<form action="" method="POST"> ' 
+            . '<input type="hidden" name="sender" value="' . $fr . '">'
+            . '<input type="hidden" name="receiver" value="' . $user->get_email() . '">'
+            . '<input type="submit" name="friend_request" value="Accept">'
+            . '&nbsp;'
+            . '<input type="submit" name="friend_request" value="Decline">'
+            . "</form>";
+        echo "</li>";
+    }
+    echo "</ul>";
+}
 
 // default profile picture
-        $profile_pic = "../rsrc/img/photos/default-profile.png";
+$profile_pic = "../rsrc/img/photos/default-profile.png";
 
-        ?>
+?>
 
-        <!doctype html>
-        <html lang="en">
-        <head>
-          <meta charset="UTF-8">
-          <title>
-              <?php echo $user->get_first_name() . " " . $user->get_last_name(); ?>
-          </title>
-          <link rel="stylesheet" href="../include/styles/css/style.css">
-          <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.6/css/bootstrap.min.css">
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>
+<?php echo $user->get_first_name() . " " . $user->get_last_name(); ?>
+</title>
+<link rel="stylesheet" href="../include/styles/css/style.css">
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.6/css/bootstrap.min.css">
           <link rel="stylesheet" type="text/css" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
 
           <meta name="viewport" content="width=device-width, initial-scale=1">

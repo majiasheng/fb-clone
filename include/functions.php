@@ -321,7 +321,7 @@ function getUserIfMatch($keyword, $pdo) {
 }
 
 /**
- * Adds friend to table
+ * Adds friend to table, A sent request to B,
  * return True on sucess, False otherwise
  */
 function addFriend($friendA, $friendB, $pdo) {
@@ -329,6 +329,16 @@ function addFriend($friendA, $friendB, $pdo) {
         . "VALUES(:A, :B);";
     $stmt = $pdo->prepare($query);
     return $stmt->execute(['A' => $friendA, 'B' => $friendB]);
+}
+
+/**
+ * Removes friend from table, A sent request to B,
+ * return True on sucess, False otherwise
+ */
+function removeFriend($friendA, $friendB, $pdo) {
+    $query = "DELETE FROM " . FRIENDS_TABLE . " WHERE friendA = ? AND friendB = ?;";
+    $stmt = $pdo->prepare($query);
+    return $stmt->execute([$friendA, $friendB]);
 }
 
 function loadFriends($user_email, $pdo) {
@@ -358,24 +368,45 @@ function isFriend($A, $B, $pdo) {
  */
 function sendFriendRequest($A, $B, $pdo) {
     $query = "INSERT INTO " . FRIEND_REQUEST_TABLE
-        . "(sender, receiver) VALUES (?, ?);";
+        . " (sender, receiver) VALUES (?, ?);";
     $stmt = $pdo->prepare($query);
     return $stmt->execute([$A, $B]);
-
 }
 
-function acceptFriendRequest() {
+/**
+ * Remove friend request. A sent request to B, and B receives notification
+ */
+function removeFriendRequest($A, $B, $pdo) {
+    $query = "DELETE FROM " . FRIEND_REQUEST_TABLE
+        . " WHERE sender = ? AND receiver = ?;";
+    $stmt = $pdo->prepare($query);
+    return $stmt->execute([$A, $B]);
+}
+
+function loadFriendRequests($user_email, $pdo) {
+    $query = "SELECT sender FROM " . FRIEND_REQUEST_TABLE 
+        . " WHERE receiver = ?";
+    $stmt = $pdo->prepare($query);
+    $stmt->execute([$user_email]);
+    return $stmt->fetchAll(PDO::FETCH_COLUMN);
+}
+
+/**
+ * A sent request to B
+ */
+function acceptFriendRequest($A, $B, $pdo) {
     /*TODO: 
         - add friend to friend_with table
         - remove friend request from friend_request table
     */
+    addFriend($A, $B, $pdo) ;
+    removeFriendRequest($A, $B, $pdo);
 }
 
-function rejectFriendRequest() {
+function rejectFriendRequest($A, $B, $pdo) {
     //TODO:
+    removeFriendRequest($A, $B, $pdo);
 }
-
-//TODO: function that removes friend from record
 
 /**
  * Save images

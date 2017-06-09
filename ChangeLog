@@ -1,3 +1,6 @@
+2017-06-08 majiasheng <jiasheng.ma@yahoo.com>
+	* Added sending and receiving friend request
+
 2017-06-06 majiasheng <jiasheng.ma@yahoo.com>
 	* Added friend relationship
 	* Added NPC.php for user to check up on other users
