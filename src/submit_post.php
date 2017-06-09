@@ -7,10 +7,10 @@ $info = $_SESSION['user_info'];
 $pdo = connect();
 
 if(isset($_POST) && ("" != trim($_POST['post_content']))) {
-	// $ab = savePostToDB($user->get_email(), $pdo, $_POST['post_content']);
-	if(!savePostToDB($user->get_email(), $pdo, $_POST['post_content'])) {
-		echo "Error occurred while saving posting <br>";
-	}
+	$ab = savePostToDB($user->get_email(), $pdo, $_POST['post_content']);
+	// if(!savePostToDB($user->get_email(), $pdo, $_POST['post_content'])) {
+	// 	echo "Error occurred while saving posting <br>";
+	// }
 	unset($_POST);
 }
 
@@ -21,9 +21,9 @@ $posts = loadPosts($user->get_email(), $pdo);
 	$comments = load_comments($p->getPostID(), $pdo);
     $name = getUserNameByEmail($p->getAuthorEmail(), $pdo);
 
-    include "../src/template/post_content.html";
+    // include "../src/template/post_content.html";
     endforeach;
 ?>
 
-
+<div><?php var_dump($ab) ?></div>
 	

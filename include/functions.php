@@ -228,9 +228,12 @@ function savePostToDB($user_email, $pdo, $post) {
     $query = "INSERT INTO " . POSTS_TABLE 
     . "(author_email, content) "
     . "VALUES (:email,:content)";
+
+
+    // INSET INTO likes (post_id) VALUES ( INTEGER );
     $init_likes = "INSERT INTO " . LIKE_TABLE
-    . "(post_id, like_count)"
-    . "VALUES (:post_id, :like_count)";
+    . "(post_id)"
+    . "VALUES (:post_id)";
 
     $stmt = $pdo->prepare($query);
     $rtval =  $stmt->execute(['email' => $user_email, 'content' => $post]);
@@ -240,14 +243,14 @@ function savePostToDB($user_email, $pdo, $post) {
     $stmt_two = $pdo->prepare($latest_post);
     $stmt_two ->execute();
 
-    $newest_post = $stmt->fetchAll(PDO::FETCH_ASSOC);
+    $newest_post = $stmt_two->fetchAll(PDO::FETCH_ASSOC);
 
-    $latest_post_id = $newest_post['id'];
+    $latest_post_id = $newest_post[0]['id'];
 
     $stmt_three = $pdo->prepare($init_likes);
-    $stmt_two->execute(['post_id' => $latest_post_id]);
+    $stmt_three->execute(['post_id' => $latest_post_id]);
 
-    return $rtval;
+    return $newest_post;
 }
 
 
