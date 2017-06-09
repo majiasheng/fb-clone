@@ -35,35 +35,37 @@ if (isset($_POST) && (isset($_POST["workplace"])
     save_info_to_db($user->get_email(), $info, $pdo);
 }
 
-// handle friend request
-if(isset($_POST['friend_request'])) {
-    if('Accept' == $_POST['friend_request']) {
-        acceptFriendRequest($_POST['sender'], $_POST['receiver'], $pdo);
-    } else if('Decline' == $_POST['friend_request']) {
-        rejectFriendRequest($_POST['sender'], $_POST['receiver'], $pdo);
-    } else {
-        echo "Something went wrong..";
-    }
-    unset($_POST);
-}
-
-// check if there's friend request 
-$friend_requests = loadFriendRequests($user->get_email(),$pdo);
-if(count($friend_requests)) {
-    echo "<ul>";
-    foreach($friend_requests as $fr) {
-        echo "<li>" . getUserNameByEmail($fr, $pdo) . " sent you a friend request ";
-        echo '<form action="" method="POST"> ' 
-            . '<input type="hidden" name="sender" value="' . $fr . '">'
-            . '<input type="hidden" name="receiver" value="' . $user->get_email() . '">'
-            . '<input type="submit" name="friend_request" value="Accept">'
-            . '&nbsp;'
-            . '<input type="submit" name="friend_request" value="Decline">'
-            . "</form>";
-        echo "</li>";
-    }
-    echo "</ul>";
-}
+// // handle friend request
+// if(isset($_POST['friend_request'])) {
+//     if('Accept' == $_POST['friend_request']) {
+//         acceptFriendRequest($_POST['sender'], $_POST['receiver'], $pdo);
+//     } else if('Decline' == $_POST['friend_request']) {
+//         rejectFriendRequest($_POST['sender'], $_POST['receiver'], $pdo);
+//     } else {
+//         echo "Something went wrong..";
+//     }
+//     unset($_POST);
+// }
+//
+// // check if there's friend request
+// $friend_requests = loadFriendRequests($user->get_email(),$pdo);
+// if(count($friend_requests)) {
+//     echo "<ul>";
+//     foreach($friend_requests as $fr) {
+//         echo "<li>" . getUserNameByEmail($fr, $pdo) . " sent you a friend request ";
+//         echo '<form action="" method="POST"> '
+//             . '<input type="hidden" name="sender" value="' . $fr . '">'
+//             . '<input type="hidden" name="receiver" value="' . $user->get_email() . '">'
+//             . '<input type="submit" name="friend_request" value="Accept">'
+//             . '&nbsp;'
+//             . '<input type="submit" name="friend_request" value="Decline">'
+//             . "</form>";
+//         echo "</li>";
+//     }
+//     echo "</ul>";
+// } else {
+//     echo 'You have no friend request, go send some instead!<br>';
+// }
 
 // default profile picture
 $profile_pic = "../rsrc/img/photos/default-profile.png";
@@ -104,22 +106,84 @@ $profile_pic = "../rsrc/img/photos/default-profile.png";
                         </div>
                         <!-- friends, messages, and alerts -->
                         <div class="col-md-2 col-sm-12 navbar__header">
-                         <li class="header__friends header--icon-setting"><a href="#"><i class="fa fa-user"></i></a></li>
-                         <li class="header__message header--icon-setting"><a href="#"><i class="fa fa-comments"></i></a></li>
-                         <li class="header__alert header--icon-setting"><a href="#"><i class="fa fa-globe"></i></a></li>
+                         <li class="header__friends header--icon-setting">
+                             <a href="#">
+                                 <i class="fa fa-user" onclick="show_friend_requests()"></i>
+                             </a>
+                             <ul class="friend-request--dropdown">
+                                 <?php
+                                 // handle friend request
+                                 if(isset($_POST['friend_request'])) {
+                                     if('Accept' == $_POST['friend_request']) {
+                                         acceptFriendRequest($_POST['sender'], $_POST['receiver'], $pdo);
+                                     } else if('Decline' == $_POST['friend_request']) {
+                                         rejectFriendRequest($_POST['sender'], $_POST['receiver'], $pdo);
+                                     } else {
+                                         echo "Something went wrong..";
+                                     }
+                                     unset($_POST);
+                                 }
+
+                                 // check if there's friend request 
+                                 $friend_requests = loadFriendRequests($user->get_email(),$pdo);
+                                 if(count($friend_requests)) {
+                                     echo "<ul>";
+                                     foreach($friend_requests as $fr) {
+                                         echo "<li>" . getUserNameByEmail($fr, $pdo) 
+                                             . " sent you a friend request ";
+                                         echo '<form action="" method="POST"> ' 
+                                             . '<input type="hidden" name="sender" value="' 
+                                             . $fr . '">'
+                                             . '<input type="hidden" name="receiver" value="' 
+                                             . $user->get_email() . '">'
+                                             . '<input type="submit" name="friend_request" value="Accept">'
+                                             . '&nbsp;'
+                                             . '<input type="submit" name="friend_request" value="Decline">'
+                                             . "</form>";
+                                         echo "</li>";
+                                     }
+                                     echo "</ul>";
+                                 } else {
+                                     echo '<p>You have no friend request, go send some instead!</p>';
+                                 }
+                                 ?>
+                             </ul>
+                         </li>
+                         
+                         <!-- message bubble -->
+                         <li class="header__message header--icon-setting">
+                             <a href="#">
+                                 <i class="fa fa-comments">
+                                     
+                                 </i>
+                             </a>
+                         </li> <!-- end message bubble -->
+
+                         <!-- notification bubble -->
+                         <li class="header__alert header--icon-setting">
+                             <a href="#">
+                                 <i class="fa fa-globe"></i>
+                             </a>
+                         </li> <!-- end notification bubble -->
                      </div>
+
                      <!-- privacy and settings (with a dropdown menu)-->
                      <div class="col-md-1 col-sm-12">
-                      <li class="header__privacy header--icon-setting"><a href="#"><i class="fa fa-lock"></i></a></li>
-                      <li class="header__setting header--icon-setting"><a href="#"><i class="fa fa-caret-down" onclick="show_setting_menu()"></i></a>
-                        <ul class="icon-setting--dropdown">
-                          <li><a href="settings.php">Settings</a></li>
-                          <li><a href="logout.php">Log Out</a></li>
-                      </ul>
+                         <li class="header__privacy header--icon-setting">
+                             <a href="#"><i class="fa fa-lock"></i></a>
+                         </li>
 
-                  </li>
+                         <li class="header__setting header--icon-setting">
+                             <a href="#">
+                                 <i class="fa fa-caret-down" onclick="show_setting_menu()"></i>
+                             </a>
+                             <ul class="icon-setting--dropdown">
+                                <li><a href="settings.php">Settings</a></li>
+                                <li><a href="logout.php">Log Out</a></li>
+                             </ul>
+                          </li>
+                      </div>
 
-              </div>
               <!-- search bar -->
               <div class="col-md-4 col-sm-12">
                <li class="navbar__form">
