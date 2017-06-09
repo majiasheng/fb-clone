@@ -263,6 +263,19 @@ function loadPosts($user_email, $pdo) {
     return $post_objs;
 }
 
+function load_one_post($post_id, $pdo){
+    // $query = "SELECT author_email, id from" . POSTS_TABLE
+    // . " WHERE id = :id";
+
+    $query = "SELECT author_email, id from " . POSTS_TABLE
+    . " WHERE id = :id";
+    $stmt = $pdo->prepare($query);
+    $stmt->execute(['id' => $post_id]);
+    $post = $stmt->fetchAll(PDO::FETCH_ASSOC);
+
+    return $post;
+}
+
 function load_comments($post_id, $pdo){
     
     $query = "SELECT author_email, comment_time, comment_content from " . COMMENTS_TABLE 
@@ -300,6 +313,22 @@ function getAllUsers($pdo) {
     $query = "SELECT first_name, last_name FROM " . USERS_TABLE;
     return $pdo->query($query);
 }
+
+/**
+* Update the liked post count
+*/
+function incLikesDB($post_id, $pdo){
+    $query = 'UPDATE' . LIKE_TABLE . ' SET like_count = like_count + 1 WHERE post= :post_id';
+    $stmt = $pdo->prepare($query);
+    $stmt->execute(['post_id' => $post_id]);
+}
+
+function decLikesDB($post_id, $pdo){
+    $query = 'UPDATE' . LIKE_TABLE . ' SET like_count = like_count - 1 WHERE like_count > 0 AND post= :post_id';
+    $stmt = $pdo->prepare($query);
+    $stmt->execute(['post_id' => $post_id]);
+}
+
 
 /**
  * For performing search

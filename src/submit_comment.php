@@ -17,13 +17,16 @@ if(isset($_POST) && isset($_POST['post_comment_content'])) {
     }  
 
     $comments = load_comments($_POST['post__id'], $pdo);
-    unset($_POST);
+    $post = load_one_post((int)$_POST['post__id'], $pdo);
+    $name = getUserNameByEmail($post[0]["author_email"], $pdo);
 
+    unset($_POST);
 }
 
 foreach ($comments as $c):
 
 ?>
-<div class="comment__content__p"><?php echo $c->getCommentContent() ?></div>
+
+<div class="comment__content__p"><?php echo $c->getCommentContent() . ' (' . $name?>)</div>
 
 <?php endforeach ?>
