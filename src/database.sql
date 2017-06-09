@@ -54,14 +54,14 @@ CREATE TABLE comments (
 );
 
 
-CREATE TABLE like(
+CREATE TABLE likes(
     id             INTEGER     NOT NULL AUTO_INCREMENT,
     post_id        INTEGER     NOT NULL,
     like_count     INTEGER     NOT NULL,
-    liked_person   VARCHAR(30) NOT NULL,
+    liked          BOOLEAN     NOT NULL,
 
-    PRIMARY KEY(id, posts_id),
-    FOREIGN KEY (post_id) REFERENCES posts(id);
+    PRIMARY KEY(id, post_id),
+    FOREIGN KEY (post_id) REFERENCES posts(id)
 );
 
 CREATE TABLE images (

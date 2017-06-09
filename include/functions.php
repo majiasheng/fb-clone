@@ -374,7 +374,6 @@ function sendFriendRequest($A, $B, $pdo) {
         . "(sender, receiver) VALUES (?, ?);";
     $stmt = $pdo->prepare($query);
     return $stmt->execute([$A, $B]);
-
 }
 
 function acceptFriendRequest() {

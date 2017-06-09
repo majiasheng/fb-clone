@@ -21,7 +21,6 @@ if(isset($_POST) && isset($_POST['post_comment_content'])) {
     $name = getUserNameByEmail($post[0]["author_email"], $pdo);
 
     unset($_POST);
-
 }
 
 foreach ($comments as $c):
