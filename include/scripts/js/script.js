@@ -5,7 +5,7 @@
 
 /* Drop-down Menu */
 function show_setting_menu() {
-	var dropdown = document.getElementsByClassName("icon-setting--dropdown")[0];
+	var dropdown = document.getElementById("icon-setting--dropdown");
 	 if(dropdown.style.display == "block") { 
 	    dropdown.style.display = "none";
 	  }
@@ -14,7 +14,7 @@ function show_setting_menu() {
 	  }
 }
 function show_friend_requests() {
-    var dropdown = document.getElementsByClassName("friend-request--dropdown")[0];
+    var dropdown = document.getElementById("friend-request--dropdown");
     if(dropdown.style.display == "block") { 
         dropdown.style.display = "none";
     }
@@ -25,13 +25,17 @@ function show_friend_requests() {
 // click anythere to close 
 window.onclick = function(event) {
  	if (!event.target.matches('.fa-caret-down')) {
-
-		var dropdown = document.getElementsByClassName("icon-setting--dropdown")[0];
-		if(dropdown.style.display == "block") { 
-	    	dropdown.style.display = "none";
+		var setting = document.getElementById("icon-setting--dropdown");
+		if(setting.style.display == "block") { 
+	    	setting.style.display = "none";
 	  	}
-
-  }
+  	}
+  	if (!event.target.matches('.fa-user')) {
+  		var fr = document.getElementById("friend-request--dropdown");
+		if(fr.style.display == "block") { 
+	    	fr.style.display = "none";
+	  	}
+  	}
 }
 
 /* Update Info Page */

@@ -149,7 +149,8 @@ $profile_pic = "../rsrc/img/photos/default-profile.png";
                              <a href="#">
                                  <i class="fa fa-user" onclick="show_friend_requests()"></i>
                              </a>
-                             <ul class="friend-request--dropdown">
+                             <!-- icon-dropdown is the basic, fr is detailed css -->
+                             <ul id="friend-request--dropdown" class="icon-dropdown fr-dropdown">
                                  <?php
                                  // handle friend request
                                  if(isset($_POST['friend_request'])) {
@@ -215,7 +216,7 @@ $profile_pic = "../rsrc/img/photos/default-profile.png";
                              <a href="#">
                                  <i class="fa fa-caret-down" onclick="show_setting_menu()"></i>
                              </a>
-                             <ul class="icon-setting--dropdown">
+                             <ul class="icon-dropdown" id="icon-setting--dropdown">
                                 <li><a href="settings.php">Settings</a></li>
                                 <li><a href="logout.php">Log Out</a></li>
                              </ul>
@@ -252,7 +253,7 @@ $profile_pic = "../rsrc/img/photos/default-profile.png";
                 <?php 
                 if(empty($user->get_cover_photo())) {
                         // set default profile picture
-                        echo '<input type="image" name="cover_submit" id="cover_photo" src="../rsrc/img/cover/default-cover.jpg" >';
+                        echo '<img id="cover_photo" src="../rsrc/img/cover/default-cover.jpg" >';
                     } else {
                         // load user cover picture
                         //TODO:

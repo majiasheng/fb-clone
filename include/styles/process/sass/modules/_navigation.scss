@@ -64,29 +64,40 @@
         color: $icon-hover-color;
 	}
     // drop-down menu: logout/settings/...
-    .icon-setting--dropdown {
-        width:100%;
-        padding:10px 0px;
+    .icon-dropdown {
+        width: 200px;
         position:absolute;
         top:100%;
         left:0px;
         display: none;
+        box-shadow: 0 10px 6px -6px #777;
         z-index:1;
     }
-    .icon-setting--dropdown li {
-        width: 200px;
+    .icon-dropdown li {
         display:block;
         font-size:1em;
         background-color: #fff;
     }
-    .icon-setting--dropdown li a {
+    .icon-dropdown li a {
         color: $icon-hover-color;
         padding:10px 30px;
         display:block;
     }
-    .icon-setting--dropdown li:hover a{
+    .icon-dropdown li:hover a{
         color: darken($white, 100%);
     }
+    .fr-dropdown {
+        -webkit-box-shadow: 0 10px 6px -6px #777;
+        -moz-box-shadow: 0 10px 6px -6px #777;
+
+        width: 400px;
+        border: 1px solid lighten(black, 95%);
+        background-color: lighten(black, 99%);
+        color: black;
+    }
+
+
+
 	/* brand icon */
 	.header__brand a {
         font-size: 1.4em;
