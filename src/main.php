@@ -432,6 +432,7 @@ if (isset($_POST) && (isset($_POST["workplace"]) || isset($_POST["education"]) |
                 $posts = loadPosts($user->get_email(), $pdo);
                 foreach($posts as $p):
                     $comments = load_comments($p->getPostID(), $pdo);
+                    $name = getUserNameByEmail($p->getAuthorEmail(), $pdo);
                 ?>
 
                 <div class="post__header">
@@ -446,7 +447,7 @@ if (isset($_POST) && (isset($_POST["workplace"]) || isset($_POST["education"]) |
                 <div class="comment__content" id="<?php echo 'post__' . $p->getPostID() . ''?>">
                 <?php
                     foreach ($comments as $c) {
-                        echo '<div class="comment__content__p"> ' . $c->getCommentContent() . '</div>';
+                        echo '<div class="comment__content__p"> ' . $c->getCommentContent() . '  (' . $name  . ')</div>';
                     }
                 ?>
                 </div>

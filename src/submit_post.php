@@ -14,12 +14,11 @@ if(isset($_POST) && ("" != trim($_POST['post_content']))) {
 }
 
 $posts = loadPosts($user->get_email(), $pdo);
-
-
 ?>
 
 <?php foreach($posts as $p):  
 	$comments = load_comments($p->getPostID(), $pdo);
+    $name = getUserNameByEmail($p->getAuthorEmail(), $pdo);
 ?>
 
 	<!-- <div class="middle__posts"> -->
@@ -35,7 +34,7 @@ $posts = loadPosts($user->get_email(), $pdo);
 	<div class="comment__content" id="<?php echo 'post__' . $p->getPostID() . ''?>">
 	<?php
 		foreach ($comments as $c) {
-			echo '<div class="comment__content__p">'. $c->getCommentContent()  .'</div>';
+			echo '<div class="comment__content__p"> ' . $c->getCommentContent() . '  (' . $name  . ')</div>';
 		}
 	?>
 	</div>

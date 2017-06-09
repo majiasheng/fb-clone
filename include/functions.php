@@ -263,6 +263,19 @@ function loadPosts($user_email, $pdo) {
     return $post_objs;
 }
 
+function load_one_post($post_id, $pdo){
+    // $query = "SELECT author_email, id from" . POSTS_TABLE
+    // . " WHERE id = :id";
+
+    $query = "SELECT author_email, id from " . POSTS_TABLE
+    . " WHERE id = :id";
+    $stmt = $pdo->prepare($query);
+    $stmt->execute(['id' => $post_id]);
+    $post = $stmt->fetchAll(PDO::FETCH_ASSOC);
+
+    return $post;
+}
+
 function load_comments($post_id, $pdo){
     
     $query = "SELECT author_email, comment_time, comment_content from " . COMMENTS_TABLE 
