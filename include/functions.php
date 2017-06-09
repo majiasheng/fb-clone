@@ -315,6 +315,22 @@ function getAllUsers($pdo) {
 }
 
 /**
+* Update the liked post count
+*/
+function incLikesDB($post_id, $pdo){
+    $query = 'UPDATE' . LIKE_TABLE . ' SET like_count = like_count + 1 WHERE post= :post_id';
+    $stmt = $pdo->prepare($query);
+    $stmt->execute(['post_id' => $post_id]);
+}
+
+function decLikesDB($post_id, $pdo){
+    $query = 'UPDATE' . LIKE_TABLE . ' SET like_count = like_count - 1 WHERE like_count > 0 AND post= :post_id';
+    $stmt = $pdo->prepare($query);
+    $stmt->execute(['post_id' => $post_id]);
+}
+
+
+/**
  * For performing search
  */
 function getUserIfMatch($keyword, $pdo) {

@@ -36,6 +36,7 @@ CREATE TABLE posts (
 	content         TEXT        NOT NULL,
     post_time       TIMESTAMP   DEFAULT CURRENT_TIMESTAMP,
     edit_time       TIMESTAMP   DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+    liked           BOOLEAN     NOT NULL DEFAULT false,
 
 	PRIMARY KEY (id,author_email),
 	FOREIGN KEY (author_email) REFERENCES users (email)
@@ -58,7 +59,6 @@ CREATE TABLE likes(
     id             INTEGER     NOT NULL AUTO_INCREMENT,
     post_id        INTEGER     NOT NULL,
     like_count     INTEGER     NOT NULL,
-    liked          BOOLEAN     NOT NULL,
 
     PRIMARY KEY(id, post_id),
     FOREIGN KEY (post_id) REFERENCES posts(id)
