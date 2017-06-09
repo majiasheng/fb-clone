@@ -465,6 +465,9 @@ $profile_pic = "../rsrc/img/photos/default-profile.png";
                 foreach($posts as $p):
                     $comments = load_comments($p->getPostID(), $pdo);
                     $name = getUserNameByEmail($p->getAuthorEmail(), $pdo);
+                    $like_count = getLikeCount($p->getPostID(), $pdo);
+
+                    echo "<div>" . $like_count["like_count"] . "</div>";
 
                     include "../src/template/post_content.html";
 

@@ -228,8 +228,26 @@ function savePostToDB($user_email, $pdo, $post) {
     $query = "INSERT INTO " . POSTS_TABLE 
     . "(author_email, content) "
     . "VALUES (:email,:content)";
+    $init_likes = "INSERT INTO " . LIKE_TABLE
+    . "(post_id, like_count)"
+    . "VALUES (:post_id, :like_count)";
+
     $stmt = $pdo->prepare($query);
-    return $stmt->execute(['email' => $user_email, 'content' => $post]);
+    $rtval =  $stmt->execute(['email' => $user_email, 'content' => $post]);
+
+    // SELECT * FROM `posts` ORDER BY `id` DESC LIMIT 1  -> get the lastest post
+    $latest_post = "SELECT * FROM " . POSTS_TABLE . " ORDER BY id DESC LIMIT 1";
+    $stmt_two = $pdo->prepare($latest_post);
+    $stmt_two ->execute();
+
+    $newest_post = $stmt->fetchAll(PDO::FETCH_ASSOC);
+
+    $latest_post_id = $newest_post['id'];
+
+    $stmt_three = $pdo->prepare($init_likes);
+    $stmt_two->execute(['post_id' => $latest_post_id]);
+
+    return $rtval;
 }
 
 
@@ -327,6 +345,18 @@ function decLikesDB($post_id, $pdo){
     $query = 'UPDATE' . LIKE_TABLE . ' SET like_count = like_count - 1 WHERE like_count > 0 AND post= :post_id';
     $stmt = $pdo->prepare($query);
     $stmt->execute(['post_id' => $post_id]);
+}
+
+/**
+*   Get the number of likes based on the post id, return the liked count.
+*/
+function getLikeCount($post_id, $pdo){
+    $query = "SELECT like_count FROM " .LIKE_TABLE . " WHERE post_id = :id";
+    $stmt = $pdo->prepare($query);
+    $stmt->execute(['id' => $post_id]);
+    $rtval = $stmt->fetch(PDO::FETCH_ASSOC);
+
+    return $rtval;
 }
 
 

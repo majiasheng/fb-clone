@@ -58,7 +58,7 @@ CREATE TABLE comments (
 CREATE TABLE likes(
     id             INTEGER     NOT NULL AUTO_INCREMENT,
     post_id        INTEGER     NOT NULL,
-    like_count     INTEGER     NOT NULL,
+    like_count     INTEGER     NOT NULL DEFAULT 0,
 
     PRIMARY KEY(id, post_id),
     FOREIGN KEY (post_id) REFERENCES posts(id)

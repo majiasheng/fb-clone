@@ -7,6 +7,7 @@ $info = $_SESSION['user_info'];
 $pdo = connect();
 
 if(isset($_POST) && ("" != trim($_POST['post_content']))) {
+	// $ab = savePostToDB($user->get_email(), $pdo, $_POST['post_content']);
 	if(!savePostToDB($user->get_email(), $pdo, $_POST['post_content'])) {
 		echo "Error occurred while saving posting <br>";
 	}
@@ -23,5 +24,6 @@ $posts = loadPosts($user->get_email(), $pdo);
     include "../src/template/post_content.html";
     endforeach;
 ?>
+
 
 	
