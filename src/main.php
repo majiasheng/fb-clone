@@ -54,6 +54,7 @@ if(isset($_POST) && isset($_POST['post_comment_content']) && ("" != trim($_POST[
     var_dump($_POST);
     header('Location:'.$_SERVER['PHP_SELF']);
 }
+// TODO: click cover section to upload; able to load; move code to functions.php; 
 // To solve "Warning: mkdir(): Permission denied", use command: chmod ugo=rwx ../rsrc/img
 // save images to local filesystem
 if(isset($_FILES['cover_image'])){
