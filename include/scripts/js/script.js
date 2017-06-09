@@ -43,11 +43,39 @@ function close_update_info_page() {
 	var modal = document.getElementById('update-info-page');
 	modal.style.display = "none";
 }
+
+// update info page: click add button to input
 function show_modal(clicked_id) {
-	document.getElementById(clicked_id).style.display = "block";
+	// obj: add button and its correponding input box
+	
+	var id_to_modal = {
+						'description'	: 'description_input',
+						'workspace'		: 'workspace_input',
+						'education'		: 'education_input',
+						'current_city'	: 'current_city_input',
+						'hometown'		: 'hometown_input',
+						'relationship'	: 'relationship_input',
+
+						};
+	if (id_to_modal.hasOwnProperty(clicked_id)) {
+		document.getElementById(id_to_modal[clicked_id]).style.display = "block";
+	}						
 }
-function close_modal(clicked_id) {
-	document.getElementById(clicked_id).style.display = "none";
+
+function close_modal(clicked_id) {	
+	// obj: add button and its correponding input box
+	var id_to_modal = {
+						'description_close'	: 'description_input',
+						'workspace_close'	: 'workspace_input',
+						'education_close'	: 'education_input',
+						'current_city_close': 'current_city_input',
+						'hometown_close'	: 'hometown_input',
+						'relationship_close': 'relationship_input',
+
+						};
+	if (id_to_modal.hasOwnProperty(clicked_id)) {
+		document.getElementById(id_to_modal[clicked_id]).style.display = "none";
+	}
 }
 
 // about page
@@ -83,9 +111,5 @@ function show_about_page(link_id) {
 
 	// add the removed element back to the obj
 	links_to_pages[link_id] = page;
-}
-
-function choose_file() {
-	document.getElementById('file_upload').click();
 }
 
