@@ -459,15 +459,19 @@ $profile_pic = "../rsrc/img/photos/default-profile.png";
 
                 <div class="middle__posts">
                 <?php
-                //load user's posts if there's any
-                // if there's none, set up a prompt maybe?
                 $posts = loadPosts($user->get_email(), $pdo);
                 foreach($posts as $p):
+
+                    // load all the comment of the current post.
                     $comments = load_comments($p->getPostID(), $pdo);
+                    
+                    // load name of person who commented.
                     $name = getUserNameByEmail($p->getAuthorEmail(), $pdo);
+
+                    // load the like_count.
                     $like_count = getLikeCount($p->getPostID(), $pdo);
 
-                    echo "<div>" . $like_count["like_count"] . "</div>";
+                    echo "<div>" . $p->getLikeCount() . "</div>";
 
                     include "../src/template/post_content.html";
 

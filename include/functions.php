@@ -231,26 +231,26 @@ function savePostToDB($user_email, $pdo, $post) {
 
 
     // INSET INTO likes (post_id) VALUES ( INTEGER );
-    $init_likes = "INSERT INTO " . LIKE_TABLE
-    . "(post_id)"
-    . "VALUES (:post_id)";
+    // $init_likes = "INSERT INTO " . LIKE_TABLE
+    // . "(post_id)"
+    // . "VALUES (:post_id)";
 
     $stmt = $pdo->prepare($query);
     $rtval =  $stmt->execute(['email' => $user_email, 'content' => $post]);
 
     // SELECT * FROM `posts` ORDER BY `id` DESC LIMIT 1  -> get the lastest post
-    $latest_post = "SELECT * FROM " . POSTS_TABLE . " ORDER BY id DESC LIMIT 1";
-    $stmt_two = $pdo->prepare($latest_post);
-    $stmt_two ->execute();
+    // $latest_post = "SELECT * FROM " . POSTS_TABLE . " ORDER BY id DESC LIMIT 1";
+    // $stmt_two = $pdo->prepare($latest_post);
+    // $stmt_two ->execute();
 
-    $newest_post = $stmt_two->fetchAll(PDO::FETCH_ASSOC);
+    // $newest_post = $stmt_two->fetchAll(PDO::FETCH_ASSOC);
 
-    $latest_post_id = $newest_post[0]['id'];
+    // $latest_post_id = $newest_post[0]['id'];
 
-    $stmt_three = $pdo->prepare($init_likes);
-    $stmt_three->execute(['post_id' => $latest_post_id]);
+    // $stmt_three = $pdo->prepare($init_likes);
+    // $stmt_three->execute(['post_id' => $latest_post_id]);
 
-    return $newest_post;
+    return $rtval;
 }
 
 
@@ -258,7 +258,7 @@ function savePostToDB($user_email, $pdo, $post) {
 function loadPosts($user_email, $pdo) {
     //TODO: need to join comments with posts later
 
-    $query = "SELECT id, content, post_time, edit_time from " . POSTS_TABLE 
+    $query = "SELECT id, content, post_time, edit_time,like_count from " . POSTS_TABLE 
     . " WHERE author_email = :email order by post_time DESC";
     $stmt = $pdo->prepare($query);
     $stmt->execute(['email' => $user_email]);
@@ -273,6 +273,7 @@ function loadPosts($user_email, $pdo) {
         $p->setContent($c['content']);
         $p->setPostTime($c['post_time']);
         $p->setPostId($c['id']);
+        $p->setLikeCount($c['like_count']);
         if($c['post_time']==$c['edit_time']) {
             $p->setIsEdited(False);
         } else {

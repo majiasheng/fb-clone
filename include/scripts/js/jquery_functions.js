@@ -44,15 +44,16 @@ $(document).ready(function(){
 
 
 	$('.thumb_up').click(function(){
-		e.preventDefault();
+		
+		// e.preventDefault();
 
-		$.post("../src/submit_like.php", $(this).serialize())
-		.done(function(data){
-			alert("dhone");
-		})
-		.fail(function(data){
-			alert("cool");
-		});
+		// $.post("../src/submit_like.php", $(this).serialize())
+		// .done(function(data){
+		// 	alert("dhone");
+		// })
+		// .fail(function(data){
+		// 	alert("cool");
+		// });
 
 	});
 

@@ -21,9 +21,8 @@ $posts = loadPosts($user->get_email(), $pdo);
 	$comments = load_comments($p->getPostID(), $pdo);
     $name = getUserNameByEmail($p->getAuthorEmail(), $pdo);
 
-    // include "../src/template/post_content.html";
+    include "../src/template/post_content.html";
     endforeach;
 ?>
 
-<div><?php var_dump($ab) ?></div>
 	

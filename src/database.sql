@@ -36,7 +36,6 @@ CREATE TABLE posts (
 	content         TEXT        NOT NULL,
     post_time       TIMESTAMP   DEFAULT CURRENT_TIMESTAMP,
     edit_time       TIMESTAMP   DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
-    liked           BOOLEAN     NOT NULL DEFAULT false,
 
 	PRIMARY KEY (id,author_email),
 	FOREIGN KEY (author_email) REFERENCES users (email)
@@ -49,20 +48,22 @@ CREATE TABLE comments (
     comment_content TEXT        NOT NULL,
     comment_time    TIMESTAMP   DEFAULT CURRENT_TIMESTAMP,
     edit_time       TIMESTAMP   DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+    like_count      INTEGER     NOT NULL DEFAULT 0,
 
     PRIMARY KEY(id,post_id,author_email),
     FOREIGN KEY (post_id) REFERENCES posts(id)
 );
 
-
-CREATE TABLE likes(
-    id             INTEGER     NOT NULL AUTO_INCREMENT,
-    post_id        INTEGER     NOT NULL,
-    like_count     INTEGER     NOT NULL DEFAULT 0,
+CREATE TABLE like_person(
+    id              INTEGER     NOT NULL AUTO_INCREMENT,
+    post_id         INTEGER     NOT NULL,
+    author_email    VARCHAR(50) NOT NULL,
+    liked           BOOLEAN     NOT NULL DEFAULT false,
 
     PRIMARY KEY(id, post_id),
-    FOREIGN KEY (post_id) REFERENCES posts(id)
+    FOREIGN KEY(post_id) REFERENCES posts(id)
 );
+
 
 CREATE TABLE images (
     id              INTEGER     NOT NULL AUTO_INCREMENT,

@@ -10,6 +10,7 @@ class Post {
     private $likes;
     private $shares;
     private $post_id;
+    private $like_count;
 
     // function __construct($content, $post_time, $is_edited) {
     //     $this->content = $content;
@@ -45,6 +46,14 @@ class Post {
     }
     function setShares($arg) {
         $this->shares = $arg;
+    }
+
+    function setLikeCount($arg){
+        $this->like_count = $arg;
+    }
+
+    function getLikeCount(){
+        return $this->like_count;
     }
 
     function getPostId(){
