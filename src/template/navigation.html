@@ -35,13 +35,18 @@
                                      }
                                      unset($_POST);
                                  }
+                                 echo "<h5 class='text text-left'>Friend requests</h5>";
                                  // check if there's friend request 
                                  $friend_requests = loadFriendRequests($user->get_email(),$pdo);
                                  if(count($friend_requests)) {
                                      echo "<ul>";
                                      foreach($friend_requests as $fr) {
-                                         echo "<li>" . getUserNameByEmail($fr, $pdo) 
-                                             . " sent you a friend request ";
+                                         echo "<li><p>".
+                                                // get user profile pic
+                                                '<img src="'. $profile_pic . '" >'
+                                                // get username
+                                             . "<a href='NPC.php?user=". $fr . "' target='_blank'>" . getUserNameByEmail($fr, $pdo) 
+                                             . "</a> </p>";
                                          echo '<form action="" method="POST"> ' 
                                              . '<input type="hidden" name="sender" value="' 
                                              . $fr . '">'
@@ -55,8 +60,10 @@
                                      }
                                      echo "</ul>";
                                  } else {
-                                     echo '<p>You have no friend request, go send some instead!</p>';
+                                     echo '<p class="dropdown__no-request">You have no friend request, go send some instead!</p>';
                                  }
+                                 echo "<h5 class='text text-left'>People you may know</h5>";
+                                    // TODO: display: "No result" if no suggestion, else display the suggestion
                                  ?>
                              </ul>
                          </li>
