@@ -15,7 +15,6 @@ $pdo = connect();
 $keyword = $_GET['search'];
 //TODO: exclude self
 $matches = getUserIfMatch($keyword, $pdo);
-
 if(count($matches) == 0) {
     echo "No matches with \"$keyword\"";
 } else {

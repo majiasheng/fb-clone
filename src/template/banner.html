@@ -1,0 +1,49 @@
+    <!-- cover image section -->
+    <div class="cover">
+        <div class="cover__container">
+            <form method="POST" action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]);?>" enctype="multipart/form-data"  class="cover__pic">
+                <!-- div: hide the upload file button -->
+                <!-- <div style="height:0px; overflow=hidden;">   -->
+                <!-- <input type="file" name="fileToUpload" id="fileToUpload">
+                <input type="submit" value="Upload Image" name="submit"> -->
+                <!-- </div> -->
+                 <input type="file" name="cover_image" onchange="this.form.submit()"/>
+                <?php 
+                if(empty($user->get_cover_photo())) {
+                        // set default profile picture
+                        echo '<img id="cover_photo" src="../rsrc/img/cover/default-cover.jpg" >';
+                    } else {
+                        // load user cover picture
+                        //TODO:
+                        
+                    }
+                ?>
+            </form>
+            <div class="cover__profile-container">
+                <?php
+                // load user profile picture
+            if(! empty($user->get_profile_picture())) {
+                    //TODO: 
+                    // $profile_pic = 
+            }
+            echo '<img src="'. $profile_pic . '" ';
+
+            ?>
+            alt="profile photo" class="cover__photo"/>
+            <div class="cover__username">
+                <?php 
+                echo $user->get_first_name() . " " . $user->get_last_name();
+                ?>
+            </div>
+            <div class="cover__update-info cover__update-info--decor" id="update-info-btn" onclick="show_update_info_page()">update info</div>
+            <div class="cover__view-at cover__update-info--decor">view activity</div>
+
+        </div>
+
+        <!-- update info page -->
+        <?php
+            include("update_info_modal.html");
+        ?>
+        <!-- end update_info page -->
+</div>
+</div>
