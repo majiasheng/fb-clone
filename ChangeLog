@@ -1,3 +1,8 @@
+2017-06-05 binzhou <binz545627124@gmail.com>
+	* Like system works for now.
+	* Make sure to update database.
+	* BUG FOUND: after one ajax send, the second one won't send for some reason ...
+
 2017-06-08 majiasheng <jiasheng.ma@yahoo.com>
 	* Added sending and receiving friend request
 

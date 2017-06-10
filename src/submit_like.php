@@ -7,7 +7,6 @@ $info = $_SESSION['user_info'];
 $pdo = connect();
 
 $email = $user->get_email();
-// $email = "123";
 
 if(isset($_POST) && ("" != trim($_POST['post_id']))) {
 	// return if the user liked this post or not.
