@@ -35,35 +35,76 @@ if (isset($_POST) && (isset($_POST["workplace"])
     save_info_to_db($user->get_email(), $info, $pdo);
 }
 
-// handle friend request
-if(isset($_POST['friend_request'])) {
-    if('Accept' == $_POST['friend_request']) {
-        acceptFriendRequest($_POST['sender'], $_POST['receiver'], $pdo);
-    } else if('Decline' == $_POST['friend_request']) {
-        rejectFriendRequest($_POST['sender'], $_POST['receiver'], $pdo);
-    } else {
-        echo "Something went wrong..";
+
+// TODO: click cover section to upload; able to load; move code to functions.php; 
+// To solve "Warning: mkdir(): Permission denied", use command: chmod ugo=rwx ../rsrc/img
+// save images to local filesystem
+if(isset($_FILES['cover_image'])){
+    $errors= array();
+    $file_name = $_FILES['cover_image']['name'];
+    $file_size = $_FILES['cover_image']['size'];
+    $file_tmp = $_FILES['cover_image']['tmp_name'];
+    $file_type = $_FILES['cover_image']['type'];
+    $file_ext=strtolower(end(explode('.',$_FILES['cover_image']['name'])));
+
+    $expensions= array("jpeg","jpg","png");
+
+    // TODO: change echo to js alert
+    if(in_array($file_ext,$expensions)=== false){
+        $errors[]="extension not allowed, please choose a JPEG or PNG file.";
     }
-    unset($_POST);
+
+    if($file_size > 2097152) {
+        $errors[]='File size must be excately 2 MB';
+    }
+
+    // save image to rsrc/ folder if no error
+    if(empty($errors)==true) {
+        // create dir named with user email 
+        $path = "../rsrc/img/".$user->get_email()."/cover";
+        if (!is_dir($path)) {
+            mkdir($path, 0700, true);
+        }
+        // upload image to the folder named with user email
+         move_uploaded_file($file_tmp,"../rsrc/img/".$user->get_email()."/cover/".$file_name);
+    }else{
+        print_r($errors);
+    }
 }
 
-// check if there's friend request 
-$friend_requests = loadFriendRequests($user->get_email(),$pdo);
-if(count($friend_requests)) {
-    echo "<ul>";
-    foreach($friend_requests as $fr) {
-        echo "<li>" . getUserNameByEmail($fr, $pdo) . " sent you a friend request ";
-        echo '<form action="" method="POST"> ' 
-            . '<input type="hidden" name="sender" value="' . $fr . '">'
-            . '<input type="hidden" name="receiver" value="' . $user->get_email() . '">'
-            . '<input type="submit" name="friend_request" value="Accept">'
-            . '&nbsp;'
-            . '<input type="submit" name="friend_request" value="Decline">'
-            . "</form>";
-        echo "</li>";
-    }
-    echo "</ul>";
-}
+
+
+// // handle friend request
+// if(isset($_POST['friend_request'])) {
+//     if('Accept' == $_POST['friend_request']) {
+//         acceptFriendRequest($_POST['sender'], $_POST['receiver'], $pdo);
+//     } else if('Decline' == $_POST['friend_request']) {
+//         rejectFriendRequest($_POST['sender'], $_POST['receiver'], $pdo);
+//     } else {
+//         echo "Something went wrong..";
+//     }
+//     unset($_POST);
+// }
+//
+// // check if there's friend request
+// $friend_requests = loadFriendRequests($user->get_email(),$pdo);
+// if(count($friend_requests)) {
+//     echo "<ul>";
+//     foreach($friend_requests as $fr) {
+//         echo "<li>" . getUserNameByEmail($fr, $pdo) . " sent you a friend request ";
+//         echo '<form action="" method="POST"> '
+//             . '<input type="hidden" name="sender" value="' . $fr . '">'
+//             . '<input type="hidden" name="receiver" value="' . $user->get_email() . '">'
+//             . '<input type="submit" name="friend_request" value="Accept">'
+//             . '&nbsp;'
+//             . '<input type="submit" name="friend_request" value="Decline">'
+//             . "</form>";
+//         echo "</li>";
+//     }
+//     echo "</ul>";
+// } else {
+//     echo 'You have no friend request, go send some instead!<br>';
+// }
 
 // default profile picture
 $profile_pic = "../rsrc/img/photos/default-profile.png";
@@ -88,7 +129,7 @@ $profile_pic = "../rsrc/img/photos/default-profile.png";
             <nav class="navbar" role="navigation">
                 <div class="navbar__container">
                     <ul class="row">
-                        <!-- brand icon -->
+                      <!-- brand icon -->
                         <div class="col-md-2 col-sm-12">
                             <li class="header__brand"><a href="main.php"><i class="fa fa-facebook"></i></a></li>
                         </div>
@@ -104,22 +145,84 @@ $profile_pic = "../rsrc/img/photos/default-profile.png";
                         </div>
                         <!-- friends, messages, and alerts -->
                         <div class="col-md-2 col-sm-12 navbar__header">
-                         <li class="header__friends header--icon-setting"><a href="#"><i class="fa fa-user"></i></a></li>
-                         <li class="header__message header--icon-setting"><a href="#"><i class="fa fa-comments"></i></a></li>
-                         <li class="header__alert header--icon-setting"><a href="#"><i class="fa fa-globe"></i></a></li>
+                         <li class="header__friends header--icon-setting">
+                             <a href="#">
+                                 <i class="fa fa-user" onclick="show_friend_requests()"></i>
+                             </a>
+                             <!-- icon-dropdown is the basic, fr is detailed css -->
+                             <ul id="friend-request--dropdown" class="icon-dropdown fr-dropdown">
+                                 <?php
+                                 // handle friend request
+                                 if(isset($_POST['friend_request'])) {
+                                     if('Accept' == $_POST['friend_request']) {
+                                         acceptFriendRequest($_POST['sender'], $_POST['receiver'], $pdo);
+                                     } else if('Decline' == $_POST['friend_request']) {
+                                         rejectFriendRequest($_POST['sender'], $_POST['receiver'], $pdo);
+                                     } else {
+                                         echo "Something went wrong..";
+                                     }
+                                     unset($_POST);
+                                 }
+                                 // check if there's friend request 
+                                 $friend_requests = loadFriendRequests($user->get_email(),$pdo);
+                                 if(count($friend_requests)) {
+                                     echo "<ul>";
+                                     foreach($friend_requests as $fr) {
+                                         echo "<li>" . getUserNameByEmail($fr, $pdo) 
+                                             . " sent you a friend request ";
+                                         echo '<form action="" method="POST"> ' 
+                                             . '<input type="hidden" name="sender" value="' 
+                                             . $fr . '">'
+                                             . '<input type="hidden" name="receiver" value="' 
+                                             . $user->get_email() . '">'
+                                             . '<input type="submit" name="friend_request" value="Accept">'
+                                             . '&nbsp;'
+                                             . '<input type="submit" name="friend_request" value="Decline">'
+                                             . "</form>";
+                                         echo "</li>";
+                                     }
+                                     echo "</ul>";
+                                 } else {
+                                     echo '<p>You have no friend request, go send some instead!</p>';
+                                 }
+                                 ?>
+                             </ul>
+                         </li>
+                         
+                         <!-- message bubble -->
+                         <li class="header__message header--icon-setting">
+                             <a href="#">
+                                 <i class="fa fa-comments">
+                                     
+                                 </i>
+                             </a>
+                         </li> <!-- end message bubble -->
+
+                         <!-- notification bubble -->
+                         <li class="header__alert header--icon-setting">
+                             <a href="#">
+                                 <i class="fa fa-globe"></i>
+                             </a>
+                         </li> <!-- end notification bubble -->
                      </div>
+
                      <!-- privacy and settings (with a dropdown menu)-->
                      <div class="col-md-1 col-sm-12">
-                      <li class="header__privacy header--icon-setting"><a href="#"><i class="fa fa-lock"></i></a></li>
-                      <li class="header__setting header--icon-setting"><a href="#"><i class="fa fa-caret-down" onclick="show_setting_menu()"></i></a>
-                        <ul class="icon-setting--dropdown">
-                          <li><a href="settings.php">Settings</a></li>
-                          <li><a href="logout.php">Log Out</a></li>
-                      </ul>
+                         <li class="header__privacy header--icon-setting">
+                             <a href="#"><i class="fa fa-lock"></i></a>
+                         </li>
 
-                  </li>
+                         <li class="header__setting header--icon-setting">
+                             <a href="#">
+                                 <i class="fa fa-caret-down" onclick="show_setting_menu()"></i>
+                             </a>
+                             <ul class="icon-dropdown" id="icon-setting--dropdown">
+                                <li><a href="settings.php">Settings</a></li>
+                                <li><a href="logout.php">Log Out</a></li>
+                             </ul>
+                          </li>
+                      </div>
 
-              </div>
               <!-- search bar -->
               <div class="col-md-4 col-sm-12">
                <li class="navbar__form">
@@ -137,22 +240,29 @@ $profile_pic = "../rsrc/img/photos/default-profile.png";
     </ul> 
 </div>
 </nav>
-<!-- cover image section -->
-<div class="cover">
-    <div class="cover__container">
-
-        <?php 
-        if(empty($user->get_cover_photo())) {
-                    // set default profile picture
-            echo '<img src="../rsrc/img/cover/default-cover.jpg">';
-        } else {
-                    // load user cover picture
-                    //TODO:
-
-        }
-        ?>
-        <div class="cover__profile-container">
-            <?php
+    <!-- cover image section -->
+    <div class="cover">
+        <div class="cover__container">
+            <form method="POST" action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]);?>" enctype="multipart/form-data"  class="cover__pic">
+                <!-- div: hide the upload file button -->
+                <!-- <div style="height:0px; overflow=hidden;">   -->
+                <!-- <input type="file" name="fileToUpload" id="fileToUpload">
+                <input type="submit" value="Upload Image" name="submit"> -->
+                <!-- </div> -->
+                 <input type="file" name="cover_image" onchange="this.form.submit()"/>
+                <?php 
+                if(empty($user->get_cover_photo())) {
+                        // set default profile picture
+                        echo '<img id="cover_photo" src="../rsrc/img/cover/default-cover.jpg" >';
+                    } else {
+                        // load user cover picture
+                        //TODO:
+                        
+                    }
+                ?>
+            </form>
+            <div class="cover__profile-container">
+                <?php
                 // load user profile picture
             if(! empty($user->get_profile_picture())) {
                     //TODO: 
@@ -176,87 +286,95 @@ $profile_pic = "../rsrc/img/photos/default-profile.png";
         <div id="update-info-page" class="update-info__modal">
           <!-- page content -->
           <div class="modal__page">
-            <span onclick="close_modal(this.id)" class="modal__page-close">&times;</span>
+            <span onclick="close_update_info_page(this.id)" class="modal__page-close">&times;</span>
 
             <p class="modal__page--titles">Describe who you are</p>
             <!-- describe who you are-->
-
-            <form method="POST" action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]);?>" id="modal__page--input0">
+            <?php
+            if(!empty($info->get_workplace())) {
+                            // foreach($info->get_workplace() as $workplace) {
+                echo '<p class="modal__page--add" id="description" onclick="show_modal(this.id)">'. $info->get_description() .'</p>';
+                            // }
+            } else {
+                echo '<p class="modal__page--add" id="description" onclick="show_modal(this.id)">Add Workplace</p>';
+            }
+            ?>
+            <form method="POST" action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]);?>" id="description_input">
                 <input type="text" name="description" class="modal__page--text">
                 <button type="submit" class="btn btn-primary modal__page--btn">Save</button>
-                <button type="button"class="btn btn-secondary modal__page--btn" onclick="close_modal(this.id)">Cancel</button>
+                <button type="button"class="btn btn-secondary modal__page--btn" id="description_close" onclick="close_modal(this.id)">Cancel</button>
             </form>
             <p class="modal__page--titles">workplace</p>
             <!-- echo all workplaces and schools-->
             <?php
             if(!empty($info->get_workplace())) {
                             // foreach($info->get_workplace() as $workplace) {
-                echo '<p class="modal__page--add" onclick="show_modal(this.id)">'. $info->get_workplace() .'</p>';
+                echo '<p class="modal__page--add" id="workspace" onclick="show_modal(this.id)">'. $info->get_workplace() .'</p>';
                             // }
             } else {
-                echo '<p class="modal__page--add" onclick="show_modal(this.id)">Add Workplace</p>';
+                echo '<p class="modal__page--add" id="workspace" onclick="show_modal(this.id)">Add Workplace</p>';
             }
             ?>
-            <form method="POST" action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]);?>" id="modal__page--input1">
+            <form method="POST" action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]);?>" id="workspace_input">
                 <input type="text" name="workplace" class="modal__page--text">
                 <button type="submit" name="input_save" class="btn btn-primary modal__page--btn">Save</button>
-                <button type="button"class="btn btn-secondary modal__page--btn" onclick="close_modal(this.id)">Cancel</button>
+                <button type="button"class="btn btn-secondary modal__page--btn" id="workspace_close" onclick="close_modal(this.id)">Cancel</button>
             </form>
 
             <p class="modal__page--titles">Education</p>
             <?php
             if(!empty($info->get_education())) {
                             // foreach($info->get_education() as $education) {
-                echo '<p class="modal__page--add" onclick="show_modal(this.id)">'. $info->get_education() .'</p>';
+                echo '<p class="modal__page--add" id="education" onclick="show_modal(this.id)">'. $info->get_education() .'</p>';
                             // }   
             } else {
-                echo '<p class="modal__page--add" onclick="show_modal(this.id)">Add education</p>';
+                echo '<p class="modal__page--add" id="education" onclick="show_modal(this.id)">Add education</p>';
             }
             ?>
-            <form method="POST" action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]);?>" id="modal__page--input2">
+            <form method="POST" action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]);?>" id="education_input">
                 <input type="text" name="education" class="modal__page--text">
                 <button type="submit" class="btn btn-primary modal__page--btn">Save</button>
-                <button type="button" class="btn btn-secondary modal__page--btn" onclick="close_modal(this.id)">Cancel</button>
+                <button type="button" class="btn btn-secondary modal__page--btn" id="education_close" onclick="close_modal(this.id)">Cancel</button>
             </form>
             <!-- echo current city, hometown, and relationship -->
             <p class="modal__page--titles">Current City</p>
             <?php
             if(empty($info->get_current_city())) {
-                echo '<p class="modal__page--add" onclick="show_modal(this.id)">Add current city</p>';
+                echo '<p class="modal__page--add" id="current_city" onclick="show_modal(this.id)">Add current city</p>';
             } else {
-                echo '<p class="modal__page--add" onclick="show_modal(this.id)">' . $info->get_current_city() . '</p>';
+                echo '<p class="modal__page--add" id="current_city" onclick="show_modal(this.id)">' . $info->get_current_city() . '</p>';
             }
             ?>
-            <form method="POST" action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]);?>" id="modal__page--input3">
+            <form method="POST" action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]);?>" id="current_city_input">
                 <input type="text" name="current_city" class="modal__page--text">
                 <button type="submit" class="btn btn-primary modal__page--btn">Save</button>
-                <button type="button" class="btn btn-secondary modal__page--btn" onclick="close_modal(this.id)">Cancel</button>
+                <button type="button" class="btn btn-secondary modal__page--btn" id="current_city_close" onclick="close_modal(this.id)">Cancel</button>
             </form>
             <p class="modal__page--titles">Hometown</p>
             <?php
             if(empty($info->get_hometown())) {
-                echo '<p class="modal__page--add" onclick="show_modal(this.id)">Add hometown</p>';
+                echo '<p class="modal__page--add" id="hometown" onclick="show_modal(this.id)">Add hometown</p>';
             } else {
-                echo '<p class="modal__page--add" onclick="show_modal(this.id)">' . $info->get_hometown() . '</p>';
+                echo '<p class="modal__page--add" id="hometown" onclick="show_modal(this.id)">' . $info->get_hometown() . '</p>';
             }
             ?>
-            <form method="POST" action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]);?>" id="modal__page--input4">
+            <form method="POST" action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]);?>" id="hometown_input">
                 <input type="text" name="hometown" class="modal__page--text">
                 <button type="submit" class="btn btn-primary modal__page--btn">Save</button>
-                <button type="button" class="btn btn-secondary modal__page--btn" onclick="close_modal(this.id)">Cancel</button>
+                <button type="button" class="btn btn-secondary modal__page--btn" id="hometown_close" onclick="close_modal(this.id)">Cancel</button>
             </form>
             <p class="modal__page--titles">Relationship</p>
             <?php
             if(empty($info->get_relationship())) {
-                echo '<p class="modal__page--add" onclick="show_modal(this.id)">Add relationship</p>';
+                echo '<p class="modal__page--add" id="relationship" onclick="show_modal(this.id)">Add relationship</p>';
             } else {
-                echo '<p class="modal__page--add" onclick="show_modal(this.id)">' . $info->get_relationship() . '</p>';
+                echo '<p class="modal__page--add"  id="relationship" onclick="show_modal(this.id)">' . $info->get_relationship() . '</p>';
             }
             ?>
-            <form method="POST" action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]);?>" id="modal__page--input5">
+            <form method="POST" action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]);?>" id="relationship_input">
                 <input type="text" name="relationship" class="modal__page--text">
                 <button type="submit" class="btn btn-primary modal__page--btn">Save</button>
-                <button type="button" class="btn btn-secondary modal__page--btn" onclick="close_modal(this.id)">Cancel</button>
+                <button type="button" class="btn btn-secondary modal__page--btn" id="relationship_close" onclick="close_modal(this.id)">Cancel</button>
             </form>
             <p class="modal__page--titles">About Info</p>
             <p class="modal__page--add">Edit Your About Info</p>

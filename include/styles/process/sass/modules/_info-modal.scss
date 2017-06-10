@@ -41,16 +41,14 @@
         .modal__page--btn {
             cursor: pointer;
         }
-        #modal__page--input0,
-        #modal__page--input1,
-        #modal__page--input2,
-        #modal__page--input3,
-        #modal__page--input4,
-        #modal__page--input5 {
+        #description_input,
+        #workspace_input,
+        #education_input,
+        #current_city_input,
+        #hometown_input,
+        #relationship_input {
             display: none;
         }
-
-
 
     }
 
