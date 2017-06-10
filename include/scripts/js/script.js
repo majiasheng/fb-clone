@@ -53,12 +53,12 @@ function show_modal(clicked_id) {
 	// obj: add button and its correponding input box
 	
 	var id_to_modal = {
-						'description'	: 'description_input',
-						'workspace'		: 'workspace_input',
-						'education'		: 'education_input',
-						'current_city'	: 'current_city_input',
-						'hometown'		: 'hometown_input',
-						'relationship'	: 'relationship_input',
+						'description'	: 'description_form',
+						'workplace'		: 'workplace_form',
+						'education'		: 'education_form',
+						'current_city'	: 'current_city_form',
+						'hometown'		: 'hometown_form',
+						'relationship'	: 'relationship_form',
 
 						};
 	if (id_to_modal.hasOwnProperty(clicked_id)) {
@@ -69,12 +69,12 @@ function show_modal(clicked_id) {
 function close_modal(clicked_id) {	
 	// obj: add button and its correponding input box
 	var id_to_modal = {
-						'description_close'	: 'description_input',
-						'workspace_close'	: 'workspace_input',
-						'education_close'	: 'education_input',
-						'current_city_close': 'current_city_input',
-						'hometown_close'	: 'hometown_input',
-						'relationship_close': 'relationship_input',
+						'description_close'	: 'description_form',
+						'workplace_close'	: 'workplace_form',
+						'education_close'	: 'education_form',
+						'current_city_close': 'current_city_form',
+						'hometown_close'	: 'hometown_form',
+						'relationship_close': 'relationship_form',
 
 						};
 	if (id_to_modal.hasOwnProperty(clicked_id)) {

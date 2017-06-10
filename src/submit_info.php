@@ -12,21 +12,34 @@ if (isset($_POST) && (isset($_POST["workplace"])
 || isset($_POST["hometown"]) 
 || isset($_POST["relationship"]) 
 || isset($_POST["description"]))) {
-    if (isset($_POST["workplace"]))
+    // the getters are for ajax to output
+    if (isset($_POST["workplace"])) {
         $info->set_workplace($_POST["workplace"]);
-    else if (isset($_POST["education"]))
+        echo $info->get_workplace();                   
+    }
+    else if (isset($_POST["education"])) {
         $info->set_education($_POST["education"]);
-    else if (isset($_POST["current_city"]))
+        echo $info->get_education();  
+    }
+    else if (isset($_POST["current_city"])) {
         $info->set_current_city($_POST["current_city"]);
-    else if (isset($_POST["hometown"]))
+        echo $info->get_current_city();  
+    }
+    else if (isset($_POST["hometown"])) {
         $info->set_hometown($_POST["hometown"]);
-    else if (isset($_POST["relationship"]))
+        echo $info->get_hometown();  
+    }
+    else if (isset($_POST["relationship"])) {
         $info->set_relationship($_POST["relationship"]);
-    else if (isset($_POST["description"]))
+        echo $info->get_relationship();  
+    }
+    else if (isset($_POST["description"])) {
         $info->set_description($_POST["description"]);
+        echo $info->get_description(); 
+    }
     save_info_to_db($user->get_email(), $info, $pdo);
+
 }
-header("Location: main.php");
 ?>
 
 	
