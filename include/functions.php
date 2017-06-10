@@ -7,6 +7,7 @@ require_once("../src/Post.php");
 require_once("../src/info.php");
 require_once("../src/comments.php");
 // TODO: use prepare statement to insert into db
+
 /**
  * Establishes connection with db
  */

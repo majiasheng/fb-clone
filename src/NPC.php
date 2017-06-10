@@ -55,9 +55,11 @@ $profile_pic = "../rsrc/img/photos/default-profile.png";
   echo $full_user_name;
   ?>
   </title>
+
   <link rel="stylesheet" href="../include/styles/css/style.css">
   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.6/css/bootstrap.min.css">
   <link rel="stylesheet" type="text/css" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+
   <meta name="viewport" content="width=device-width, initial-scale=1">
 </head>
 <body>
@@ -412,65 +414,30 @@ $profile_pic = "../rsrc/img/photos/default-profile.png";
             </div> <!-- ********************** end panel ********************** -->
 
             <!-- ********************** middle: post ********************** -->
+
             <div class="middle__posts">
                 <?php
-                //load user's posts if there's any
-                // if there's none, set up a prompt maybe?
                 $posts = loadPosts($user->get_email(), $pdo);
-                // var_dump($posts);
-                foreach($posts as $p) {
-                    // header: user pic, user name
-                    echo '<div class="post__header">';
-                    echo '<img src="' . $profile_pic . '" class="post__header__author-photo">';
-                    echo '<p class="post__header__info info__author"><a class="">' 
-                        . $full_user_name . '</a>';
-                    if($p->getIsEdited()) {
-                        echo " Edited";
-                    }
-                    echo '</p>';
+                foreach($posts as $p):
 
-                    echo '<p class="post__header__info info__date">' 
-                        . $p->getPostTime() // load post's time
-                        . '</p></div>';
-
-                    // content
-                    echo '<div class="post__content"> <p class="post__content__p">';
-                    echo $p->getContent() . "<br></p></div>";
-
+                    // load all the comment of the current post.
                     $comments = load_comments($p->getPostID(), $pdo);
+                    
+                    // load name of person who commented.
+                    $name = getUserNameByEmail($p->getAuthorEmail(), $pdo);
 
+                    // load the like_count.
+                    $like_count = getLikeCount($p->getPostID(), $pdo);
 
+                    include "../src/template/post_content.html";
 
-                    //comment content
-                    foreach($comments as $c){
-                        echo ' <div class="comment_content"> &nbsp&nbsp'. $c->getCommentContent()  . '------('. $c->getAuthor() .')----------' . $c->getCommentTime() . '</div>';
-
-
-                    }
-
-                    // footer/actions: like, comment, share
-
-                    echo '<div class="post__actions">
-                    <div class="actions--setting actions--decor"><i class="fa fa-thumbs-up"></i></div>
-                    <div class="actions--setting actions--decor"><i class="fa fa-share"></i></div>
-                    <div class="actions--setting actions--decor actions__comment"></div>
-                    <div class="actions--setting actions--decor actions__comment">';
-                          
-                          
-                    echo '
-                    <form action="" method="POST" id="post_comment_form">
-                        <input type="text" name="post_comment_content" placeholder="Write some comment"/>
-                        <input type="hidden" name="post__id" value="'  . $p->getPostId()  . '" >
-                        <button type="submit">
-                            <i class="fa fa-comment"></i>
-                        </button>
-                    </form>';
-
-                    echo'
-                    </div>
-                    </div> <br><br>';
-                }
+                    endforeach;
                 ?>
+
+            </div>
+
+            <!-- End middle__post -->
+            
 
         </div> <!-- end middle column -->
 
@@ -497,8 +464,12 @@ $profile_pic = "../rsrc/img/photos/default-profile.png";
 
 </div>
 
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+<script src="https://cdn.jsdelivr.net/jquery.validation/1.16.0/jquery.validate.js"></script>
+<script src="../include/scripts/js/script.js"></script>
+<script src="../include/scripts/js/jquery_functions.js"></script>
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.6/js/bootstrap.min.js"></script>
-  <script src="../include/scripts/js/script.js"></script>
+  
 </body>
 </html>
 

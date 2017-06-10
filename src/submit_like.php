@@ -12,7 +12,8 @@ if(isset($_POST) && ("" != trim($_POST['post_id']))) {
 	// return if the user liked this post or not.
 	$checkNull = checkNullLikeState((int)$_POST['post_id'], $user->get_email(), $pdo);
 
-	if(is_null($checkNull)){
+	// var_dump($checkNull);
+	if(is_null($checkNull['id'])){
 		linkPost((int)$_POST['post_id'], $user->get_email(), $pdo);
 	}
 

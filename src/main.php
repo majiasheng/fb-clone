@@ -250,7 +250,7 @@ $profile_pic = "../rsrc/img/photos/default-profile.png";
 
                 <!-- ********************** middle: post ********************** -->
 
-<!--                 <div class="middle__posts">
+<!--                <div class="middle__posts">
                     <div class="post__header">
                     </div>
                     <div class="post__content">
@@ -262,9 +262,10 @@ $profile_pic = "../rsrc/img/photos/default-profile.png";
                         <div class="actions--setting actions--decor"><i class="fa fa-share"></i></div>
                         <div class="actions--setting actions--decor actions__comment"><i class="fa fa-comment"></i></div>
                     </div>
-                </div>
+                    </div>
 
  -->
+                <!-- Begin middle__post -->
 
                 <div class="middle__posts">
                 <?php
@@ -286,6 +287,8 @@ $profile_pic = "../rsrc/img/photos/default-profile.png";
                 ?>
 
                 </div>
+
+                <!-- End middle__post -->
 
                 <div class="content__right col-md-2">
                     <!-- ********************** right: online contacts bar ********************** -->
