@@ -67,9 +67,12 @@
     .icon-dropdown {
         width: 200px;
         position:absolute;
-        top:100%;
+        top:125%;
         left:0px;
         display: none;
+
+        -webkit-box-shadow: 0 10px 6px -6px #777;
+        -moz-box-shadow: 0 10px 6px -6px #777;
         box-shadow: 0 10px 6px -6px #777;
         z-index:1;
     }
@@ -87,13 +90,13 @@
         color: darken($white, 100%);
     }
     .fr-dropdown {
-        -webkit-box-shadow: 0 10px 6px -6px #777;
-        -moz-box-shadow: 0 10px 6px -6px #777;
-
         width: 400px;
         border: 1px solid lighten(black, 95%);
         background-color: lighten(black, 99%);
         color: black;
+    }
+    .fr-dropdown p {
+        font-size: 0.8em;
     }
 
 
