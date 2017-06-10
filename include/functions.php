@@ -371,10 +371,13 @@ function getUserIfMatch($keyword, $pdo) {
 
     $query = "SELECT first_name, last_name, email FROM "
         . USERS_TABLE
-        . " WHERE first_name LIKE ?"
-        . " OR last_name LIKE ?";
+        // . " WHERE first_name LIKE ?"
+        // . " OR last_name LIKE ?";
+        . " WHERE concat(first_name, concat(' ', last_name)) like ?;";
+        // . " OR last_name LIKE ?";
     $stmt = $pdo->prepare($query);
-    $stmt->execute(array("%$keyword%", "%$keyword%"));
+    // $stmt->execute(array("%$keyword%", "%$keyword%"));
+        $stmt->execute(array("%$keyword%"));
     return $stmt->fetchAll(PDO::FETCH_ASSOC);
 // $query = "SELECT first_name, last_name, email FROM "
 //     . USERS_TABLE
