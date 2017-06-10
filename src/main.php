@@ -471,8 +471,6 @@ $profile_pic = "../rsrc/img/photos/default-profile.png";
                     // load the like_count.
                     $like_count = getLikeCount($p->getPostID(), $pdo);
 
-                    echo "<div>" . $p->getLikeCount() . "</div>";
-
                     include "../src/template/post_content.html";
 
                     endforeach;
