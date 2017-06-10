@@ -182,8 +182,6 @@ function loadUserProfile($user_email, $pdo) {
 
 function saveCommentToDB($author_email, $post_id, $pdo, $comment){
 
-    $post_id = (int)$post_id;
-
     $query = "INSERT INTO " . COMMENTS_TABLE 
     . "(post_id, author_email, comment_content) "
     . "VALUES (:post__id, :author_email, :comment_content)";
@@ -231,29 +229,26 @@ function savePostToDB($user_email, $pdo, $post) {
 
 
     // INSET INTO likes (post_id) VALUES ( INTEGER );
-    // $init_likes = "INSERT INTO " . LIKE_TABLE
-    // . "(post_id)"
-    // . "VALUES (:post_id)";
+    $init_likes_person = "INSERT INTO " . LIKE_TABLE
+    . "(post_id, author_email)"
+    . "VALUES (:post_id, :author_email)";
 
     $stmt = $pdo->prepare($query);
     $rtval =  $stmt->execute(['email' => $user_email, 'content' => $post]);
 
     // SELECT * FROM `posts` ORDER BY `id` DESC LIMIT 1  -> get the lastest post
-    // $latest_post = "SELECT * FROM " . POSTS_TABLE . " ORDER BY id DESC LIMIT 1";
-    // $stmt_two = $pdo->prepare($latest_post);
-    // $stmt_two ->execute();
+    $latest_post = "SELECT * FROM " . POSTS_TABLE . " ORDER BY id DESC LIMIT 1";
+    $stmt_two = $pdo->prepare($latest_post);
+    $stmt_two ->execute();
 
-    // $newest_post = $stmt_two->fetchAll(PDO::FETCH_ASSOC);
+    $newest_post = $stmt_two->fetchAll(PDO::FETCH_ASSOC);
+    $latest_post_id = $newest_post[0]['id'];
 
-    // $latest_post_id = $newest_post[0]['id'];
-
-    // $stmt_three = $pdo->prepare($init_likes);
-    // $stmt_three->execute(['post_id' => $latest_post_id]);
+    $stmt_three = $pdo->prepare($init_likes_person);
+    $stmt_three->execute(['post_id' => $latest_post_id , 'author_email' => $user_email]);
 
     return $rtval;
 }
-
-
 
 function loadPosts($user_email, $pdo) {
     //TODO: need to join comments with posts later
@@ -289,7 +284,7 @@ function load_one_post($post_id, $pdo){
     // $query = "SELECT author_email, id from" . POSTS_TABLE
     // . " WHERE id = :id";
 
-    $query = "SELECT author_email, id from " . POSTS_TABLE
+    $query = "SELECT author_email, id, like_count from " . POSTS_TABLE
     . " WHERE id = :id";
     $stmt = $pdo->prepare($query);
     $stmt->execute(['id' => $post_id]);
@@ -337,16 +332,45 @@ function getAllUsers($pdo) {
 }
 
 /**
+* Check if user has liked a post or not.
+* Return: true/false;
+*/
+function checkLikeStat($post_id, $author_email, $pdo){
+    // get the current like state
+    // SELECT liked FROM like_person WHERE id = 2 (example)
+    $query = "SELECT liked FROM " . LIKE_TABLE . " WHERE post_id = :id AND author_email = :email";
+    $stmt = $pdo->prepare($query);
+    $stmt->execute(['id' => $post_id , 'email' => $author_email]);
+    $rtval = $stmt->fetch(PDO::FETCH_ASSOC);
+
+    return $rtval;
+}
+
+/**
+* 
+*/
+function updateLikeStat($post_id, $author_email, $state, $pdo){
+    // UPDATE like_person SET liked = 1 WHERE post_id = 6
+    $query = "UPDATE " . LIKE_TABLE . " SET liked = :liked WHERE post_id = :post_id AND author_email = :email";
+    $stmt = $pdo->prepare($query);
+    $stmt->execute(['liked' => $state,'post_id' => $post_id, 'email' => $author_email]);
+}
+
+
+/**
 * Update the liked post count
 */
 function incLikesDB($post_id, $pdo){
-    $query = 'UPDATE' . LIKE_TABLE . ' SET like_count = like_count + 1 WHERE post= :post_id';
+    $query = 'UPDATE ' . POSTS_TABLE . ' SET like_count = like_count + 1 WHERE id = :post_id';
     $stmt = $pdo->prepare($query);
     $stmt->execute(['post_id' => $post_id]);
 }
 
+/**
+* dec the like_count
+*/
 function decLikesDB($post_id, $pdo){
-    $query = 'UPDATE' . LIKE_TABLE . ' SET like_count = like_count - 1 WHERE like_count > 0 AND post= :post_id';
+    $query = 'UPDATE ' . POSTS_TABLE . ' SET like_count = like_count - 1 WHERE like_count > 0 AND id = :post_id';
     $stmt = $pdo->prepare($query);
     $stmt->execute(['post_id' => $post_id]);
 }
@@ -355,12 +379,34 @@ function decLikesDB($post_id, $pdo){
 *   Get the number of likes based on the post id, return the liked count.
 */
 function getLikeCount($post_id, $pdo){
-    $query = "SELECT like_count FROM " .LIKE_TABLE . " WHERE post_id = :id";
+    // select like_count from posts where id = 3
+    $query = "SELECT like_count from " . POSTS_TABLE . " WHERE id = :id"; 
     $stmt = $pdo->prepare($query);
     $stmt->execute(['id' => $post_id]);
     $rtval = $stmt->fetch(PDO::FETCH_ASSOC);
 
     return $rtval;
+}
+
+/**
+*   Check if user has been input into the like_person post yet.
+*/
+function checkNullLikeState($post_id, $author_email, $pdo){
+    $query = "SELECT ( SELECT liked FROM " .LIKE_TABLE. " WHERE post_id = :post_id AND author_email = :email) AS id";
+    $stmt = $pdo->prepare($query);
+    $stmt->execute(['post_id'=> $post_id, 'email' => $author_email]);
+    $rtval = $stmt->fetch(PDO::FETCH_ASSOC);
+    return $rtval;
+}
+
+/**
+*   Create a new entry for the user who doesn't have linkage with the post like yet.
+**/
+function linkPost($post_id, $author_email, $pdo){
+    $query = "INSERT INTO " .LIKE_TABLE. "(post_id, author_email)" .
+    " VALUES(:post_id, :author_email); ";
+    $stmt = $pdo->prepare($query);
+    return $stmt->execute(['post_id' => $post_id, 'author_email' => $author_email]);   
 }
 
 

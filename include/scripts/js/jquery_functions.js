@@ -42,18 +42,25 @@ $(document).ready(function(){
 
 	});
 
+	$('.thumb_up').click(function(e){
 
-	$('.thumb_up').click(function(){
-		
-		// e.preventDefault();
+		e.preventDefault();
+		var post_id = $(this).parent().siblings("form").find("input[type=hidden]").val();
 
-		// $.post("../src/submit_like.php", $(this).serialize())
-		// .done(function(data){
-		// 	alert("dhone");
-		// })
-		// .fail(function(data){
-		// 	alert("cool");
-		// });
+		$.ajax({
+			context: this,
+            url: '../src/submit_like.php',
+            type: "post",
+            data: { 'post_id': post_id },
+            success: function(data) {
+                $(this).fadeOut('fast', function(){
+					$(this).fadeIn('fast').html(data);
+				});
+            },
+            fail: function(data){
+            	alert("Failed to like");
+            }
+        });
 
 	});
 

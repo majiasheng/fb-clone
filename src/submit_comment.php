@@ -5,7 +5,7 @@ session_start();
 $user = $_SESSION['user'];
 $info = $_SESSION['user_info'];
 $pdo = connect();
-
+$comments = null;
 if(isset($_POST) && isset($_POST['post_comment_content'])) {
     //FIXME: $user->get_email() <= not really, $user can be anyone
 
@@ -23,6 +23,8 @@ if(isset($_POST) && isset($_POST['post_comment_content'])) {
     unset($_POST);
 }
 
+if(!is_null($comments)):
+
 foreach ($comments as $c):
 
 ?>
@@ -30,3 +32,5 @@ foreach ($comments as $c):
 <div class="comment__content__p"><?php echo $c->getCommentContent() . ' (' . $name?>)</div>
 
 <?php endforeach ?>
+
+<?php endif ?>
