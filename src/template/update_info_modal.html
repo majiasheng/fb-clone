@@ -7,12 +7,12 @@
             <p class="modal__page--titles">Describe who you are</p>
             <!-- describe who you are-->
             <?php
-            if(!empty($info->get_workplace())) {
+            if(!empty($info->get_description())) {
                             // foreach($info->get_workplace() as $workplace) {
                 echo '<p class="modal__page--add" id="description" onclick="show_modal(this.id)">'. $info->get_description() .'</p>';
                             // }
             } else {
-                echo '<p class="modal__page--add" id="description" onclick="show_modal(this.id)">Add Workplace</p>';
+                echo '<p class="modal__page--add" id="description" onclick="show_modal(this.id)">Describe who you are</p>';
             }
             ?>
             <form method="POST" action="submit_info.php" id="description_input">

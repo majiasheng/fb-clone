@@ -90,7 +90,7 @@ $profile_pic = "../rsrc/img/photos/default-profile.png";
                 echo '<p class="intro__detail"><i class="fa fa-map-marker"></i> From ' . $info->get_hometown() . '</p>';
 
             ?>
-            <button class="intro__update-btn--font intro__update-btn--bg" onclick="show_modal(this.id)">update info</button>
+            <button class="intro__update-btn--font intro__update-btn--bg" id="update-info-btn" onclick="show_update_info_page()">update info</button>
         </div>
 
         <!-- ********************** left: photos ********************** -->
