@@ -3,6 +3,7 @@ Jia Sheng Ma
 -->
 <?php
 require_once("../include/functions.php");
+require_once("../include/loads/load_images.php");
 session_start();
 // TODO: use user data to populate main.php
 
@@ -13,43 +14,10 @@ $user = $_SESSION['user'];
 $info = $_SESSION['user_info'];
 $pdo = connect();
 
-// if a form is sent to self, handle it
-
-// // handle friend request
-// if(isset($_POST['friend_request'])) {
-//     if('Accept' == $_POST['friend_request']) {
-//         acceptFriendRequest($_POST['sender'], $_POST['receiver'], $pdo);
-//     } else if('Decline' == $_POST['friend_request']) {
-//         rejectFriendRequest($_POST['sender'], $_POST['receiver'], $pdo);
-//     } else {
-//         echo "Something went wrong..";
-//     }
-//     unset($_POST);
-// }
-//
-// // check if there's friend request
-// $friend_requests = loadFriendRequests($user->get_email(),$pdo);
-// if(count($friend_requests)) {
-//     echo "<ul>";
-//     foreach($friend_requests as $fr) {
-//         echo "<li>" . getUserNameByEmail($fr, $pdo) . " sent you a friend request ";
-//         echo '<form action="" method="POST"> '
-//             . '<input type="hidden" name="sender" value="' . $fr . '">'
-//             . '<input type="hidden" name="receiver" value="' . $user->get_email() . '">'
-//             . '<input type="submit" name="friend_request" value="Accept">'
-//             . '&nbsp;'
-//             . '<input type="submit" name="friend_request" value="Decline">'
-//             . "</form>";
-//         echo "</li>";
-//     }
-//     echo "</ul>";
-// } else {
-//     echo 'You have no friend request, go send some instead!<br>';
-// }
-
 // default profile picture
 $profile_pic = "../rsrc/img/photos/default-profile.png";
 
+$cover_pic = load_cover($user);
 ?>
 
 <!doctype html>

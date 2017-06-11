@@ -2,7 +2,6 @@
 	author: Melanie Lin 
 
 **/
-
 /* Drop-down Menu */
 function show_setting_menu() {
 	var dropdown = document.getElementById("icon-setting--dropdown");

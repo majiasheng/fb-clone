@@ -13,4 +13,11 @@ define("CHARSET","utf8");
 define("FRIENDS_TABLE", "friend_with");
 define("IMAGE_TABLE", "images");
 define("FRIEND_REQUEST_TABLE", "friend_request");
+
+// paths
+define("PATH_SRC_TO_RSRC", "../rsrc/");
+define("PATH_SRC_TO_RSRC_IMG", "../rsrc/img/");
+
+define("IMG_COVER", "../rsrc/img/cover/default-cover.jpg");
+
 ?>

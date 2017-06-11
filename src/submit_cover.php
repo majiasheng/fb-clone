@@ -5,14 +5,13 @@ session_start();
 $user = $_SESSION['user'];
 $info = $_SESSION['user_info'];
 $pdo = connect();
-// TODO: click cover section to upload; able to load; move code to functions.php; 
-// To solve "Warning: mkdir(): Permission denied", use command: chmod ugo=rwx ../rsrc/img
+
 // save images to local filesystem
 if(isset($_FILES['cover_image'])){
     $errors= array();
-    $file_name = $_FILES['cover_image']['name'];
+    // $file_name = $_FILES['cover_image']['name'];
     $file_size = $_FILES['cover_image']['size'];
-    $file_tmp = $_FILES['cover_image']['tmp_name'];
+    $file_tmp = $_FILES['cover_image']['tmp_name'];     // temporarily stored
     $file_type = $_FILES['cover_image']['type'];
     $file_ext=strtolower(end(explode('.',$_FILES['cover_image']['name'])));
 
@@ -31,11 +30,15 @@ if(isset($_FILES['cover_image'])){
     if(empty($errors)==true) {
         // create dir named with user email 
         $path = "../rsrc/img/".$user->get_email()."/cover";
+        // create dir if not exist
         if (!is_dir($path)) {
-            mkdir($path, 0700, true);
-        }
-        // upload image to the folder named with user email
-         move_uploaded_file($file_tmp,"../rsrc/img/".$user->get_email()."/cover/".$file_name);
+            // umash to get the actual permission 0777; default umask is 022
+            $oldmask = umask(0);
+            mkdir($path, 0777, true);
+            umask($oldmask);
+        }    
+        // upload image to the user's folder
+        move_uploaded_file($file_tmp,"../rsrc/img/".$user->get_email()."/cover/cover_img");
     }else{
         print_r($errors);
     }
