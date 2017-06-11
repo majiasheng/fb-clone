@@ -412,19 +412,19 @@ function linkPost($post_id, $author_email, $pdo){
 
 
 /**
- * For performing search
+ * For performing search (by $user)
  */
-function getUserIfMatch($keyword, $pdo) {
+function getUserIfMatch($user, $keyword, $pdo) {
 
     $query = "SELECT first_name, last_name, email FROM "
         . USERS_TABLE
         // . " WHERE first_name LIKE ?"
         // . " OR last_name LIKE ?";
-        . " WHERE concat(first_name, concat(' ', last_name)) like ?;";
+        . " WHERE concat(first_name, concat(' ', last_name)) like ? AND email <> ?;";
         // . " OR last_name LIKE ?";
     $stmt = $pdo->prepare($query);
     // $stmt->execute(array("%$keyword%", "%$keyword%"));
-        $stmt->execute(array("%$keyword%"));
+        $stmt->execute(array("%$keyword%", "$user"));
     return $stmt->fetchAll(PDO::FETCH_ASSOC);
 // $query = "SELECT first_name, last_name, email FROM "
 //     . USERS_TABLE
