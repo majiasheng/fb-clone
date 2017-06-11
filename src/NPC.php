@@ -61,7 +61,7 @@ if(isset($_POST['cancel_friend_request'])) {
 }
 
 // default profile picture
-$profile_pic = "../rsrc/img/photos/default-profile.png";
+// $profile_pic = "../rsrc/img/photos/default-profile.png";
 
 $profile_pic = load_profile($user);
 $cover_pic = load_cover($user);
@@ -145,8 +145,6 @@ $cover_pic = load_cover($user);
                     echo '<img src="../rsrc/img/cover/default-cover.jpg">';
                 } else {
                     // load user cover picture
-                    //TODO:
-                    
                 }
             ?>
             <div class="cover__profile-container">

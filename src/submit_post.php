@@ -1,5 +1,6 @@
 <?php
 require_once("../include/functions.php");
+require_once("../include/loads/load_images.php");
 session_start();
 
 $user = $_SESSION['user'];
@@ -14,6 +15,9 @@ if(isset($_POST) && ("" != trim($_POST['post_content']))) {
 }
 
 $posts = loadPosts($user->get_email(), $pdo);
+
+$profile_pic = load_profile($user);
+
 ?>
 
 <?php foreach($posts as $p):  
