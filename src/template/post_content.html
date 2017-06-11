@@ -36,17 +36,19 @@
         <a href="#" class="thumb_up"><i class="fa fa-thumbs-up"> <?php echo $p->getLikeCount() ?></i></a>
     </div>
     <div class="actions--setting actions--decor"><i class="fa fa-share"></i></div>
-    <div class="actions--setting actions--decor actions__comment"></div>
+    <div class="actions--setting actions--decor actions__comment">
 
-    <form action="" method="POST" class="post_comment_form">
-        <input type="text" name="post_comment_content" placeholder="Write some comment" required="true" oninvalid="this.setCustomValidity('Say something ...')" 
-        oninput="setCustomValidity('')" 
-        />
-        <input type="hidden" name="post__id" value="<?php echo $p->getPostId(); ?>" />
-        <button type="submit">
-            <i class="fa fa-comment"></i>
-        </button>
-    </form>
+
+        <form action="" method="POST" class="post_comment_form">
+            <input type="text" name="post_comment_content" placeholder="Write some comment" required="true" oninvalid="this.setCustomValidity('Say something ...')" 
+            oninput="setCustomValidity('')" 
+            />
+            <input type="hidden" name="post__id" value="<?php echo $p->getPostId(); ?>" />
+           
+            <a href="#" onclick="$(this).closest('form').submit()"><i class="fa fa-comment"></i></a>
+                
+        </form>
+    </div>
 
 </div>
 <br><br>
