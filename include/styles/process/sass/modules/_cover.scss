@@ -39,49 +39,66 @@
                 }
             }
         }
-        // profile
+        // wrapper contains profile photo, username, update info btn, and view activity btn
     	.cover__profile-container {
         	// z-index: 10;
         	position: absolute;
-        	width: 40%;
+            // background-color: green;
+        	width: 500px;
         	height: 200px;
         	top: 200px;
             left: 100px;
         	overflow: hidden;
         	font-family: "Open Sans", Helvetica, Arial;
         	color: white;
-            // profile photo
-        	.cover__photo {
+            div {
+                display: inline;
+                margin-bottom: 10px;
+            }
+            
+
+        	img {
         		width: 120px;
-        		height: auto;
-        		border-radius: 50%;
+        		height: 120px;
         		float: left;
+                border-radius: 50%;
         	}
+            a {
+                display: inline;
+                position: absolute;
+                top: 135px;
+                left: 0;
+
+                font-weight: 500;
+                text-decoration: none;
+
+                i {
+                    padding: 10px;
+                }
+            }
             // username
         	.cover__username {
-        		margin-top: 20px;
+                display: block;
+        		// margin-top: 10px;
         		margin-left: 200px;
-        		font-size: 1.9em;
-        		
+        		font-size: 1.6em;
         	}
+         //    // update info / view activity
             .cover__act {
-                margin-top: 30px;
+                margin-left: 50px;
                 div {
-                    display: inline;
-                    margin-left: 20px;
-                    padding: 6px 20px;
+         //            display: inline;
+         //            margin-left: 30px;
+                    padding: 6px 15px;
                     cursor: pointer;
                     background: transparent; //Fall-back for browsers that don't support rgba
                     background: rgba(0,0,0, 0.1);
                     font-variant: small-caps;
                     font-weight: bold;
-                }
-            }
-            .cover__pic {
-                input {
 
                 }
             }
+
     	// .cover__update-info {
     	// 	float: left;
     	// 	margin-left: 5%;
