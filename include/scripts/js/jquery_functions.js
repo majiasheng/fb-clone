@@ -45,7 +45,8 @@ $(document).ready(function(){
 	$('.thumb_up').click(function(e){
 
 		e.preventDefault();
-		var post_id = $(this).parent().siblings("form").find("input[type=hidden]").val();
+		var post_id = $(this).parent().siblings(".actions__comment").children().find("input[type=hidden]").val();
+		console.log(post_id);
 
 		$.ajax({
 			context: this,

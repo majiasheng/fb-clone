@@ -242,12 +242,10 @@ $cover_pic = load_cover($user);
 
                     // load all the comment of the current post.
                     $comments = load_comments($p->getPostID(), $pdo);
-                    
-                    // load name of person who commented.
-                    $name = getUserNameByEmail($p->getAuthorEmail(), $pdo);
 
                     // load the like_count.
                     $like_count = getLikeCount($p->getPostID(), $pdo);
+                    
 
                     include "../src/template/post_content.html";
 

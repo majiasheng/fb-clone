@@ -17,5 +17,12 @@ function load_profile($user) {
         return DEFAULT_PROFILE;
 }
 
+function load_profile_email($email){
+	if(file_exists(PATH_TO_USERS.$email.'/profile'))
+        return PATH_TO_USERS.$email.'/profile/profile_img';
+    else
+        return DEFAULT_PROFILE;
+}
+
 
 ?>
