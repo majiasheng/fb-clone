@@ -298,10 +298,12 @@ $profile_pic = "../rsrc/img/photos/default-profile.png";
             <!-- ********************** left: friends ********************** -->
             <div class="left__friends">
                 <!-- TODO: redirect to NPC's friends -->
-                <a href="friends.php?user="><h2 class="content__title content__title--font">
+                <a href="friends.php?user=<?php echo $user->get_email(); ?>">
+                    <h2 class="content__title content__title--font">
                     <i class="fa fa-user-plus content__icon content__icon--bg" aria-hidden="true"></i>
                     Friends
-                </h2></a>
+                    </h2>
+                </a>
 
                 <div class="row photos__container">
 
