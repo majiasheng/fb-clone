@@ -7,10 +7,12 @@
     <p class="post__content__p"><?php echo $p->getContent() ?></p>
 </div>
 
+<hr>
+
 <div class="comment__content" id="<?php echo 'post__' . $p->getPostID() . ''?>">
     <?php
     foreach ($comments as $c) {
-        echo '<div class="comment__content__p"> ' . $c->getCommentContent() . '  (' . $name  . ')</div>';
+        echo '<div class="comment__content__p"> ' . $c->getCommentContent() . '  (' . getUserNameByEmail($c->getAuthor(), $pdo) . ')</div>';
     }
     ?>
 </div>
