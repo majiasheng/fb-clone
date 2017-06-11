@@ -29,7 +29,7 @@
                                      if('Accept' == $_POST['friend_request']) {
                                          acceptFriendRequest($_POST['sender'], $_POST['receiver'], $pdo);
                                      } else if('Decline' == $_POST['friend_request']) {
-                                         rejectFriendRequest($_POST['sender'], $_POST['receiver'], $pdo);
+                                         removeFriendRequest($_POST['sender'], $_POST['receiver'], $pdo);
                                      } else {
                                          echo "Something went wrong..";
                                      }
