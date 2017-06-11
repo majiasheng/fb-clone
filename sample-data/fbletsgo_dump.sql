@@ -32,7 +32,7 @@ CREATE TABLE `comments` (
   PRIMARY KEY (`id`,`post_id`,`author_email`),
   KEY `post_id` (`post_id`),
   CONSTRAINT `comments_ibfk_1` FOREIGN KEY (`post_id`) REFERENCES `posts` (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -41,8 +41,34 @@ CREATE TABLE `comments` (
 
 LOCK TABLES `comments` WRITE;
 /*!40000 ALTER TABLE `comments` DISABLE KEYS */;
-INSERT INTO `comments` VALUES (1,18,'hashbrown@fb.com','ok','2017-06-05 23:14:43','2017-06-05 23:14:43'),(2,18,'hashbrown@fb.com','well','2017-06-05 23:14:59','2017-06-05 23:14:59');
+INSERT INTO `comments` VALUES (1,18,'hashbrown@fb.com','ok','2017-06-05 23:14:43','2017-06-05 23:14:43'),(2,18,'hashbrown@fb.com','well','2017-06-05 23:14:59','2017-06-05 23:14:59'),(3,17,'hashbrown@fb.com','hello hash brown','2017-06-08 14:28:08','2017-06-08 14:28:08'),(4,18,'hashbrown@fb.com','ha','2017-06-09 02:34:56','2017-06-09 02:34:56'),(5,19,'dd@fb.com','yo','2017-06-11 01:13:13','2017-06-11 01:13:13');
 /*!40000 ALTER TABLE `comments` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `friend_request`
+--
+
+DROP TABLE IF EXISTS `friend_request`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `friend_request` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `sender` varchar(50) NOT NULL,
+  `receiver` varchar(50) NOT NULL,
+  `time_received` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  PRIMARY KEY (`id`,`sender`,`receiver`)
+) ENGINE=InnoDB AUTO_INCREMENT=24 DEFAULT CHARSET=latin1;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `friend_request`
+--
+
+LOCK TABLES `friend_request` WRITE;
+/*!40000 ALTER TABLE `friend_request` DISABLE KEYS */;
+INSERT INTO `friend_request` VALUES (23,'lisa@fb.com','pf@fb.com','2017-06-11 03:32:10');
+/*!40000 ALTER TABLE `friend_request` ENABLE KEYS */;
 UNLOCK TABLES;
 
 --
@@ -65,7 +91,7 @@ CREATE TABLE `friend_with` (
 
 LOCK TABLES `friend_with` WRITE;
 /*!40000 ALTER TABLE `friend_with` DISABLE KEYS */;
-INSERT INTO `friend_with` VALUES ('hashbrown@fb.com','lisa@fb.com','2017-06-06 20:25:36'),('hashbrown@fb.com','cbrown@fb.com','2017-06-07 02:43:28'),('cbrown@fb.com','lisa@fb.com','2017-06-07 02:46:19');
+INSERT INTO `friend_with` VALUES ('hashbrown@fb.com','lisa@fb.com','2017-06-06 20:25:36'),('hashbrown@fb.com','cbrown@fb.com','2017-06-07 02:43:28'),('cbrown@fb.com','lisa@fb.com','2017-06-07 02:46:19'),('hashbrown@fb.com','dd@fb.com','2017-06-09 03:25:17'),('dd@fb.com','lisa@fb.com','2017-06-09 03:39:48');
 /*!40000 ALTER TABLE `friend_with` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -79,7 +105,7 @@ DROP TABLE IF EXISTS `info`;
 CREATE TABLE `info` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `email` varchar(50) NOT NULL,
-  `workspace` varchar(50) DEFAULT NULL,
+  `workplace` varchar(50) DEFAULT NULL,
   `education` varchar(50) DEFAULT NULL,
   `current_city` varchar(50) DEFAULT NULL,
   `hometown` varchar(50) DEFAULT NULL,
@@ -102,6 +128,34 @@ INSERT INTO `info` VALUES (1,'hashbrown@fb.com','','Stony Brook University','','
 UNLOCK TABLES;
 
 --
+-- Table structure for table `like_person`
+--
+
+DROP TABLE IF EXISTS `like_person`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `like_person` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `post_id` int(11) NOT NULL,
+  `author_email` varchar(50) NOT NULL,
+  `liked` tinyint(1) NOT NULL DEFAULT '0',
+  PRIMARY KEY (`id`,`post_id`),
+  KEY `post_id` (`post_id`),
+  CONSTRAINT `like_person_ibfk_1` FOREIGN KEY (`post_id`) REFERENCES `posts` (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=latin1;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `like_person`
+--
+
+LOCK TABLES `like_person` WRITE;
+/*!40000 ALTER TABLE `like_person` DISABLE KEYS */;
+INSERT INTO `like_person` VALUES (1,19,'hashbrown@fb.com',1),(2,18,'hashbrown@fb.com',1),(3,19,'dd@fb.com',1);
+/*!40000 ALTER TABLE `like_person` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
 -- Table structure for table `posts`
 --
 
@@ -114,10 +168,11 @@ CREATE TABLE `posts` (
   `content` text NOT NULL,
   `post_time` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
   `edit_time` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+  `like_count` int(11) NOT NULL DEFAULT '0',
   PRIMARY KEY (`id`,`author_email`),
   KEY `author_email` (`author_email`),
   CONSTRAINT `posts_ibfk_1` FOREIGN KEY (`author_email`) REFERENCES `users` (`email`)
-) ENGINE=InnoDB AUTO_INCREMENT=19 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=20 DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -126,7 +181,7 @@ CREATE TABLE `posts` (
 
 LOCK TABLES `posts` WRITE;
 /*!40000 ALTER TABLE `posts` DISABLE KEYS */;
-INSERT INTO `posts` VALUES (17,'hashbrown@fb.com','Hi I am Hash Brown','2017-06-04 01:04:54','2017-06-04 01:04:54'),(18,'hashbrown@fb.com','but I am not saying I like hash brown','2017-06-04 01:05:51','2017-06-04 01:05:51');
+INSERT INTO `posts` VALUES (17,'hashbrown@fb.com','Hi I am Hash Brown','2017-06-04 01:04:54','2017-06-04 01:04:54',0),(18,'hashbrown@fb.com','but I am not saying I like hash brown','2017-06-04 01:05:51','2017-06-10 14:31:32',1),(19,'hashbrown@fb.com','test','2017-06-09 02:37:11','2017-06-11 01:14:36',2);
 /*!40000 ALTER TABLE `posts` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -149,7 +204,7 @@ CREATE TABLE `users` (
   `gender` enum('M','F') NOT NULL,
   PRIMARY KEY (`id`),
   UNIQUE KEY `email` (`email`)
-) ENGINE=InnoDB AUTO_INCREMENT=18 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=20 DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -158,7 +213,7 @@ CREATE TABLE `users` (
 
 LOCK TABLES `users` WRITE;
 /*!40000 ALTER TABLE `users` DISABLE KEYS */;
-INSERT INTO `users` VALUES (15,'Hash','Brown','hashbrown@fb.com','$2y$10$dK4arzNkR42ltcEEubi1auaOmgiFmxYw.0MIJ2QP1Buz25ZaV3mr6','Jan','1','2000','M'),(16,'Charlie','Brown','cbrown@fb.com','$2y$10$QdThiD4qtlAiT.MVCEImIuxX4bDU.77DnoIrB2y6x76d1WUgEkx0e','Dec','24','1996','M'),(17,'Lisa','L','lisa@fb.com','$2y$10$dUK4rd6px7yCenDhpbTKu.95dSiZQIYaR6Ufnm12LTpM/gJ7awyg2','Oct','24','2017','F');
+INSERT INTO `users` VALUES (15,'Hash','Brown','hashbrown@fb.com','$2y$10$dK4arzNkR42ltcEEubi1auaOmgiFmxYw.0MIJ2QP1Buz25ZaV3mr6','Jan','1','2000','M'),(16,'Charlie','Brown','cbrown@fb.com','$2y$10$QdThiD4qtlAiT.MVCEImIuxX4bDU.77DnoIrB2y6x76d1WUgEkx0e','Dec','24','1996','M'),(17,'Lisa','L','lisa@fb.com','$2y$10$dUK4rd6px7yCenDhpbTKu.95dSiZQIYaR6Ufnm12LTpM/gJ7awyg2','Oct','24','2017','F'),(18,'Daffy','Duck','dd@fb.com','$2y$10$jq.OYQZumL3.0j33WmaTKuud1Fhj2kulG7O9TTACl/y0xhw8qw6hu','Sept','26','1991','F'),(19,'Paul','Fodor','pf@fb.com','$2y$10$tAnprhEulszL7aMWdrfod.MNxm3IdO77CFxISiL5u6g6UHm12oYfy','June','16','1978','M');
 /*!40000 ALTER TABLE `users` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
@@ -171,4 +226,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2017-06-06 23:29:16
+-- Dump completed on 2017-06-11 11:36:03
