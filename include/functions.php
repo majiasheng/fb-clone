@@ -476,6 +476,19 @@ function isFriend($A, $B, $pdo) {
     return count($rtval);
 }
 
+
+/**
+ * Check if A has sent request to B
+ */
+function isRequestSent($A, $B, $pdo) {
+    $query = "SELECT * FROM " . FRIEND_REQUEST_TABLE
+        . " WHERE sender = ? AND receiver = ? LIMIT 1;";
+    $stmt = $pdo->prepare($query);
+    $stmt->execute([$A, $B]);
+
+    return $stmt->fetch();
+}
+
 /**
  * A sends request to B, and B receives notification
  */
@@ -513,11 +526,6 @@ function acceptFriendRequest($A, $B, $pdo) {
         - remove friend request from friend_request table
     */
     addFriend($A, $B, $pdo) ;
-    removeFriendRequest($A, $B, $pdo);
-}
-
-function rejectFriendRequest($A, $B, $pdo) {
-    //TODO:
     removeFriendRequest($A, $B, $pdo);
 }
 

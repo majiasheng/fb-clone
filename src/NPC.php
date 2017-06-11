@@ -31,14 +31,31 @@ if(strcmp($_GET['user'], $_SESSION['user']->get_email()) == 0) {
     header("Location: main.php");
 }
 
-// 
-if(isset($_POST['friend_quest'])) {
+// check whether there's a sending of friend request
+if(isset($_POST['friend_request'])) {
     /*  add notification to the to-be friend, 
         and the to-be friend would need to refresh page 
         to get notified (for now)
     */
     // "you" send friend request to "NPC"
     sendFriendRequest($_SESSION['user']->get_email(), $_GET['user'], $pdo);
+    
+    // set "is_request_sent" to true
+    // $_SESSION['is_request_sent'] = True;
+
+    unset($_POST['friend_request']);
+    // redirect to self to prevent resubmission by refreshing
+    $self = $_SERVER['REQUEST_URI'];
+    header("Location: $self");
+}
+
+// check whether there's a cancelling of friend request
+if(isset($_POST['cancel_friend_request'])) {
+
+    removeFriendRequest($_SESSION['user']->get_email(), $_GET['user'], $pdo);
+    unset($_POST['cancel_friend_request']);
+    
+    // unset($_SESSION['is_request_sent']);
 }
 
 // default profile picture
@@ -256,8 +273,17 @@ $profile_pic = "../rsrc/img/photos/default-profile.png";
     if(!isFriend($_GET['user'], $_SESSION['user']->get_email(), $pdo)) {
         //TODO: on press, disable button, change text to "request sent"
         echo '<form action="" method="POST">';
-        echo '<input type="submit" name="friend_quest" value="Add Friend"> ';
-        //TODO: disable button
+        //TODO: onclick: change from "Add Friend" to "Cancel Request"
+        if(!isRequestSent($_SESSION['user']->get_email(), $_GET['user'], $pdo)){
+            // "you" send friend request to "NPC"
+
+            //TODO: check if db has this friend request instead because 
+            //      the other user can decline request
+            echo '<input type="submit" name="friend_request" value="Add Friend"> ';
+        } else {
+
+            echo '<input type="submit" name="cancel_friend_request" value="Cancel Request"> ';
+        }
         echo '</form>';
     }
     ?>

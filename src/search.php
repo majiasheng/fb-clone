@@ -12,7 +12,6 @@ if(!isset($_GET['search']) || trim($_GET['search']=="")) {
 
 $pdo = connect();
 $keyword = $_GET['search'];
-//TODO: exclude self
 $matches = getUserIfMatch($user->get_email(), $keyword, $pdo);
 if(count($matches) == 0) {
     echo "No matches with \"$keyword\"";
@@ -26,7 +25,6 @@ if(count($matches) == 0) {
         echo "<li>";
         //TODO: echo profile pic
         // echo 
-        // TODO: href to user's home page
         echo "<a href=\"NPC.php?user=". $m['email'] . "\">" . $m['first_name'] . " " . $m['last_name'] . "</a>";
         echo "</li>";
     }
