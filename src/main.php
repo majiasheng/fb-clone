@@ -15,7 +15,7 @@ $info = $_SESSION['user_info'];
 $pdo = connect();
 
 // default profile picture
-$profile_pic = "../rsrc/img/photos/default-profile.png";
+$profile_pic = load_profile($user);
 
 $cover_pic = load_cover($user);
 ?>

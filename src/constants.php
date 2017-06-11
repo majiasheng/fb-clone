@@ -17,7 +17,9 @@ define("FRIEND_REQUEST_TABLE", "friend_request");
 // paths
 define("PATH_SRC_TO_RSRC", "../rsrc/");
 define("PATH_SRC_TO_RSRC_IMG", "../rsrc/img/");
+define("PATH_TO_USERS", "../users/");
 
-define("IMG_COVER", "../rsrc/img/cover/default-cover.jpg");
+define("DEFAULT_COVER", "../rsrc/img/cover/default-cover.jpg");
+define("DEFAULT_PROFILE", "../rsrc/img/photos/default-profile.png");
 
 ?>
