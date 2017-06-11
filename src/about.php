@@ -3,6 +3,8 @@
 -->
 <?php
 require_once("../include/functions.php");
+require_once("../include/loads/load_images.php");
+
 session_start();
 // TODO: use user data to populate main.php
 
@@ -17,7 +19,11 @@ $pdo = connect();
 
 
 // default profile picture
-$profile_pic = "../rsrc/img/photos/default-profile.png";
+// $profile_pic = "../rsrc/img/photos/default-profile.png";
+$profile_pic = load_profile($user);
+
+$cover_pic = load_cover($user);
+
 
 ?>
 
