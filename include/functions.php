@@ -387,7 +387,7 @@ function getShareContent($post_id, $pdo){
     $stmt = $pdo->prepare($query);
     $stmt->execute(['post_id' => $post_id]);
     $rtval = $stmt->fetch(PDO::FETCH_ASSOC);
-
+    return $rtval;
 }
 
 /**
@@ -574,5 +574,6 @@ function acceptFriendRequest($A, $B, $pdo) {
 
 //     $pdo->query($query);
 // }
+
 
 ?>

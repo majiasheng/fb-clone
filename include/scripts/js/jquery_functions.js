@@ -67,37 +67,53 @@ $(document).ready(function(){
 	});
 
 	$('.share_content').click(function(e){
-		alert("hello");
+		e.preventDefault();
+		//get the post_id of the clicked like button.
+		var post_id = $(this).parent().siblings(".actions__comment").children().find("input[type=hidden]").val();
+		console.log(post_id);
+
+		$.ajax({
+			context: this,
+            url: '../src/submit_share_content.php',
+            type: "post",
+            data: { 'post_id': post_id },
+            success: function(data) {
+				alert("This post has been shared to your timeline.");
+            },
+            fail: function(data){
+            	alert("Failed to like");
+            }
+        });
 	});
 
-	// // Update info page
-	// $('.update-info-form').submit(function(event){
-	// 	event.preventDefault(); // Prevent Default Submission
+	// Update info page
+	$('.update-info-form').submit(function(event){
+		event.preventDefault(); // Prevent Default Submission
 
-	// 	// create an array to store all display fields
-	// 	var display_fields = ["description", "workplace", "education", "current_city", "hometown", "relationship"];
-	// 	// get the class index of which form is submitted, since all forms have the same name
-	// 	var index = $(".update-info-form").index(this);
-	// 	// get the content
-	// 	var id = $(this).find("input[type=hidden]").val();
-	// 	// store the form name
-	// 	var form_name = "update-info-form";
+		// create an array to store all display fields
+		var display_fields = ["description", "workplace", "education", "current_city", "hometown", "relationship"];
+		// get the class index of which form is submitted, since all forms have the same name
+		var index = $(".update-info-form").index(this);
+		// get the content
+		var id = $(this).find("input[type=hidden]").val();
+		// store the form name
+		var form_name = "update-info-form";
 
-	// 	$.post('../src/submit_info.php', $(this).serialize() )
-	// 	.done(function(data){
-	// 		// update
-	// 		$('.' + form_name).fadeOut('fast', function(){
-	// 			$('#' + display_fields[index]).fadeIn('fast').html(data);
-	// 		});
+		$.post('../src/submit_info.php', $(this).serialize() )
+		.done(function(data){
+			// update
+			$('.' + form_name).fadeOut('fast', function(){
+				$('#' + display_fields[index]).fadeIn('fast').html(data);
+			});
 
-	// 		// empty out the input field.
-	// 		$('#' + form_name).trigger("reset");
-	// 	})
-	// 	.fail(function(){
-	// 		alert('Failed to save your information ...');
-	// 	});
-	// });
+			// empty out the input field.
+			$('#' + form_name).trigger("reset");
+		})
+		.fail(function(){
+			alert('Failed to save your information ...');
+		});
+	});
 
-	// $(":file").filestyle({input:false});
+	$(":file").filestyle({input:false});
 
 });
