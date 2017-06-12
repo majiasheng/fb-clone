@@ -45,6 +45,7 @@ $(document).ready(function(){
 	$('.thumb_up').click(function(e){
 
 		e.preventDefault();
+		//get the post_id of the clicked like button.
 		var post_id = $(this).parent().siblings(".actions__comment").children().find("input[type=hidden]").val();
 		console.log(post_id);
 
