@@ -334,7 +334,7 @@ function getAllUsers($pdo) {
 
 /**
 * Check if user has liked a post or not.
-* Return: true/false;
+* Return: true/false.
 */
 function checkLikeStat($post_id, $author_email, $pdo){
     // get the current like state
@@ -348,7 +348,9 @@ function checkLikeStat($post_id, $author_email, $pdo){
 }
 
 /**
-* 
+*   Update the like_status, if the user clicked on a post that he has already
+*   liked, then the like count will decrease, else increase.
+*   If statement to check state in submit_like.php.
 */
 function updateLikeStat($post_id, $author_email, $state, $pdo){
     // UPDATE like_person SET liked = 1 WHERE post_id = 6
@@ -359,7 +361,7 @@ function updateLikeStat($post_id, $author_email, $state, $pdo){
 
 
 /**
-* Update the liked post count
+* Decrease the like count based on post_id;
 */
 function incLikesDB($post_id, $pdo){
     $query = 'UPDATE ' . POSTS_TABLE . ' SET like_count = like_count + 1 WHERE id = :post_id';
@@ -368,13 +370,41 @@ function incLikesDB($post_id, $pdo){
 }
 
 /**
-* dec the like_count
+* Decrease the like count based on post_id;
 */
 function decLikesDB($post_id, $pdo){
     $query = 'UPDATE ' . POSTS_TABLE . ' SET like_count = like_count - 1 WHERE like_count > 0 AND id = :post_id';
     $stmt = $pdo->prepare($query);
     $stmt->execute(['post_id' => $post_id]);
 }
+
+
+/**
+*   Return the post content based on post_id
+*/
+function getShareContent($post_id, $pdo){
+    $query = "SELECT content FROM " .POSTS_TABLE. " WHERE id = :post_id";
+    $stmt = $pdo->prepare($query);
+    $stmt->execute(['post_id' => $post_id]);
+    $rtval = $stmt->fetch(PDO::FETCH_ASSOC);
+
+}
+
+/**
+*   Check if the post content belongs to the current user or belong to friend
+*   Return NULL if belong to friend
+*   Return post content if beloing to user.
+*/
+function checkBelongToUser($post_id, $email, $pdo){
+    $query = "SELECT ( SELECT content FROM " .POSTS_TABLE. " WHERE id = :post_id AND author_email = :email) AS content";
+    $stmt = $pdo->prepare($query);
+    $stmt->execute(['post_id' => $post_id, 'email' => $email]);
+    $rtval = $stmt->fetch(PDO::FETCH_ASSOC);
+
+    return $rtval;
+}
+
+
 
 /**
 *   Get the number of likes based on the post id, return the liked count.
@@ -528,6 +558,7 @@ function acceptFriendRequest($A, $B, $pdo) {
     addFriend($A, $B, $pdo) ;
     removeFriendRequest($A, $B, $pdo);
 }
+
 
 /**
  * Save images
