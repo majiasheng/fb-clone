@@ -8,7 +8,7 @@ $info = $_SESSION['user_info'];
 $pdo = connect();
 
 if(isset($_POST) && ("" != trim($_POST['post_content']))) {
-	if(!savePostToDB($user->get_email(), $pdo, $_POST['post_content'])) {
+	if(!savePostToDB($user->get_email(), $user->get_email(), $pdo, $_POST['post_content'])) {
 		echo "Error occurred while saving posting <br>";
 	}
 	unset($_POST);

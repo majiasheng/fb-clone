@@ -60,6 +60,15 @@ if(isset($_POST['cancel_friend_request'])) {
     // unset($_SESSION['is_request_sent']);
 }
 
+// check if there's a post to friend
+if(isset($_POST['post_to_friend'])) {
+    savePostToDB($_SESSION['user']->get_email(), 
+        $user->get_email(), 
+        $pdo, 
+        $_POST['post_to_friend']
+    );
+}
+
 // default profile picture
 // $profile_pic = "../rsrc/img/photos/default-profile.png";
 
@@ -430,11 +439,11 @@ $cover_pic = load_cover($user);
 
 
                 <!-- TODO: post on wall -->
-                <form action="" method="POST" id="post_form">
+                <form action="" method="POST" id="post_to_friend_form">
                 <textarea placeholder="Write something to <?php 
                 echo $full_user_name;
                 ?>" 
-                rows="3" name="post_content" form="post_form"></textarea>
+                rows="3" name="post_to_friend" form="post_to_friend_form"></textarea>
                 <input type="submit" Value="Post">
                 </form>
             </div> <!-- ********************** end panel ********************** -->
