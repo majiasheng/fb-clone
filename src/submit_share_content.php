@@ -18,10 +18,12 @@ if(isset($_POST) && isset($_POST['post_id'])) {
 	// This post belongs to a friend.
 	if (is_null($result['content'])) {
 		//get the post_content
-		$content = getShareContent((int)$_POST['post_id'], $pdo);
+		$assoc_arr= getShareContent((int)$_POST['post_id'], $pdo);
+		$content = $assoc_arr['content'];
+		$author_email = $assoc_arr['author_email'];
 
 		// save the post content to the user's timeline
-		$save_result = savePostToDB($user->get_email(), $pdo, $content['content']);
+		$save_result = savePostToDB($author_email, $user->get_email(), $pdo, $content);
 		
 	}
     unset($_POST);
