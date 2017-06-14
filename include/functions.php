@@ -238,15 +238,15 @@ function savePostToDB($user_email, $pdo, $post) {
     $rtval =  $stmt->execute(['email' => $user_email, 'content' => $post]);
 
     // SELECT * FROM `posts` ORDER BY `id` DESC LIMIT 1  -> get the lastest post
-    $latest_post = "SELECT * FROM " . POSTS_TABLE . " ORDER BY id DESC LIMIT 1";
-    $stmt_two = $pdo->prepare($latest_post);
-    $stmt_two ->execute();
+    // $latest_post = "SELECT * FROM " . POSTS_TABLE . " ORDER BY id DESC LIMIT 1";
+    // $stmt_two = $pdo->prepare($latest_post);
+    // $stmt_two ->execute();
 
-    $newest_post = $stmt_two->fetchAll(PDO::FETCH_ASSOC);
-    $latest_post_id = $newest_post[0]['id'];
+    // $newest_post = $stmt_two->fetchAll(PDO::FETCH_ASSOC);
+    // $latest_post_id = $newest_post[0]['id'];
 
-    $stmt_three = $pdo->prepare($init_likes_person);
-    $stmt_three->execute(['post_id' => $latest_post_id , 'author_email' => $user_email]);
+    // $stmt_three = $pdo->prepare($init_likes_person);
+    // $stmt_three->execute(['post_id' => $latest_post_id , 'author_email' => $user_email]);
 
     return $rtval;
 }
@@ -377,7 +377,7 @@ function checkBelongToUser($post_id, $email, $pdo){
 */
 function getLikeCount($post_id, $pdo){
     // SELECT count(*) from like_person where post_id=28;
-    $query = "SELECT count(*) from " . LIKE_TABLE . " WHERE post_id= :post_id";
+    $query = "SELECT count(liked) from " . LIKE_TABLE . " WHERE post_id= :post_id";
     $stmt = $pdo->prepare($query);
     $stmt->execute(['post_id'=> $post_id]);
     $rtval = $stmt->fetch(PDO::FETCH_ASSOC);
@@ -399,7 +399,7 @@ function checkNullLikeState($post_id, $author_email, $pdo){
 /**
 *   Create a new entry for the user who doesn't have linkage with the post like yet.
 **/
-function linkPost($post_id, $author_email, $pdo){
+function likePost($post_id, $author_email, $pdo){
     $query = "INSERT INTO " .LIKE_TABLE. "(post_id, author_email)" .
     " VALUES(:post_id, :author_email); ";
     $stmt = $pdo->prepare($query);
