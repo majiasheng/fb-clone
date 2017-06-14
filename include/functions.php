@@ -254,7 +254,7 @@ function savePostToDB($user_email, $pdo, $post) {
 function loadPosts($user_email, $pdo) {
     //TODO: need to join comments with posts later
 
-    $query = "SELECT id, content, post_time, edit_time,like_count from " . POSTS_TABLE 
+    $query = "SELECT id, content, post_time, edit_time from " . POSTS_TABLE 
     . " WHERE author_email = :email order by post_time DESC";
     $stmt = $pdo->prepare($query);
     $stmt->execute(['email' => $user_email]);
@@ -269,7 +269,6 @@ function loadPosts($user_email, $pdo) {
         $p->setContent($c['content']);
         $p->setPostTime($c['post_time']);
         $p->setPostId($c['id']);
-        $p->setLikeCount($c['like_count']);
         if($c['post_time']==$c['edit_time']) {
             $p->setIsEdited(False);
         } else {
@@ -285,7 +284,7 @@ function load_one_post($post_id, $pdo){
     // $query = "SELECT author_email, id from" . POSTS_TABLE
     // . " WHERE id = :id";
 
-    $query = "SELECT author_email, id, like_count from " . POSTS_TABLE
+    $query = "SELECT author_email, id from " . POSTS_TABLE
     . " WHERE id = :id";
     $stmt = $pdo->prepare($query);
     $stmt->execute(['id' => $post_id]);
@@ -337,45 +336,12 @@ function getAllUsers($pdo) {
 * Return: true/false.
 */
 function checkLikeStat($post_id, $author_email, $pdo){
-    // get the current like state
-    // SELECT liked FROM like_person WHERE id = 2 (example)
-    $query = "SELECT liked FROM " . LIKE_TABLE . " WHERE post_id = :id AND author_email = :email";
+    $query = "SELECT ( SELECT id FROM" . LIKE_TABLE . " WHERE post_id=:id AND author_email=:email) AS id";
     $stmt = $pdo->prepare($query);
     $stmt->execute(['id' => $post_id , 'email' => $author_email]);
     $rtval = $stmt->fetch(PDO::FETCH_ASSOC);
 
     return $rtval;
-}
-
-/**
-*   Update the like_status, if the user clicked on a post that he has already
-*   liked, then the like count will decrease, else increase.
-*   If statement to check state in submit_like.php.
-*/
-function updateLikeStat($post_id, $author_email, $state, $pdo){
-    // UPDATE like_person SET liked = 1 WHERE post_id = 6
-    $query = "UPDATE " . LIKE_TABLE . " SET liked = :liked WHERE post_id = :post_id AND author_email = :email";
-    $stmt = $pdo->prepare($query);
-    $stmt->execute(['liked' => $state,'post_id' => $post_id, 'email' => $author_email]);
-}
-
-
-/**
-* Decrease the like count based on post_id;
-*/
-function incLikesDB($post_id, $pdo){
-    $query = 'UPDATE ' . POSTS_TABLE . ' SET like_count = like_count + 1 WHERE id = :post_id';
-    $stmt = $pdo->prepare($query);
-    $stmt->execute(['post_id' => $post_id]);
-}
-
-/**
-* Decrease the like count based on post_id;
-*/
-function decLikesDB($post_id, $pdo){
-    $query = 'UPDATE ' . POSTS_TABLE . ' SET like_count = like_count - 1 WHERE like_count > 0 AND id = :post_id';
-    $stmt = $pdo->prepare($query);
-    $stmt->execute(['post_id' => $post_id]);
 }
 
 
@@ -410,10 +376,10 @@ function checkBelongToUser($post_id, $email, $pdo){
 *   Get the number of likes based on the post id, return the liked count.
 */
 function getLikeCount($post_id, $pdo){
-    // select like_count from posts where id = 3
-    $query = "SELECT like_count from " . POSTS_TABLE . " WHERE id = :id"; 
+    // SELECT count(*) from like_person where post_id=28;
+    $query = "SELECT count(*) from " . LIKE_TABLE . " WHERE post_id= :post_id";
     $stmt = $pdo->prepare($query);
-    $stmt->execute(['id' => $post_id]);
+    $stmt->execute(['post_id'=> $post_id]);
     $rtval = $stmt->fetch(PDO::FETCH_ASSOC);
 
     return $rtval;
@@ -439,6 +405,15 @@ function linkPost($post_id, $author_email, $pdo){
     $stmt = $pdo->prepare($query);
     return $stmt->execute(['post_id' => $post_id, 'author_email' => $author_email]);   
 }
+
+
+function unlikePost($post_id, $author_email, $pdo){
+    // DELETE FROM like_person WHERE post_id=31 AND author_email="123@gmail.com"
+    $query = "DELETE FROM " . LIKE_TABLE . " WHERE post_id =:post_id AND author_email =:author_email";
+    $stmt = $pdo->prepare($query);
+    return $stmt->execute(['post_id' => $post_id, 'author_email' => $author_email]);   
+}
+
 
 
 /**

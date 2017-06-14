@@ -35,7 +35,7 @@
 
     <div class="actions--setting actions--decor">
         <a href="#" class="thumb_up">
-            <i class="fa fa-thumbs-up"> <?php echo $p->getLikeCount() ?></i>
+            <i class="fa fa-thumbs-up"> <?php echo getLikeCount($p->getPostId(), $pdo)['count(*)'] ?></i>
         </a>
     </div>
 
