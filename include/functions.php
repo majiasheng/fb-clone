@@ -222,11 +222,11 @@ function load_user_info($user_email, $pdo) {
 
 }
 
-function savePostToDB($user_email, $pdo, $post) {
+function savePostToDB($author_email, $owner_email, $pdo, $post) {
     //TODO: insert post to db
     $query = "INSERT INTO " . POSTS_TABLE 
-    . "(author_email, content) "
-    . "VALUES (:email,:content)";
+    . "(author_email, owner_email, content) "
+    . "VALUES (?, ?, ?)";
 
 
     // INSET INTO likes (post_id) VALUES ( INTEGER );
@@ -235,7 +235,7 @@ function savePostToDB($user_email, $pdo, $post) {
     . "VALUES (:post_id, :author_email)";
 
     $stmt = $pdo->prepare($query);
-    $rtval =  $stmt->execute(['email' => $user_email, 'content' => $post]);
+    $rtval =  $stmt->execute([$author_email, $owner_email, $post]);
 
     // SELECT * FROM `posts` ORDER BY `id` DESC LIMIT 1  -> get the lastest post
     // $latest_post = "SELECT * FROM " . POSTS_TABLE . " ORDER BY id DESC LIMIT 1";
@@ -254,8 +254,8 @@ function savePostToDB($user_email, $pdo, $post) {
 function loadPosts($user_email, $pdo) {
     //TODO: need to join comments with posts later
 
-    $query = "SELECT id, content, post_time, edit_time from " . POSTS_TABLE 
-    . " WHERE author_email = :email order by post_time DESC";
+    $query = "SELECT * from " . POSTS_TABLE 
+    . " WHERE owner_email = :email order by post_time DESC";
     $stmt = $pdo->prepare($query);
     $stmt->execute(['email' => $user_email]);
 
@@ -265,7 +265,8 @@ function loadPosts($user_email, $pdo) {
     
     foreach($posts as $c) {
         $p = new Post;
-        $p->setAuthorEmail($user_email);
+        $p->setOwnerEmail($user_email);
+        $p->setAuthorEmail($c['author_email']);
         $p->setContent($c['content']);
         $p->setPostTime($c['post_time']);
         $p->setPostId($c['id']);
@@ -349,7 +350,7 @@ function checkLikeStat($post_id, $author_email, $pdo){
 *   Return the post content based on post_id
 */
 function getShareContent($post_id, $pdo){
-    $query = "SELECT content FROM " .POSTS_TABLE. " WHERE id = :post_id";
+    $query = "SELECT author_email, content FROM " .POSTS_TABLE. " WHERE id = :post_id";
     $stmt = $pdo->prepare($query);
     $stmt->execute(['post_id' => $post_id]);
     $rtval = $stmt->fetch(PDO::FETCH_ASSOC);

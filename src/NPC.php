@@ -60,6 +60,27 @@ if(isset($_POST['cancel_friend_request'])) {
     // unset($_SESSION['is_request_sent']);
 }
 
+// check if there's a post to friend
+if(isset($_POST['post_to_friend'])) {
+    if(isFriend($_SESSION['user']->get_email(), $user->get_email(), $pdo)) {        
+        savePostToDB($_SESSION['user']->get_email(), 
+            $user->get_email(), 
+            $pdo, 
+            $_POST['post_to_friend']
+        );
+        unset($_POST['post_to_friend']);
+        // redirect to self to prevent resubmission by refreshing
+        $self = $_SERVER['REQUEST_URI'];
+        header("Location: $self");
+    } else {
+        //TODO: make popup window
+        $msg = "Be " . $full_user_name . "'s friend first :)";
+        echo $msg;
+        unset($_POST['post_to_friend']);
+    }
+}
+
+
 // default profile picture
 // $profile_pic = "../rsrc/img/photos/default-profile.png";
 
@@ -430,11 +451,11 @@ $cover_pic = load_cover($user);
 
 
                 <!-- TODO: post on wall -->
-                <form action="" method="POST" id="post_form">
+                <form action="" method="POST" id="post_to_friend_form">
                 <textarea placeholder="Write something to <?php 
                 echo $full_user_name;
                 ?>" 
-                rows="3" name="post_content" form="post_form"></textarea>
+                rows="3" name="post_to_friend" form="post_to_friend_form"></textarea>
                 <input type="submit" Value="Post">
                 </form>
             </div> <!-- ********************** end panel ********************** -->
@@ -455,6 +476,7 @@ $cover_pic = load_cover($user);
                     // load the like_count.
                     $like_count = getLikeCount($p->getPostID(), $pdo);
 
+                    // $owner = 
                     include "../src/template/post_content.html";
 
                     endforeach;

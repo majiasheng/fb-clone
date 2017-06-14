@@ -32,6 +32,7 @@ CREATE TABLE info (
 
 CREATE TABLE posts (
 	id              INTEGER     NOT NULL AUTO_INCREMENT,
+    owner_email     VARCHAR(50) NOT NULL,
     author_email    VARCHAR(50) NOT NULL,
 	content         TEXT        NOT NULL,
     post_time       TIMESTAMP   DEFAULT CURRENT_TIMESTAMP,

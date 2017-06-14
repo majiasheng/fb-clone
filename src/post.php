@@ -2,6 +2,7 @@
 <?php
 class Post {
     private $author_email;
+    private $owner_email;
     private $type;
     private $content;
     private $post_time;
@@ -22,9 +23,11 @@ class Post {
     function setPostId($arg){
         $this->post_id = $arg;
     }
-
     function setAuthorEmail($arg) {
         $this->author_email = $arg;
+    }
+    function setOwnerEmail($arg) {
+        $this->onwer_email = $arg;
     }
     function setType($arg) {
         $this->type = $arg;
@@ -62,6 +65,9 @@ class Post {
     
     function getAuthorEmail() {
         return $this->author_email;
+    }
+    function getOnwerEmail() {
+        return $this->onwer_email;
     }
     function getType() {
         return $this->type;
