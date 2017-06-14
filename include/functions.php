@@ -254,7 +254,7 @@ function savePostToDB($author_email, $owner_email, $pdo, $post) {
 function loadPosts($user_email, $pdo) {
     //TODO: need to join comments with posts later
 
-    $query = "SELECT id, content, post_time, edit_time,like_count from " . POSTS_TABLE 
+    $query = "SELECT * from " . POSTS_TABLE 
     . " WHERE owner_email = :email order by post_time DESC";
     $stmt = $pdo->prepare($query);
     $stmt->execute(['email' => $user_email]);
@@ -265,11 +265,13 @@ function loadPosts($user_email, $pdo) {
     
     foreach($posts as $c) {
         $p = new Post;
-        $p->setAuthorEmail($user_email);
+        $p->setOwnerEmail($user_email);
+        $p->setAuthorEmail($c['author_email']);
         $p->setContent($c['content']);
         $p->setPostTime($c['post_time']);
         $p->setPostId($c['id']);
         $p->setLikeCount($c['like_count']);
+
         if($c['post_time']==$c['edit_time']) {
             $p->setIsEdited(False);
         } else {

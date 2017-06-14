@@ -62,12 +62,24 @@ if(isset($_POST['cancel_friend_request'])) {
 
 // check if there's a post to friend
 if(isset($_POST['post_to_friend'])) {
-    savePostToDB($_SESSION['user']->get_email(), 
-        $user->get_email(), 
-        $pdo, 
-        $_POST['post_to_friend']
-    );
+    if(isFriend($_SESSION['user']->get_email(), $user->get_email(), $pdo)) {        
+        savePostToDB($_SESSION['user']->get_email(), 
+            $user->get_email(), 
+            $pdo, 
+            $_POST['post_to_friend']
+        );
+        unset($_POST['post_to_friend']);
+        // redirect to self to prevent resubmission by refreshing
+        $self = $_SERVER['REQUEST_URI'];
+        header("Location: $self");
+    } else {
+        //TODO: make popup window
+        $msg = "Be " . $full_user_name . "'s friend first :)";
+        echo $msg;
+        unset($_POST['post_to_friend']);
+    }
 }
+
 
 // default profile picture
 // $profile_pic = "../rsrc/img/photos/default-profile.png";
@@ -464,6 +476,7 @@ $cover_pic = load_cover($user);
                     // load the like_count.
                     $like_count = getLikeCount($p->getPostID(), $pdo);
 
+                    // $owner = 
                     include "../src/template/post_content.html";
 
                     endforeach;

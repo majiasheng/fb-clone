@@ -1,8 +1,15 @@
 <!-- TODO: Change user to owner of post -->
 <div class="post__header">
     <!-- load user pic -->
-    <img src="<?php echo $profile_pic ?>" class="post__header__author-photo">
-    <p class="post__header__info info__author"><a class=""><?php echo $user->get_first_name() . " " . $user->get_last_name() ?></a></p>
+    <img src="<?php echo load_profile_email($p->getAuthorEmail()) ?>" class="post__header__author-photo">
+    <!-- <p class="post__header__info info__author"><a class=""><?php echo $user->get_first_name() . " " . $user->get_last_name() ?></a></p> -->
+
+    <p class="post__header__info info__author">
+        <a class="" href="<?php echo $p->getAuthorEmail(); ?>"><?php 
+            echo getUserNameByEmail($p->getAuthorEmail(),$pdo); 
+        ?></a>
+    </p>
+
     <p class="post__header__info info__date"><?php echo $p->getPostTime() ?></p>
 </div>
 <div class="post__content">
