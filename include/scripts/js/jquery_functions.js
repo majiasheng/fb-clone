@@ -14,13 +14,12 @@ $(document).ready(function(){
 		.fail(function(){
 			alert('Post submit Failed ...');
 		});
-
 	});
 
 
-	$('.post_comment_form').submit(function(event){
+	$('.post_comment_form').submit(function(e){
 
-		event.preventDefault(); // Prevent Default Submission
+		e.preventDefault(); // Prevent Default Submission
 
 		// get the post_id.
 		var id = $(this).find("input[type=hidden]").val();
@@ -40,9 +39,14 @@ $(document).ready(function(){
 			alert('Comment submit Failed ...');
 		});
 
+		return false;
+
 	});
 
-	$('.thumb_up').click(function(e){
+
+
+	$(".thumb_up").on("click", function(e){
+	// $('.thumb_up').click(function(e){
 
 		e.preventDefault();
 		//get the post_id of the clicked like button.
@@ -62,11 +66,15 @@ $(document).ready(function(){
             fail: function(data){
             	alert("Failed to like");
             }
+
         });
+
+		return false;
 
 	});
 
-	$('.share_content').click(function(e){
+	$(".share_content").on("click", function(e){
+	// $('.share_content').click(function(e){
 		e.preventDefault();
 		//get the post_id of the clicked like button.
 		var post_id = $(this).parent().siblings(".actions__comment").children().find("input[type=hidden]").val();

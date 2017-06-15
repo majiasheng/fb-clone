@@ -37,7 +37,6 @@ CREATE TABLE posts (
 	content         TEXT        NOT NULL,
     post_time       TIMESTAMP   DEFAULT CURRENT_TIMESTAMP,
     edit_time       TIMESTAMP   DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
-    like_count      INTEGER     NOT NULL DEFAULT 0,
 	PRIMARY KEY (id,author_email),
 	FOREIGN KEY (author_email) REFERENCES users (email)
 );
@@ -49,7 +48,6 @@ CREATE TABLE comments (
     comment_content TEXT        NOT NULL,
     comment_time    TIMESTAMP   DEFAULT CURRENT_TIMESTAMP,
     edit_time       TIMESTAMP   DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
-    like_count      INTEGER     NOT NULL DEFAULT 0,
 
     PRIMARY KEY(id,post_id,author_email),
     FOREIGN KEY (post_id) REFERENCES posts(id)
