@@ -17,7 +17,9 @@ $(document).ready(function(){
 	});
 
 
-	$('.post_comment_form').submit(function(e){
+	// $('.post_comment_form').submit(function(e){
+
+	$(document).on('submit', '.post_comment_form', function(e){
 
 		e.preventDefault(); // Prevent Default Submission
 
@@ -45,7 +47,8 @@ $(document).ready(function(){
 
 
 
-	$(".thumb_up").on("click", function(e){
+	// $(".thumb_up").on("click", function(e){
+	$(document).on('click', '.thumb_up', function(e){
 	// $('.thumb_up').click(function(e){
 
 		e.preventDefault();
@@ -73,7 +76,7 @@ $(document).ready(function(){
 
 	});
 
-	$(".share_content").on("click", function(e){
+	$(document).on('click', '.share_content', function(e){
 	// $('.share_content').click(function(e){
 		e.preventDefault();
 		//get the post_id of the clicked like button.
