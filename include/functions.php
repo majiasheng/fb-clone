@@ -251,6 +251,21 @@ function savePostToDB($author_email, $owner_email, $pdo, $post) {
     return $rtval;
 }
 
+/**
+*   Load the latest shared post given owner and author email
+*   Return the post associate array.
+*/
+function get_latest_share_post($owner_email, $author_email, $pdo){
+    // SELECT * from posts where author_email="123@gmail.com" and owner_email="2@gmail.com" ORDER BY id desc LIMIT 1
+    $query = "SELECT * FROM " . POSTS_TABLE . " WHERE author_email=:author_email " . 
+        "AND owner_email=:owner_email ORDER BY id DESC LIMIT 1";
+    $stmt = $pdo->prepare($query);
+    $stmt->execute(['author_email'=> $author_email, 'owner_email'=> $owner_email]);
+    
+    $latest_post = $stmt->fetchAll(PDO::FETCH_ASSOC);
+    return $latest_post;
+}
+
 function loadPosts($user_email, $pdo) {
     //TODO: need to join comments with posts later
 
