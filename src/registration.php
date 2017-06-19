@@ -1,6 +1,7 @@
 
 <p>Sign Me Up</p>
 <?php
+session_start();
 
 require("../include/functions.php");
 // session_start();
@@ -50,9 +51,9 @@ if($_SERVER["REQUEST_METHOD"] == "POST") {
 
 		// save user to db
 		if (save_user_to_db($new_user, $connection)) {
-			//TODO: redirect to index.php with user info
-			echo "<p> Redirecting to main page... </p>";
 			sleep(1);
+			$_SESSION['registration'] = $new_user->get_email();
+			// redirect to index.php 
 			header("Location: index.php");
 		} else {
 			echo "<p>Failed to save user to database</p>";

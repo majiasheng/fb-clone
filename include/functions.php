@@ -6,7 +6,6 @@ require_once("../src/user.php");
 require_once("../src/Post.php");
 require_once("../src/info.php");
 require_once("../src/comments.php");
-// TODO: use prepare statement to insert into db
 
 /**
  * Establishes connection with db
@@ -36,7 +35,7 @@ function validate_name($name) {
 	}
 }
 
-//TODO: return a User object?
+
 function validate_registration() {
 	$first_name = $_POST["first_name"];
 	$last_name = $_POST["last_name"];
@@ -54,17 +53,17 @@ function validate_registration() {
   [`~!@#$%^&*()-_=+;:'",<.>/?] */
 
 	// month day and year has to be selected
-  if(isset($_POST["month"]) && $_POST["month"] != "month"
-   && isset($_POST["day"]) && $_POST["day"] != "day"
-   && isset($_POST["year"]) && $_POST["year"] != "year"
-	// Gender field is required
-   && isset($_POST["gender"])
+    if(isset($_POST["month"]) && $_POST["month"] != "month"
+    && isset($_POST["day"]) && $_POST["day"] != "day"
+    && isset($_POST["year"]) && $_POST["year"] != "year"
+    // Gender field is required
+    && isset($_POST["gender"])
 
-   ) {
-      return True;
-} else {
-  return False;
-}
+    ) {
+        return True;
+    } else {
+        return False;
+    }
 }
 
 function save_user_to_db($user, $pdo) {
@@ -223,7 +222,7 @@ function load_user_info($user_email, $pdo) {
 }
 
 function savePostToDB($author_email, $owner_email, $pdo, $post) {
-    //TODO: insert post to db
+
     $query = "INSERT INTO " . POSTS_TABLE 
     . "(author_email, owner_email, content) "
     . "VALUES (?, ?, ?)";
@@ -252,14 +251,13 @@ function savePostToDB($author_email, $owner_email, $pdo, $post) {
 }
 
 function loadPosts($user_email, $pdo) {
-    //TODO: need to join comments with posts later
 
     $query = "SELECT * from " . POSTS_TABLE 
     . " WHERE owner_email = :email order by post_time DESC";
     $stmt = $pdo->prepare($query);
     $stmt->execute(['email' => $user_email]);
 
-    //TODO: wrap contents in post object and return list of posts
+    // wrap contents in post object and return list of posts
     $post_objs = array();
     $posts = $stmt->fetchAll(PDO::FETCH_ASSOC);
     
@@ -527,7 +525,7 @@ function loadFriendRequests($user_email, $pdo) {
  * A sent request to B
  */
 function acceptFriendRequest($A, $B, $pdo) {
-    /*TODO: 
+    /* 
         - add friend to friend_with table
         - remove friend request from friend_request table
     */

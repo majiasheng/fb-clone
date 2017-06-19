@@ -22,8 +22,7 @@ $user = loadUser($user_email, $password, $pdo);
 // var_dump($user);
 
 if(is_null($user)) {
-    //TODO: shoud display this message in index.php
-    echo "email and password did not match <br/>";
+    $_SESSION['error'] = "Email and password did not match <br/>";
     // rediect back to login page
     header("Location: index.php");
 } else {

@@ -4,6 +4,15 @@ session_start();
 if (isset($_SESSION['loggedin']) && $_SESSION['loggedin']==True) {
     header("Location: main.php");
 }
+if(isset($_SESSION['registration'])) {
+    echo "Registration sucessful!<br/>";
+    echo "Now you can log in as ". $_SESSION['registration'];
+    unset($_SESSION['registration']);
+}
+if(isset($_SESSION['error'])) {
+    echo $_SESSION['error'] . "<br/>";
+    unset($_SESSION['error']);
+}
 
 ?>
 <html>
