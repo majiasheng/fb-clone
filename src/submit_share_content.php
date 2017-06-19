@@ -24,9 +24,24 @@ if(isset($_POST) && isset($_POST['post_id'])) {
 
 		// save the post content to the user's timeline
 		$save_result = savePostToDB($author_email, $user->get_email(), $pdo, $content);
-		
+
+		// first we have to get the post_id;
+		$latest_post = get_latest_share_post($user->get_email(), $author_email, $pdo)[0];
+
+		$latest_post_id = $latest_post['id'];
+
+		// load all of the comments based on the save result.
+		$comments = load_comments((int)$_POST['post_id'], $pdo);
+
+		// Now save the comments into the DB based on the latest_post_id.
+		foreach($comments as $c){
+			saveCommentToDB($c->getAuthor(), $latest_post_id, $pdo, $c->getCommentContent());
+		}
+
 	}
+
     unset($_POST);
+
 }
 
 ?>
