@@ -1,4 +1,5 @@
 $(document).ready(function(){
+	// $("#posting_area").focus();
 
 	$('#post_form').submit(function(e){
 
@@ -126,5 +127,6 @@ $(document).ready(function(){
 	});
 
 	$(":file").filestyle({input:false});
+
 
 });

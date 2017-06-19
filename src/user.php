@@ -14,8 +14,8 @@ class User {
     private $date_joined;
 
     // cover 
-    private $cover_photo;
-    private $profile_picture;
+    private $num_cover;
+    private $num_profile;
     // post 
     private $posts = array();
 
@@ -49,11 +49,11 @@ class User {
     function addPost($arg) {
         $posts[] = $arg;
     }
-    function set_cover_photo($arg) {
-        $this->cover_photo = $arg;
+    function set_num_cover($arg) {
+        $this->num_cover = $arg;
     }
-    function set_profile_picture($arg) {
-        $this->profile_picture = $arg;
+    function set_num_profile($arg) {
+        $this->num_profile = $arg;
     }
     function set_date_joined($arg) {
     	$this->time_joined = $arg;
@@ -90,11 +90,11 @@ class User {
     function getPosts() {
         return $this->$posts;
     }
-    function get_cover_photo() {
-        return $this->cover_photo;
+    function get_num_cover() {
+        return $this->num_cover;
     }
-    function get_profile_picture() {
-        return $this->profile_picture;
+    function get_num_profile() {
+        return $this->num_profile;
     }
  	function get_date_joined() {
         return $this->date_joined;

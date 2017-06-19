@@ -1,10 +1,10 @@
 .content__middle {
-
 	> * {
     	box-shadow: 1px 1px 5px rgba(0,0,0,.2);
     	margin: 0;
     	margin-bottom: 20px;
         padding: 5%;
+
     }
 
     .middle__timeline {
@@ -69,19 +69,30 @@
     			cursor: pointer;
     		}
     	}
+        // handle posting...
+        form {
+            textarea {
+                border: none;
+                resize: none;
+                
+                margin-bottom: -6.5%;
+                @include resize-to-full-width;
+       
+                :focus {
+                    // border: none;
+                }
 
-    	textarea {
-    		border: none;
-    		resize: none;
-    		
-    		margin-bottom: -6.5%;
-    		@include resize-to-full-width;
-   
-    		:focus {
-    		    border: none;
-    	    }
-
-    	}
+            }
+            // posting button
+            button {
+                display: none;
+                margin: 0;
+                padding: 5px 10px;
+                margin-left: -30px;
+                background-color: lighten($black, 97%);
+            }
+        }
+    	
 
     }
 

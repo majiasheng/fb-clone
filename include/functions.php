@@ -71,7 +71,7 @@ function save_user_to_db($user, $pdo) {
 	$query .= "INSERT INTO " . USERS_TABLE . " (";
 	// fields of user class
 	$query .= "first_name, last_name, email, password, ";
-	$query .= "birth_month, birth_day, birth_year, gender";
+	$query .= "birth_month, birth_day, birth_year, gender, num_cover, num_profile";
 	$query .= ") VALUES (";
 
 	$query .= ( 
@@ -82,7 +82,9 @@ function save_user_to_db($user, $pdo) {
         "'" . $user->get_birth_month()	. "'," .
         "'" . $user->get_birth_day() 	. "'," .
         "'" . $user->get_birth_year()	. "'," .
-        "'" . $user->get_gender()       . "'" );
+        "'" . $user->get_gender()       . "'," .
+        "'" . $user->get_num_cover()    . "'," .
+        "'" . $user->get_num_profile()  . "'" );
 
 	$query .= ");";
 
@@ -548,21 +550,15 @@ function acceptFriendRequest($A, $B, $pdo) {
     removeFriendRequest($A, $B, $pdo);
 }
 
+// save number of cover image
+function saveNumCover($user, $pdo) {
 
-/**
- * Save images
- */
-// function saveCoverPhoto($pdo, $email) {
-//     $image_name = $_FILES["cover_upload"]["name"];
-//     $image_tmp = addslashes(file_get_contents($_FILES["cover_upload"]["tmp_name"]));
+    $query = "UPDATE " . USERS_TABLE . " SET" . 
+    " num_cover=" . $user->get_num_cover() . " WHERE email='" . $user->get_email() . "';"; 
+    $stmt = $pdo->prepare($query);
+    return $stmt->execute();
 
-//     $query = "INSERT INTO " . IMAGE_TABLE . " (";
-//     $query .= "email, cover";
-//     $query .= ") VALUES (";
-//     $query .= "'" . $email . "', '" . $image_name . "');";
-
-//     $pdo->query($query);
-// }
+}
 
 
 ?>

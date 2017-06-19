@@ -211,8 +211,8 @@ $cover_pic = load_cover($user);
 
 
                     <form action="" method="POST" id="post_form">
-                        <textarea placeholder="What's on your mind?" rows="3" name="post_content"></textarea>
-                        <input type="submit" Value="Post">
+                        <textarea placeholder="What's on your mind?" rows="3" name="post_content" id="posting_area"></textarea>
+                        <button type="submit" Value="Post" class="btn" id="posting_btn">Post</button>
                     </form>
                 </div> <!-- ********************** end panel ********************** -->
 
@@ -235,11 +235,11 @@ $cover_pic = load_cover($user);
  -->
                 <!-- Begin middle__post -->
 
-                <div class="middle__posts">
+                
                 <?php
                 $posts = loadPosts($user->get_email(), $pdo);
                 foreach($posts as $p):
-
+                    echo '<div class="middle__posts">';
                     // load all the comment of the current post.
                     $comments = load_comments($p->getPostID(), $pdo);
 
@@ -248,12 +248,12 @@ $cover_pic = load_cover($user);
                     
 
                     include "../src/template/post_content.html";
-
+                    echo '</div>';
                     endforeach;
                 ?>
 
+                
                 </div>
-
                 <!-- End middle__post -->
 
                 <div class="content__right col-md-2">
