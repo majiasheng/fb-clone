@@ -95,19 +95,22 @@
     		overflow: auto;
 
     		.post__header__author-photo {
-	    		width: 10%;
+	    		width: 50px;
+                height: 50px;
 	    		float: left;
-	    		border-radius: 50%;
+	    		// border-radius: 50%;
     	    }
 
     	    .post__header__info {    		
 	    		margin: 0;
 	    		padding: 0;
-	    		margin-left: 15%;
+	    		// margin-left: 15%;
 	    		font-size: 0.8em;
 	    	}
 
 	    	.info__author {
+                margin-left: 15%;
+                font-size: 0.8em;
 	    		margin-top: 5px;
 	    		font-weight: bold;
 	    		a {
@@ -120,6 +123,8 @@
 	    	}
 
 	    	.info__date {
+                margin-left: 80px;
+                font-size: 0.8em;
 	    		color: lighten($black, 70%);
 	    	}
     	}
@@ -139,13 +144,15 @@
     	}
 
     	.post__actions {
-    		margin-top: 10px;
-    		margin-bottom: -12px;
+    		// margin-top: 10px;
+            padding: 0;
+            margin: 0;
+    		margin-bottom: 15px;
     		overflow: hidden;
 
     		.actions--setting {
     			display: inline-block;   			
-    			font-size: 1.2em;
+    			// font-size: 1.2em;
     			margin-right: 15px;   			
     		}
 
@@ -162,6 +169,18 @@
     		}
 
     	}
-
+    .comment__content {
+        margin-top: 30px;
+        // margin-left: 20px;
+        // background-color: lighten(black, 96%);
+        p {
+            font-size: 0.8em;
+        }
+        .comment__pic {
+            width: 40px;
+            height: 40px;
+            float: left;
+        }
+    }
     }
 }
