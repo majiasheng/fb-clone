@@ -3,7 +3,7 @@
 
 require_once("../src/constants.php");
 require_once("../src/user.php");
-require_once("../src/Post.php");
+require_once("../src/post.php");
 require_once("../src/info.php");
 require_once("../src/comments.php");
 

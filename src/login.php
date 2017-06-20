@@ -15,7 +15,7 @@ $user_email = $_POST["email"];
 $password = $_POST["password"];
 
 $pdo = connect();
-echo "[DEBUG] user: $user_email" . " pw:" . $password . "<br>";
+// echo "[DEBUG] user: $user_email" . " pw:" . $password . "<br>";
 
 // try to load user with give email and password
 $user = loadUser($user_email, $password, $pdo);
