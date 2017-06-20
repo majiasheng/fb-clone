@@ -30,7 +30,7 @@ if(isset($_SESSION['error'])) {
             <a href="registration.php">Register</a>
             &nbsp;
             <!-- TODO -->
-            <a href="forget_password.php">Forget password?</a>
+            <a href="forget_password.php">Forgot password?</a>
         </p>
     </body>
 </html>
