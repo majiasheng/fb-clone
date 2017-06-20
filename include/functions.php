@@ -342,6 +342,15 @@ function getUserNameByEmail($email, $pdo) {
     return $rtval['first_name'] . " " . $rtval['last_name'];
 }
 
+// get the total number of profile images
+function getNumProfileByEmail($email, $pdo) {
+    $query = "SELECT num_profile FROM " . USERS_TABLE. " WHERE email = :email";
+    $stmt = $pdo->prepare($query);
+    $stmt->execute(['email' => $email]);
+    $rtval = $stmt->fetch(PDO::FETCH_ASSOC);
+    return $rtval['num_profile'];
+}
+
 function getAllUsers($pdo) {
     $query = "SELECT first_name, last_name FROM " . USERS_TABLE;
     return $pdo->query($query);

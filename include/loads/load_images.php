@@ -26,9 +26,12 @@ function load_profile($user) {
         return DEFAULT_PROFILE;
 }
 
-function load_profile_email($email){
+// load profile image by user email
+function load_profile_email($email, $pdo){
+    $index = getNumProfileByEmail($email, $pdo);
+    // get the latest profile image
 	if(file_exists(PATH_TO_USERS.$email.'/profile'))
-        return PATH_TO_USERS.$email.'/profile/profile_img';
+        return PATH_TO_USERS.$email.'/profile/profile_img'.$index;
     else
         return DEFAULT_PROFILE;
 }
