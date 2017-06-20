@@ -147,7 +147,7 @@ $cover_pic = load_cover($user);
                                 <input type="text" name="search" class="navbar__search-input form-control" placeholder="Search">
                                 <!--TODO: send a GET request to search.php -->
                                   <!-- <a href=# class="linka"><i class="fa fa-search"></i></a> -->
-                                <input type="submit" value="Search" class="fa fa-search">
+                                <input type="submit" value="Search" class="fa fa-search form__search-btn">
                             <!-- </div> -->
                         </form>
                     </li>
@@ -157,42 +157,31 @@ $cover_pic = load_cover($user);
         </div>
     </nav>
     <!-- cover image section -->
+    <!-- cover image section -->
     <div class="cover">
         <div class="cover__container">
-            
-            <?php 
-            if(empty($user->get_cover_photo())) {
-                    // set default profile picture
-                    echo '<img src="../rsrc/img/cover/default-cover.jpg">';
-                } else {
-                    // load user cover picture
-                }
-            ?>
+             <div class="cover--fill">
+                <?php 
+                    echo '<img id="cover_photo" src="'.$cover_pic.'" />';
+                ?>              
+             </div>
             <div class="cover__profile-container">
+                <div class="img_wrapper">
                 <?php
-                // load user profile picture
-                if(! empty($user->get_profile_picture())) {
-                    //TODO: 
-                    // $profile_pic = 
-                }
-                echo '<img src="'. $profile_pic . '" ';
-
+                    // load user profile picture
+                    echo '<img src="'. $profile_pic . '" alt="profile photo" />';
                 ?>
-                alt="profile photo" class="cover__photo"/>
-                <div class="cover__username">
-                    <?php 
-                    echo $full_user_name;
-                    ?>
                 </div>
+            <div class="cover__username">
+                <?php 
+                echo $user->get_first_name() . " " . $user->get_last_name();
+                ?>
             </div>
 
-            <!-- update info page -->
-            <div id="update-info-page" class="update-info__modal">
-                  <!-- page content -->
-                  <!-- TODO -->
-              <!-- </form> -->
-            </div>
+            </div> 
+
     </div>
+
     
 
     
