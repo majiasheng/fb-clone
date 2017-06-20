@@ -29,9 +29,9 @@ if(isset($_FILES['profile_image'])){
     // save image to rsrc/ folder if no error
     if(empty($errors)==true) {
         // TODO: first image name incorrect
-        $image_index = $user->get_num_profile()+1;
+        $image_index = $user->get_num_profile();
         // upload image to the user's folder
-        move_uploaded_file($file_tmp, PATH_TO_USERS.$user->get_email()."/profile/profile_img".$image_index);
+        move_uploaded_file($file_tmp, PATH_TO_USERS.$user->get_email()."/profile/profile_img".($image_index+1));
 
         // save to db
         $image_index++;

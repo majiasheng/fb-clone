@@ -32,9 +32,9 @@ if(isset($_FILES['cover_image'])){
         // create dir if not exist
 
         // upload image to the user's folder
-        $image_index = $user->get_num_cover()+1;          // name the file according to index
+        $image_index = $user->get_num_cover();          // name the file according to index
 
-        move_uploaded_file($file_tmp, PATH_TO_USERS.$user->get_email()."/cover/cover_img".$image_index);
+        move_uploaded_file($file_tmp, PATH_TO_USERS.$user->get_email()."/cover/cover_img".($image_index+1));
 
         // set num of cover image
         $image_index++;
