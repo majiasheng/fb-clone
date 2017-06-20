@@ -84,11 +84,11 @@
 
             }
             // posting button
-            button {
-                display: none;
+            input {
+                // display: none;
                 margin: 0;
                 padding: 5px 10px;
-                margin-left: -30px;
+                // margin-left: -30px;
                 background-color: lighten($black, 97%);
             }
         }

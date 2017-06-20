@@ -552,13 +552,19 @@ function acceptFriendRequest($A, $B, $pdo) {
 
 // save number of cover image
 function saveNumCover($user, $pdo) {
-
     $query = "UPDATE " . USERS_TABLE . " SET" . 
     " num_cover=" . $user->get_num_cover() . " WHERE email='" . $user->get_email() . "';"; 
     $stmt = $pdo->prepare($query);
     return $stmt->execute();
-
 }
+// save number of profile image
+function saveNumProfile($user, $pdo) {
+    $query = "UPDATE " . USERS_TABLE . " SET" . 
+    " num_profile=" . $user->get_num_profile() . " WHERE email='" . $user->get_email() . "';"; 
+    $stmt = $pdo->prepare($query);
+    return $stmt->execute();
+}
+
 
 
 ?>

@@ -28,18 +28,16 @@ if(isset($_FILES['profile_image'])){
 
     // save image to rsrc/ folder if no error
     if(empty($errors)==true) {
-        // create dir named with user email 
-        $path = PATH_TO_USERS.$user->get_email()."/profile";
-        // create dir if not exist
-        if (!is_dir($path)) {
-            // umash to get the actual permission 0777; default umask is 022
-            $oldmask = umask(0);
-            mkdir($path, 0777, true);
-            umask($oldmask);
-        }    
+        // TODO: first image name incorrect
+        $image_index = $user->get_num_profile()+1;
         // upload image to the user's folder
-        move_uploaded_file($file_tmp, PATH_TO_USERS.$user->get_email()."/profile/profile_img");
-    }else{
+        move_uploaded_file($file_tmp, PATH_TO_USERS.$user->get_email()."/profile/profile_img".$image_index);
+
+        // save to db
+        $image_index++;
+        $user->set_num_profile($image_index);
+        saveNumProfile($user, $pdo);
+    } else {
         print_r($errors);
     }
 }

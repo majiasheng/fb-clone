@@ -2,4 +2,4 @@
 */.gitignore
 build/
 users/
-include/.sass-cache/*
+include/.sass-cache/
