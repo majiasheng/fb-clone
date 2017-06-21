@@ -4,14 +4,14 @@
         <ul id="cog__dropdown">
             <!-- edit -->
             <li id="cog__dropdown--edit">
-                <form action="" method="POST" id="post_edit_form">
+                <form action="" method="POST" class="post_edit_form">
                     <input type="hidden" name="post__id" value="<?php echo $p->getPostId(); ?>" />
                     <a href="javascript:void(0);" onclick="$(this).closest('form').submit()">Edit</a>
                 </form>
             </li>
             <!-- delete -->
             <li id="cog__dropdown--del">
-                <form action="" method="POST" id="post_delete_form">
+                <form action="" method="POST" class="post_delete_form">
                     <input type="hidden" name="post__id" value="<?php echo $p->getPostId(); ?>" />
                     <a href="javascript:void(0);" onclick="$(this).closest('form').submit()">Delete</a>
                         

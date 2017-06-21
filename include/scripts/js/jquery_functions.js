@@ -51,7 +51,7 @@ $(document).ready(function(){
 	});
 
 	// ajax to delete a post
-	$('#post_delete_form').submit(function(e) {
+	$('.post_delete_form').submit(function(e) {
 		e.preventDefault();
 
 		var id = $(this).find("input[type=hidden]").val();
@@ -59,9 +59,9 @@ $(document).ready(function(){
 
 		$.post('../src/submit_post_deletion.php', $(this).serialize())
 		.done(function(data) {
-			alert(name);
-			// window.location.reload();
-			
+			// alert(name);
+			window.location.reload();
+
 		}) .fail(function() {
 			alert("Deletion Failed ...");
 		});
