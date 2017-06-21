@@ -14,6 +14,8 @@ $(document).ready(function(){
 			$('.middle__posts').fadeOut('fast', function(){
 				$('.middle__posts').fadeIn('fast').html(data);
 			});
+			// temporarily using: 
+			window.location.reload();
 			$("#post_form")[0].reset();
 		})
 		.fail(function(){
@@ -39,6 +41,8 @@ $(document).ready(function(){
 				$('#' + name).fadeIn('fast').html(data);
 			});
 
+			// temporarily using: 
+			window.location.reload();
 			// empty out the comment.
 			$('.post_comment_form').trigger("reset");
 		})
