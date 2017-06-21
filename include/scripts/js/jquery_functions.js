@@ -5,7 +5,10 @@ $(document).ready(function(){
 
 		e.preventDefault(); // Prevent Default Submission
 
-		$.post('../src/submit_post.php', $(this).serialize() )
+		var data_array = $(this).serializeArray();
+		data_array.push({name: 'update_page', value: true});
+
+		$.post('../src/submit_post.php', data_array)
 		.done(function(data){
 			$('.middle__posts').fadeOut('fast', function(){
 				$('.middle__posts').fadeIn('fast').html(data);
@@ -97,6 +100,12 @@ $(document).ready(function(){
             }
         });
 	});
+
+	$('#test_sse').click(function(e){
+
+	});
+
+
 
 	// Update info page
 	$('.update-info-form').submit(function(event){

@@ -1,21 +1,13 @@
 <?php
 
-$voice = "hello world";
+function sendMessage(){
 
-header("Content-Type: text/event-stream");
-header("Cache-Control: no-cache");
-header("Connection: keep-alive");
+	header('Content-Type: text/event-stream\n\n');
+    header('Cache-Control: no-cache');	
 
-$lastId = $_SERVER["HTTP_LAST_EVENT_ID"];
-if (isset($lastId) && !empty($lastId) && is_numeric($lastId)) {
-    $lastId = intval($lastId);
-    $lastId++;
-} else {
-    $lastId = 0;
+	$time = date('r');
+	echo "data: The server time is {$time}\n\n";
+	flush();
 }
 
-function sendMessage($message){
-    echo "data: $message\n\n";
-    ob_flush();
-    flush();
-}
+?>

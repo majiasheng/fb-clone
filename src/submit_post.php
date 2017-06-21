@@ -1,6 +1,7 @@
 <?php
 require_once("../include/functions.php");
 require_once("../include/loads/load_images.php");
+require_once("server_update_page.php");
 session_start();
 
 $user = $_SESSION['user'];
@@ -11,8 +12,17 @@ if(isset($_POST) && ("" != trim($_POST['post_content']))) {
 	if(!savePostToDB($user->get_email(), $user->get_email(), $pdo, $_POST['post_content'])) {
 		echo "Error occurred while saving posting <br>";
 	}
+
+	if(isset($_POST['update_page'])){
+		sendMessage();
+	}
+
 	unset($_POST);
 }
+
+
+
+
 
 $posts = loadPosts($user->get_email(), $pdo);
 

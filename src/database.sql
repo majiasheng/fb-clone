@@ -72,6 +72,10 @@ CREATE TABLE images (
     profile         LONGBLOB,
     cover           LONGBLOB,
 
+    PRIMARY KEY(id, email),
+    FOREIGN KEY (email) REFERENCES users(email)
+);
+
 
 CREATE TABLE friend_request (
     id              INTEGER NOT NULL AUTO_INCREMENT,

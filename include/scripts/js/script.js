@@ -117,23 +117,21 @@ function show_about_page(link_id) {
 }
 
 window.onload = function setDataSource(){
-	if(!!window.EventSource){
-		var source = new EventSource("server_update_page.php");
+	if(typeof(EventSource) !== "undefined") {
+	   var source = new EventSource('/stats');
 
-		source.addEventListener("message", function(e){
-			console.log(e);
-		}, false);
+		source.onopen = function() {
+		   connectionOpen(true);
+		};
+		source.onerror = function () {
+		  connectionOpen(false);
+		};
 
-		source.addEventListener("open", function(e){
-			console.log("OPEN");
-		}, false);
-
-		source.addEventListener("error", function(e){
-			console.log("ERROR");
-		}, false);
-	}else{
-		// browser not supported....
+		source.onmessage = function (event) {
+			console.log(event.data);
+		};
+	} else {
+	    // document.getElementById("result").innerHTML = "Sorry, your browser does not support server-sent events...";
+	    console.log("Browser not supported");
 	}
 }
-
-
