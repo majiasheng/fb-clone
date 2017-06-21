@@ -1,5 +1,9 @@
 $(document).ready(function(){
-	// $("#posting_area").focus();
+	// cog (setting button on posts) show and hide onclick
+	// $(".cog").click(function(){
+ //        $("#cog__dropdown").toggle();
+ //    });
+
 
 	$('#post_form').submit(function(e){
 
@@ -39,13 +43,27 @@ $(document).ready(function(){
 			$('.post_comment_form').trigger("reset");
 		})
 		.fail(function(){
-			alert('Comment submit Failed ...');
+			alert('Comment submit failed ...');
 		});
 
 		return false;
 
 	});
 
+	// ajax to delete a post
+	$(document).on('submit', '.post_delete_form', function(e) {
+		e.preventDefault();
+
+		var id = $(this).find("input[type=hidden]").val();
+		var name = 'post__' + id;
+
+		$.post('../src/submit_post_deletion.php', $(this).serialize()).done(function(data) {
+			// alert(name);
+		}) .fail(function() {
+			alert("Deletion Failed ...");
+		});
+
+	});
 
 
 	// $(".thumb_up").on("click", function(e){

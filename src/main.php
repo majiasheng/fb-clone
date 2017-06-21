@@ -16,7 +16,6 @@ $pdo = connect();
 
 // default profile picture
 $profile_pic = load_profile($user);
-
 $cover_pic = load_cover($user);
 ?>
 
@@ -235,7 +234,7 @@ $cover_pic = load_cover($user);
  -->
                 <!-- Begin middle__post -->
 
-                <div class="middle__posts">
+                
                 <?php
                 $posts = loadPosts($user->get_email(), $pdo);
                 foreach($posts as $p):
@@ -246,13 +245,12 @@ $cover_pic = load_cover($user);
                     // load the like_count.
                     $like_count = getLikeCount($p->getPostID(), $pdo);
                     
-
+                    echo '<div class="middle__posts">';
                     include "../src/template/post_content.html";
-                    
+                    echo '</div>';
                     endforeach;
                 ?>
-
-                </div>
+                
                 </div>
                 <!-- End middle__post -->
 

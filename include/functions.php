@@ -237,19 +237,16 @@ function savePostToDB($author_email, $owner_email, $pdo, $post) {
 
     $stmt = $pdo->prepare($query);
     $rtval =  $stmt->execute([$author_email, $owner_email, $post]);
-
-    // SELECT * FROM `posts` ORDER BY `id` DESC LIMIT 1  -> get the lastest post
-    // $latest_post = "SELECT * FROM " . POSTS_TABLE . " ORDER BY id DESC LIMIT 1";
-    // $stmt_two = $pdo->prepare($latest_post);
-    // $stmt_two ->execute();
-
-    // $newest_post = $stmt_two->fetchAll(PDO::FETCH_ASSOC);
-    // $latest_post_id = $newest_post[0]['id'];
-
-    // $stmt_three = $pdo->prepare($init_likes_person);
-    // $stmt_three->execute(['post_id' => $latest_post_id , 'author_email' => $user_email]);
-
     return $rtval;
+}
+
+// delete a post from db
+function delPostFromDB($author_email, $pdo, $post_id) {
+    $query = "DELETE FROM " . POSTS_TABLE . 
+             "WHERE author_email = :author_email AND id = :post_id";
+
+    $stmt = $pdo->prepare($query);
+    return $stmt->execute(["author_email" => $author_email, "post_id" => $post_id]);   
 }
 
 /**
@@ -368,7 +365,6 @@ function checkLikeStat($post_id, $author_email, $pdo){
 
     return $rtval;
 }
-
 
 /**
 *   Return the post content based on post_id
@@ -573,7 +569,6 @@ function saveNumProfile($user, $pdo) {
     $stmt = $pdo->prepare($query);
     return $stmt->execute();
 }
-
 
 
 ?>

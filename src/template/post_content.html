@@ -1,4 +1,24 @@
 <!-- TODO: Change user to owner of post -->
+ <!-- setting button: delete, edit -->
+ <div class="cog fa fa-cog">
+        <ul id="cog__dropdown">
+            <!-- edit -->
+            <li id="cog__dropdown--edit">
+                <form action="" method="POST" class="post_edit_form">
+                    <input type="hidden" name="post__id" value="<?php echo $p->getPostId(); ?>" />
+                    <a href="javascript:void(0);" onclick="$(this).closest('form').submit()">Edit</a>
+                </form>
+            </li>
+            <!-- delete -->
+            <li id="cog__dropdown--del">
+                <form action="" method="POST" class="post_delete_form">
+                    <input type="hidden" name="post__id" value="<?php echo $p->getPostId(); ?>" />
+                    <a href="javascript:void(0);" onclick="$(this).closest('form').submit()">Delete</a>
+                        
+                </form>
+            </li>
+        </ul>
+</div>
 <div class="post__header">
     <!-- load user pic -->
     <img src="<?php echo load_profile_email($p->getAuthorEmail(), $pdo) ?>" class="post__header__author-photo">
@@ -11,30 +31,31 @@
     </p>
 
     <p class="post__header__info info__date"><?php echo $p->getPostTime() ?></p>
+   
+
 </div>
 <div class="post__content">
     <p class="post__content__p"><?php echo $p->getContent() ?></p>
 </div>
 
 <hr>
-<!-- ' . $c->getCommentContent() . '  (' . getUserNameByEmail($c->getAuthor(), $pdo) . ')-->
 
 
 <div class="post__actions">
-
+    <!-- like -->
     <div class="actions--setting actions--decor">
         <a href="javascript:void(0);" class="thumb_up">
             <i class="fa fa-thumbs-up"> <?php echo getLikeCount($p->getPostId(), $pdo)["count(liked)"] ?></i>
         </a>
     </div>
-
+    <!-- share -->
     <div class="actions--setting actions--decor">
         <a href="javascript:void(0);" class="share_content">
             <i class="fa fa-share"></i>
         </a>
     </div>
 
-
+    <!-- comment -->
     <div class="actions--setting actions--decor actions__comment">
         <form action="" method="POST" class="post_comment_form">
             <input type="text" name="post_comment_content" placeholder="Write some comment" required="true" oninvalid="this.setCustomValidity('Say something ...')" 
