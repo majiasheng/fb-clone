@@ -3,10 +3,9 @@
 
 require_once("../src/constants.php");
 require_once("../src/user.php");
-require_once("../src/Post.php");
+require_once("../src/post.php");
 require_once("../src/info.php");
 require_once("../src/comments.php");
-// TODO: use prepare statement to insert into db
 
 /**
  * Establishes connection with db
@@ -36,7 +35,7 @@ function validate_name($name) {
 	}
 }
 
-//TODO: return a User object?
+
 function validate_registration() {
 	$first_name = $_POST["first_name"];
 	$last_name = $_POST["last_name"];
@@ -54,17 +53,17 @@ function validate_registration() {
   [`~!@#$%^&*()-_=+;:'",<.>/?] */
 
 	// month day and year has to be selected
-  if(isset($_POST["month"]) && $_POST["month"] != "month"
-   && isset($_POST["day"]) && $_POST["day"] != "day"
-   && isset($_POST["year"]) && $_POST["year"] != "year"
-	// Gender field is required
-   && isset($_POST["gender"])
+    if(isset($_POST["month"]) && $_POST["month"] != "month"
+    && isset($_POST["day"]) && $_POST["day"] != "day"
+    && isset($_POST["year"]) && $_POST["year"] != "year"
+    // Gender field is required
+    && isset($_POST["gender"])
 
-   ) {
-      return True;
-} else {
-  return False;
-}
+    ) {
+        return True;
+    } else {
+        return False;
+    }
 }
 
 function save_user_to_db($user, $pdo) {
@@ -72,7 +71,7 @@ function save_user_to_db($user, $pdo) {
 	$query .= "INSERT INTO " . USERS_TABLE . " (";
 	// fields of user class
 	$query .= "first_name, last_name, email, password, ";
-	$query .= "birth_month, birth_day, birth_year, gender";
+	$query .= "birth_month, birth_day, birth_year, gender, num_cover, num_profile";
 	$query .= ") VALUES (";
 
 	$query .= ( 
@@ -83,7 +82,9 @@ function save_user_to_db($user, $pdo) {
         "'" . $user->get_birth_month()	. "'," .
         "'" . $user->get_birth_day() 	. "'," .
         "'" . $user->get_birth_year()	. "'," .
-        "'" . $user->get_gender()       . "'" );
+        "'" . $user->get_gender()       . "'," .
+        "'" . $user->get_num_cover()    . "'," .
+        "'" . $user->get_num_profile()  . "'" );
 
 	$query .= ");";
 
@@ -143,6 +144,8 @@ function loadUser($user_email, $password, $pdo) {
         $user->set_birth_day($user_data['birth_day']);
         $user->set_birth_year($user_data['birth_year']);
         $user->set_gender($user_data['gender']);
+        $user->set_num_cover($user_data['num_cover']);
+        $user->set_num_profile($user_data['num_profile']);
         return $user;
     } else {
     	return NULL;
@@ -223,7 +226,7 @@ function load_user_info($user_email, $pdo) {
 }
 
 function savePostToDB($author_email, $owner_email, $pdo, $post) {
-    //TODO: insert post to db
+
     $query = "INSERT INTO " . POSTS_TABLE 
     . "(author_email, owner_email, content) "
     . "VALUES (?, ?, ?)";
@@ -267,14 +270,13 @@ function get_latest_share_post($owner_email, $author_email, $pdo){
 }
 
 function loadPosts($user_email, $pdo) {
-    //TODO: need to join comments with posts later
 
     $query = "SELECT * from " . POSTS_TABLE 
     . " WHERE owner_email = :email order by post_time DESC";
     $stmt = $pdo->prepare($query);
     $stmt->execute(['email' => $user_email]);
 
-    //TODO: wrap contents in post object and return list of posts
+    // wrap contents in post object and return list of posts
     $post_objs = array();
     $posts = $stmt->fetchAll(PDO::FETCH_ASSOC);
     
@@ -340,6 +342,15 @@ function getUserNameByEmail($email, $pdo) {
     $stmt->execute(['email' => $email]);
     $rtval = $stmt->fetch(PDO::FETCH_ASSOC);
     return $rtval['first_name'] . " " . $rtval['last_name'];
+}
+
+// get the total number of profile images
+function getNumProfileByEmail($email, $pdo) {
+    $query = "SELECT num_profile FROM " . USERS_TABLE. " WHERE email = :email";
+    $stmt = $pdo->prepare($query);
+    $stmt->execute(['email' => $email]);
+    $rtval = $stmt->fetch(PDO::FETCH_ASSOC);
+    return $rtval['num_profile'];
 }
 
 function getAllUsers($pdo) {
@@ -542,7 +553,7 @@ function loadFriendRequests($user_email, $pdo) {
  * A sent request to B
  */
 function acceptFriendRequest($A, $B, $pdo) {
-    /*TODO: 
+    /* 
         - add friend to friend_with table
         - remove friend request from friend_request table
     */
@@ -550,21 +561,21 @@ function acceptFriendRequest($A, $B, $pdo) {
     removeFriendRequest($A, $B, $pdo);
 }
 
+// save number of cover image
+function saveNumCover($user, $pdo) {
+    $query = "UPDATE " . USERS_TABLE . " SET" . 
+    " num_cover=" . $user->get_num_cover() . " WHERE email='" . $user->get_email() . "';"; 
+    $stmt = $pdo->prepare($query);
+    return $stmt->execute();
+}
+// save number of profile image
+function saveNumProfile($user, $pdo) {
+    $query = "UPDATE " . USERS_TABLE . " SET" . 
+    " num_profile=" . $user->get_num_profile() . " WHERE email='" . $user->get_email() . "';"; 
+    $stmt = $pdo->prepare($query);
+    return $stmt->execute();
+}
 
-/**
- * Save images
- */
-// function saveCoverPhoto($pdo, $email) {
-//     $image_name = $_FILES["cover_upload"]["name"];
-//     $image_tmp = addslashes(file_get_contents($_FILES["cover_upload"]["tmp_name"]));
-
-//     $query = "INSERT INTO " . IMAGE_TABLE . " (";
-//     $query .= "email, cover";
-//     $query .= ") VALUES (";
-//     $query .= "'" . $email . "', '" . $image_name . "');";
-
-//     $pdo->query($query);
-// }
 
 
 ?>

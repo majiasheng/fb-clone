@@ -1,6 +1,7 @@
 
 <p>Sign Me Up</p>
 <?php
+session_start();
 
 require("../include/functions.php");
 // session_start();
@@ -47,12 +48,26 @@ if($_SERVER["REQUEST_METHOD"] == "POST") {
 		$new_user->set_birth_month($_POST["month"]);
 		$new_user->set_birth_year($_POST["year"]);
 		$new_user->set_gender($_POST["gender"]);
+		$new_user->set_num_cover(0);
+		$new_user->set_num_profile(0);
 
 		// save user to db
 		if (save_user_to_db($new_user, $connection)) {
-			//TODO: redirect to index.php with user info
-			echo "<p> Redirecting to main page... </p>";
 			sleep(1);
+			$_SESSION['registration'] = $new_user->get_email();
+
+			// create a user folder upon registration
+			$path = PATH_TO_USERS.$new_user->get_email();
+			if (!is_dir($path)) {
+	            // umash to get the actual permission 0777; default umask is 022
+	            $oldmask = umask(0);
+	            mkdir($path, 0777, true);
+	            mkdir($path."/cover", 0777, true);
+	            mkdir($path."/profile", 0777, true);
+	            umask($oldmask);
+	        }   
+
+			// redirect to index.php 
 			header("Location: index.php");
 		} else {
 			echo "<p>Failed to save user to database</p>";

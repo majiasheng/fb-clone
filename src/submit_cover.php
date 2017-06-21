@@ -5,7 +5,6 @@ session_start();
 $user = $_SESSION['user'];
 $info = $_SESSION['user_info'];
 $pdo = connect();
-
 // save images to local filesystem
 if(isset($_FILES['cover_image'])){
     $errors= array();
@@ -29,17 +28,20 @@ if(isset($_FILES['cover_image'])){
     // save image to rsrc/ folder if no error
     if(empty($errors)==true) {
         // create dir named with user email 
-        $path = PATH_TO_USERS.$user->get_email()."/cover";
+        // $path = PATH_TO_USERS.$user->get_email()."/cover";
         // create dir if not exist
-        if (!is_dir($path)) {
-            // umash to get the actual permission 0777; default umask is 022
-            $oldmask = umask(0);
-            mkdir($path, 0777, true);
-            umask($oldmask);
-        }    
+
         // upload image to the user's folder
-        move_uploaded_file($file_tmp, PATH_TO_USERS.$user->get_email()."/cover/cover_img");
-    }else{
+        $image_index = $user->get_num_cover();          // name the file according to index
+
+        move_uploaded_file($file_tmp, PATH_TO_USERS.$user->get_email()."/cover/cover_img".($image_index+1));
+
+        // set num of cover image
+        $image_index++;
+        $user->set_num_cover($image_index);
+        saveNumCover($user, $pdo);
+
+    } else {
         print_r($errors);
     }
 }

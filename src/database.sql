@@ -9,6 +9,8 @@ CREATE TABLE users (
     birth_day   CHAR(2)		NOT NULL,
     birth_year  CHAR(4)		NOT NULL,
     gender      enum('M', 'F') NOT NULL,
+    num_cover   INTEGER     NOT NULL,                   -- stores the number of cover images the user has
+    num_profile INTEGER     NOT NULL,                   -- stores the number of profile images the user has
     date_joined TIMESTAMP   DEFAULT CURRENT_TIMESTAMP,
 
     PRIMARY KEY(id)

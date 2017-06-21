@@ -26,7 +26,7 @@ if(isset($_POST) && isset($_POST['post_comment_content'])) {
 if(!is_null($comments)):
 
 foreach ($comments as $c):
-$pic = load_profile_email($c->getAuthor());
+$pic = loadProfileByEmail($c->getAuthor(),$pdo);
 
 ?>
 

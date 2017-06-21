@@ -2,27 +2,37 @@
 
 // load cover pic
 function load_cover($user) {
-    // if folder exists, meaning that the user has updated cover, update, else use default
-    if(file_exists(PATH_TO_USERS.$user->get_email().'/cover'))
-        return PATH_TO_USERS.$user->get_email().'/cover/cover_img';
+    // load the largest(latest) num, and load accordingly
+    $index = $user->get_num_cover();
+    // get the latest cover image (by the largest number)
+    if($index > 0 && file_exists(PATH_TO_USERS.$user->get_email().'/cover/cover_img'.$index)) {
+        // $index--;        
+        return PATH_TO_USERS.$user->get_email().'/cover/cover_img'.$index;
+    }
     else
         return DEFAULT_COVER;
 }
 
 // load profile photo
 function load_profile($user) {
-	if(file_exists(PATH_TO_USERS.$user->get_email().'/profile'))
-        return PATH_TO_USERS.$user->get_email().'/profile/profile_img';
+    $index = $user->get_num_profile();
+
+	if($index > 0 && file_exists(PATH_TO_USERS.$user->get_email().'/profile/profile_img'.$index)) {
+        // $index--;
+        return PATH_TO_USERS.$user->get_email().'/profile/profile_img'.$index;
+    } 
     else
         return DEFAULT_PROFILE;
 }
 
-function load_profile_email($email){
+// load profile image by user email
+function loadProfileByEmail($email, $pdo){
+    $index = getNumProfileByEmail($email, $pdo);
+    // get the latest profile image
 	if(file_exists(PATH_TO_USERS.$email.'/profile'))
-        return PATH_TO_USERS.$email.'/profile/profile_img';
+        return PATH_TO_USERS.$email.'/profile/profile_img'.$index;
     else
         return DEFAULT_PROFILE;
 }
-
 
 ?>
