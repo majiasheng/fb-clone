@@ -7,4 +7,4 @@
 - [ ] Make page update automatically when user enters a comment or post.
 - [ ] Extract the content from the post into a new table, maybe extract comment content too?
 - [ ] Split the post into independent sections.
-- [ ] Fix the submit_comment
+- [ ] Fix the submit_comment.php
