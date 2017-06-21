@@ -51,14 +51,17 @@ $(document).ready(function(){
 	});
 
 	// ajax to delete a post
-	$(document).on('submit', '.post_delete_form', function(e) {
+	$('#post_delete_form').submit(function(e) {
 		e.preventDefault();
 
 		var id = $(this).find("input[type=hidden]").val();
 		var name = 'post__' + id;
 
-		$.post('../src/submit_post_deletion.php', $(this).serialize()).done(function(data) {
-			// alert(name);
+		$.post('../src/submit_post_deletion.php', $(this).serialize())
+		.done(function(data) {
+			alert(name);
+			// window.location.reload();
+			
 		}) .fail(function() {
 			alert("Deletion Failed ...");
 		});

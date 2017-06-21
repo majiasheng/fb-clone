@@ -144,6 +144,8 @@ function loadUser($user_email, $password, $pdo) {
         $user->set_birth_day($user_data['birth_day']);
         $user->set_birth_year($user_data['birth_year']);
         $user->set_gender($user_data['gender']);
+        $user->set_num_cover($user_data['num_cover']);
+        $user->set_num_profile($user_data['num_profile']);
         return $user;
     } else {
     	return NULL;
@@ -242,11 +244,22 @@ function savePostToDB($author_email, $owner_email, $pdo, $post) {
 
 // delete a post from db
 function delPostFromDB($author_email, $pdo, $post_id) {
-    $query = "DELETE FROM " . POSTS_TABLE . 
-             "WHERE author_email = :author_email AND id = :post_id";
+    // must delete comments before deleting the post, otherwise, foreign key error
+    if (delCommentFromDB($author_email, $pdo, $post_id)) {
+        $query = "DELETE FROM " . POSTS_TABLE . 
+             " WHERE author_email='" . $author_email . "' AND id='" . $post_id . "'";
+        $stmt = $pdo->prepare($query);
+        return $stmt->execute();  
+    }
 
+    
+}
+// delete comments
+function delCommentFromDB($author_email, $pdo, $post_id) {
+    $query = "DELETE FROM " . COMMENTS_TABLE . 
+             " WHERE author_email='" . $author_email . "' AND post_id=" . $post_id;
     $stmt = $pdo->prepare($query);
-    return $stmt->execute(["author_email" => $author_email, "post_id" => $post_id]);   
+    return $stmt->execute();  
 }
 
 /**
