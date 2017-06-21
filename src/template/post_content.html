@@ -1,7 +1,7 @@
 <!-- TODO: Change user to owner of post -->
 <div class="post__header">
     <!-- load user pic -->
-    <img src="<?php echo load_profile_email($p->getAuthorEmail(), $pdo) ?>" class="post__header__author-photo">
+    <img src="<?php echo loadProfileByEmail($p->getAuthorEmail(), $pdo) ?>" class="post__header__author-photo">
     <!-- <p class="post__header__info info__author"><a class=""><?php echo $user->get_first_name() . " " . $user->get_last_name() ?></a></p> -->
 
     <p class="post__header__info info__author">
@@ -51,7 +51,7 @@
 <div class="comment__content" id="<?php echo 'post__' . $p->getPostID() . ''?>">
     <?php
     foreach ($comments as $c) {
-        $pic = load_profile_email($c->getAuthor());
+        $pic = loadProfileByEmail($c->getAuthor(), $pdo);
 
         echo '
             <div class="comment__details post__header">  
