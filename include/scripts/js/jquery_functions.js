@@ -1,8 +1,8 @@
 $(document).ready(function(){
 	// cog (setting button on posts) show and hide onclick
-	// $(".cog").click(function(){
- //        $("#cog__dropdown").toggle();
- //    });
+	$(".cog").click(function(){
+        $(".cog__dropdown").toggle();
+    });
 
 
 	$('#post_form').submit(function(e){

@@ -217,21 +217,6 @@ $cover_pic = load_cover($user);
 
                 <!-- ********************** middle: post ********************** -->
 
-<!--                <div class="middle__posts">
-                    <div class="post__header">
-                    </div>
-                    <div class="post__content">
-                    </div>
-                    <div class="comment__content">
-                    </div>
-                    <div class="post__actions">
-                        <div class="actions--setting actions--decor"><i class="fa fa-thumbs-up"></i></div>
-                        <div class="actions--setting actions--decor"><i class="fa fa-share"></i></div>
-                        <div class="actions--setting actions--decor actions__comment"><i class="fa fa-comment"></i></div>
-                    </div>
-                    </div>
-
- -->
                 <!-- Begin middle__post -->
 
                 
@@ -264,12 +249,6 @@ $cover_pic = load_cover($user);
                         ?>
                 <!-- <a href="#"><img src="../rsrc/img/friends/cat1.png" alt="friends"></a>
                 <a href="#"><img src="../rsrc/img/friends/cat2.jpeg" alt="friends"></a>
-                <a href="#"><img src="../rsrc/img/friends/cat3.jpeg" alt="friends"></a>
-                <a href="#"><img src="../rsrc/img/friends/cat4.jpeg" alt="friends"></a>
-                <a href="#"><img src="../rsrc/img/friends/cat5.jpeg" alt="friends"></a>
-                <a href="#"><img src="../rsrc/img/friends/cat6.jpeg" alt="friends"></a>
-                <a href="#"><img src="../rsrc/img/friends/cat7.jpeg" alt="friends"></a>
-                <a href="#"><img src="../rsrc/img/friends/cat8.jpeg" alt="friends"></a>
                 <a href="#"><img src="../rsrc/img/friends/cat9.jpeg" alt="friends"></a> -->
 
 

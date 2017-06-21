@@ -116,3 +116,24 @@ function show_about_page(link_id) {
 	links_to_pages[link_id] = page;
 }
 
+window.onload = function setDataSource(){
+	if(!!window.EventSource){
+		var source = new EventSource("server_update_page.php");
+
+		source.addEventListener("message", function(e){
+			console.log(e);
+		}, false);
+
+		source.addEventListener("open", function(e){
+			console.log("OPEN");
+		}, false);
+
+		source.addEventListener("error", function(e){
+			console.log("ERROR");
+		}, false);
+	}else{
+		// browser not supported....
+	}
+}
+
+
