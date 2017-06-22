@@ -1,7 +1,8 @@
 $(document).ready(function(){
+	
 	// cog (setting button on posts) show and hide onclick
 	$(".cog").click(function(){
-        $(".cog__dropdown").toggle();
+		$(this).find(".cog__dropdown").toggle();
     });
 
 
@@ -80,6 +81,7 @@ $(document).ready(function(){
 		$.post('../src/submit_post_deletion.php', $(this).serialize())
 		.done(function(data) {
 			// alert(name);
+
 			window.location.reload();
 
 		}) .fail(function() {

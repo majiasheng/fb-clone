@@ -150,9 +150,9 @@
             top: 15px;
             color: lighten($black, 70%);
             cursor: pointer;
-
             // dropdown: edit, delete
             ul {
+                display: none;
                 position: absolute; // stay in a fixed position
                 right: 1px;         // set a number to 'initialize' the right value
                 width: 100px;
