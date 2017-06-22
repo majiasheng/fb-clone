@@ -17,6 +17,22 @@ $(document).ready(function(){
 		});
 	});
 
+	$('#post_to_friend_form').submit(function(e){
+
+		e.preventDefault(); // Prevent Default Submission
+
+		$.post('../src/post_to_NPC.php', $(this).serialize() )
+		.done(function(data){
+			$('.middle__posts').fadeOut('fast', function(){
+				$('.middle__posts').fadeIn('fast').html(data);
+			});
+			$("#post_to_friend_form")[0].reset();
+		})
+		.fail(function(){
+			alert('Post submit Failed ...');
+		});
+	});
+
 
 	// $('.post_comment_form').submit(function(e){
 

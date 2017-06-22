@@ -177,7 +177,9 @@ function loadUserProfile($user_email, $pdo) {
     $user->set_birth_day($user_data['birth_day']);
     $user->set_birth_year($user_data['birth_year']);
     $user->set_gender($user_data['gender']);
-
+    $user->set_num_cover($user_data['num_cover']);
+    $user->set_num_profile($user_data['num_profile']);
+    
     $info = load_user_info($user->get_email(), $pdo);
     $user->set_info($info);
 
