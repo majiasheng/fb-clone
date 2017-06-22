@@ -61,24 +61,24 @@ if(isset($_POST['cancel_friend_request'])) {
 }
 
 // check if there's a post to friend
-if(isset($_POST['post_to_friend'])) {
-    if(isFriend($_SESSION['user']->get_email(), $user->get_email(), $pdo)) {        
-        savePostToDB($_SESSION['user']->get_email(), 
-            $user->get_email(), 
-            $pdo, 
-            $_POST['post_to_friend']
-        );
-        unset($_POST['post_to_friend']);
-        // redirect to self to prevent resubmission by refreshing
-        $self = $_SERVER['REQUEST_URI'];
-        header("Location: $self");
-    } else {
-        //TODO: make popup window
-        $msg = "Be " . $full_user_name . "'s friend first :)";
-        echo $msg;
-        unset($_POST['post_to_friend']);
-    }
-}
+// if(isset($_POST['post_to_friend'])) {
+//     if(isFriend($_SESSION['user']->get_email(), $user->get_email(), $pdo)) {        
+//         savePostToDB($_SESSION['user']->get_email(), 
+//             $user->get_email(), 
+//             $pdo, 
+//             $_POST['post_to_friend']
+//         );
+//         unset($_POST['post_to_friend']);
+//         // redirect to self to prevent resubmission by refreshing
+//         $self = $_SERVER['REQUEST_URI'];
+//         header("Location: $self");
+//     } else {
+//         //TODO: make popup window
+//         $msg = "Be " . $full_user_name . "'s friend first :)";
+//         echo $msg;
+//         unset($_POST['post_to_friend']);
+//     }
+// }
 
 
 // default profile picture
@@ -203,6 +203,8 @@ $cover_pic = load_cover($user);
             echo '<input type="submit" name="cancel_friend_request" value="Cancel Request"> ';
         }
         echo '</form>';
+    } else {
+        echo "???";
     }
     ?>
 
@@ -349,6 +351,7 @@ $cover_pic = load_cover($user);
                 echo $full_user_name;
                 ?>" 
                 rows="3" name="post_to_friend" form="post_to_friend_form"></textarea>
+                <input type="hidden" name="NPC_email" value="<?php echo $user->get_email()?>">
                 <input type="submit" Value="Post">
                 </form>
             </div> <!-- ********************** end panel ********************** -->
