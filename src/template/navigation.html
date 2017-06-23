@@ -28,8 +28,14 @@
                                  if(isset($_POST['friend_request'])) {
                                      if('Accept' == $_POST['friend_request']) {
                                          acceptFriendRequest($_POST['sender'], $_POST['receiver'], $pdo);
+                                         // redirect to self to prevent resubmission by refreshing
+                                        $self = $_SERVER['REQUEST_URI'];
+                                        header("Location: $self");
                                      } else if('Decline' == $_POST['friend_request']) {
                                          removeFriendRequest($_POST['sender'], $_POST['receiver'], $pdo);
+                                         // redirect to self to prevent resubmission by refreshing
+                                        $self = $_SERVER['REQUEST_URI'];
+                                        header("Location: $self");
                                      } else {
                                          echo "Something went wrong..";
                                      }
