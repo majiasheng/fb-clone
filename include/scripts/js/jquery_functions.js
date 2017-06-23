@@ -1,7 +1,19 @@
 $(document).ready(function(){
 	// $("#posting_area").focus();
+	var source = null;
 
 	$('#post_form').submit(function(e){
+
+  		if(source){
+  			source.close();
+  		}
+	  	source = new EventSource('server_update_page.php');
+	  	source.addEventListener('message', function(e){
+		    console.log(e.data);
+		   	source.close();
+		},false);
+	    // if(e.data >= 100){server.close();server=null;} //6
+	    // }, false);
 
 		e.preventDefault(); // Prevent Default Submission
 
