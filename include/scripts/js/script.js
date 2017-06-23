@@ -35,6 +35,12 @@ window.onclick = function(event) {
 	    	fr.style.display = "none";
 	  	}
   	}
+  	if (!event.target.matches('.cog')) {
+  		var fr = document.getElementsByClassName("cog__dropdown");
+		if(fr.style.display == "block") { 
+	    	fr.style.display = "none";
+	  	}
+  	}
 }
 
 /* Update Info Page */

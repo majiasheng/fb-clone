@@ -1,10 +1,15 @@
 $(document).ready(function(){
-	
-	// cog (setting button on posts) show and hide onclick
-	$(".cog").click(function(){
-		$(this).find(".cog__dropdown").toggle();
-    });
 
+	// click anywhere to close 	// DOES NOT WORK ON CHROME?!
+    $(window).click(function() {
+	   if (!event.target.matches('.cog')) {
+	  		$(".cog__dropdown").hide();
+	  	}
+	});
+
+    cogToggle();
+	
+    
 
 	$('#post_form').submit(function(e){
 
@@ -73,20 +78,19 @@ $(document).ready(function(){
 
 	// ajax to delete a post
 	$('.post_delete_form').submit(function(e) {
-		e.preventDefault();
+		deletePost($(this), e);
+		// e.preventDefault();
+		// var id = $(this).find("input[type=hidden]").val();
+		// var name = 'post__' + id;
 
-		var id = $(this).find("input[type=hidden]").val();
-		var name = 'post__' + id;
+		// $.post('../src/submit_post_deletion.php', $(this).serialize())
+		// .done(function(data) {
+		// 	// alert(name);
+		// 	window.location.reload();
 
-		$.post('../src/submit_post_deletion.php', $(this).serialize())
-		.done(function(data) {
-			// alert(name);
-
-			window.location.reload();
-
-		}) .fail(function() {
-			alert("Deletion Failed ...");
-		});
+		// }) .fail(function() {
+		// 	alert("Deletion Failed ...");
+		// });
 
 	});
 
@@ -171,5 +175,26 @@ $(document).ready(function(){
 
 	$(":file").filestyle({input:false});
 
-
 });
+
+function cogToggle() {
+	// cog (setting button on posts) show and hide onclick
+	$(".cog").click(function(){
+		$(this).find(".cog__dropdown").toggle();
+    });
+}
+
+function deletePost(thisObj, e) {
+	e.preventDefault();
+	var id = thisObj.find("input[type=hidden]").val();
+	var name = 'post__' + id;
+
+	$.post('../src/submit_post_deletion.php', thisObj.serialize())
+	.done(function(data) {
+		// alert(name);
+		window.location.reload();
+
+	}) .fail(function() {
+		alert("Deletion Failed ...");
+	});
+}
