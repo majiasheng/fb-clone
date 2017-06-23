@@ -7,8 +7,18 @@ $(document).ready(function(){
 	  	}
 	});
 
+    // toggle cog button
     cogToggle();
-	
+
+	// ajax to delete a post
+	$('.post_delete_form').submit(function(e) {
+		deletePost($(this), e);
+	});
+
+	// Update info page
+	$('.update-info-form').submit(function(event){
+		updateInfo(this, event);
+	});
     
 
 	$('#post_form').submit(function(e){
@@ -76,23 +86,7 @@ $(document).ready(function(){
 
 	});
 
-	// ajax to delete a post
-	$('.post_delete_form').submit(function(e) {
-		deletePost($(this), e);
-		// e.preventDefault();
-		// var id = $(this).find("input[type=hidden]").val();
-		// var name = 'post__' + id;
-
-		// $.post('../src/submit_post_deletion.php', $(this).serialize())
-		// .done(function(data) {
-		// 	// alert(name);
-		// 	window.location.reload();
-
-		// }) .fail(function() {
-		// 	alert("Deletion Failed ...");
-		// });
-
-	});
+	
 
 
 	// $(".thumb_up").on("click", function(e){
@@ -145,38 +139,15 @@ $(document).ready(function(){
         });
 	});
 
-	// Update info page
-	$('.update-info-form').submit(function(event){
-		event.preventDefault(); // Prevent Default Submission
-
-		// create an array to store all display fields
-		var display_fields = ["description", "workplace", "education", "current_city", "hometown", "relationship"];
-		// get the class index of which form is submitted, since all forms have the same name
-		var index = $(".update-info-form").index(this);
-		// get the content
-		var id = $(this).find("input[type=hidden]").val();
-		// store the form name
-		var form_name = "update-info-form";
-
-		$.post('../src/submit_info.php', $(this).serialize() )
-		.done(function(data){
-			// update
-			$('.' + form_name).fadeOut('fast', function(){
-				$('#' + display_fields[index]).fadeIn('fast').html(data);
-			});
-
-			// empty out the input field.
-			$('#' + form_name).trigger("reset");
-		})
-		.fail(function(){
-			alert('Failed to save your information ...');
-		});
-	});
+	
 
 	$(":file").filestyle({input:false});
 
 });
 
+/**
+*	Toggle the cog (setting) button on a post
+*/
 function cogToggle() {
 	// cog (setting button on posts) show and hide onclick
 	$(".cog").click(function(){
@@ -184,6 +155,11 @@ function cogToggle() {
     });
 }
 
+/**
+*	Delete a post from wall
+* 	thisObj: $this      	
+*	e: event
+*/
 function deletePost(thisObj, e) {
 	e.preventDefault();
 	var id = thisObj.find("input[type=hidden]").val();
@@ -196,5 +172,37 @@ function deletePost(thisObj, e) {
 
 	}) .fail(function() {
 		alert("Deletion Failed ...");
+	});
+}
+
+/**
+*	Use AJAX to send update-info-form to backend
+*	thisObj: this (no $)
+*	event: event
+*/
+function updateInfo(thisObj, event) {
+	event.preventDefault(); // Prevent Default Submission
+
+	// create an array to store all display fields
+	var display_fields = ["description", "workplace", "education", "current_city", "hometown", "relationship"];
+	// get the class index of which form is submitted, since all forms have the same name
+	var index = $(".update-info-form").index(thisObj);
+	// get the content
+	var id = $(thisObj).find("input[type=hidden]").val();
+	// store the form name
+	var form_name = "update-info-form";
+
+	$.post('../src/submit_info.php', $(thisObj).serialize() )
+	.done(function(data){
+		// update
+		$('.' + form_name).fadeOut('fast', function(){
+			$('#' + display_fields[index]).fadeIn('fast').html(data);
+		});
+
+		// empty out the input field.
+		$('#' + form_name).trigger("reset");
+	})
+	.fail(function(){
+		alert('Failed to save your information ...');
 	});
 }
