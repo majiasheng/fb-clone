@@ -118,13 +118,13 @@ function show_about_page(link_id) {
 
 window.onload = function setDataSource(){
 	if(typeof(EventSource) !== "undefined") {
-	   var source = new EventSource('/stats');
+	   var source = new EventSource('server_update_page.php');
 
 		source.onopen = function() {
-		   connectionOpen(true);
+		   console.log("Open");
 		};
 		source.onerror = function () {
-		  connectionOpen(false);
+		   console.log("Error");
 		};
 
 		source.onmessage = function (event) {

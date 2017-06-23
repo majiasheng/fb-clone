@@ -27,7 +27,6 @@ if(isset($_POST) && ("" != trim($_POST['post_id']))) {
 	unset($_POST);
 }
 
-
 ?>
 
 <i class="fa fa-thumbs-up"><?php echo $like_count ?></i>
