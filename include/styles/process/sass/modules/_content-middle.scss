@@ -152,21 +152,34 @@
             cursor: pointer;
             // dropdown: edit, delete
             ul {
-                display: none;
+                // display: none;
                 position: absolute; // stay in a fixed position
                 right: 1px;         // set a number to 'initialize' the right value
-                width: 100px;
+                width: 200px;
                 margin-top: 5px;
+                margin: 0;
+                padding: 0;
                 -webkit-box-shadow: 0 10px 6px -6px gray;
                 -moz-box-shadow: 0 10px 6px -6px gray;
                 box-shadow: 0 10px 6px -6px gray;
                 border: 1px solid lighten(black, 95%);
-
-                li {
-                    
+                z-index: 200;
+                li {    
+                    display: block;             // 100% width        
                     cursor: pointer;
-                    padding: 10px;
                     font-size: 0.8em;
+                    a {
+                        display: block;
+                        padding: 10px;
+                        margin: 0;
+                        color: black;
+                        text-decoration: none;
+                    }
+                    a:hover {
+                        color: white;
+                        background-color: $facebook-blue;
+                    }
+
                 }
             }
         }
