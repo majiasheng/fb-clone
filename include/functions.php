@@ -240,17 +240,6 @@ function savePostToDB($author_email, $owner_email, $pdo, $post) {
     $stmt = $pdo->prepare($query);
     $rtval =  $stmt->execute([$author_email, $owner_email, $post]);
 
-    // SELECT * FROM `posts` ORDER BY `id` DESC LIMIT 1  -> get the lastest post
-    // $latest_post = "SELECT * FROM " . POSTS_TABLE . " ORDER BY id DESC LIMIT 1";
-    // $stmt_two = $pdo->prepare($latest_post);
-    // $stmt_two ->execute();
-
-    // $newest_post = $stmt_two->fetchAll(PDO::FETCH_ASSOC);
-    // $latest_post_id = $newest_post[0]['id'];
-
-    // $stmt_three = $pdo->prepare($init_likes_person);
-    // $stmt_three->execute(['post_id' => $latest_post_id , 'author_email' => $user_email]);
-
     return $rtval;
 }
 
@@ -486,6 +475,10 @@ function removeFriend($friendA, $friendB, $pdo) {
     return $stmt->execute([$friendA, $friendB]);
 }
 
+/**
+*   Load all of the friends of the current user based on their email account.
+*   Return array of friends.
+*/
 function loadFriends($user_email, $pdo) {
     $query = "SELECT friendA FROM " . FRIENDS_TABLE . " WHERE friendB = ?"
         . " UNION "

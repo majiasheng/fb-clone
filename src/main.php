@@ -172,12 +172,11 @@ $cover_pic = load_cover($user);
                         </li>
 
                         <li class="col-xs-3 col-sm-3 col-md-3 col-lg-3">
-<!--                        <a href="#">
+                            <a href="#">
                                 <i class="fa fa-globe timeline__icon"></i>
                                 friends
                             </a>
- -->                     
-                            <button id="test_sse">TEST SSE</button>
+                     
                          </li>
 
                         <li class="col-xs-3 col-sm-3 col-md-3 col-lg-3">

@@ -27,6 +27,7 @@ $profile_pic = load_profile($user);
     $name = getUserNameByEmail($p->getAuthorEmail(), $pdo);
 
     include "../src/template/post_content.html";
+    
     endforeach;
 ?>
 
