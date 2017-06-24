@@ -2,6 +2,7 @@ $(document).ready(function(){
 	// $("#posting_area").focus();
 
 	var source = null;
+	var self_name = null;
 
 	$('#post_form').submit(function(e){
 
@@ -32,10 +33,20 @@ $(document).ready(function(){
 	  	source = new EventSource('server_update_page.php');
 	  	source.addEventListener('message', function(sse_listener){
 		    
-		    var friends = JSON.parse(sse_listener.data);
-		    console.log(friends);
+		    var retval = JSON.parse(sse_listener.data);
+
 		    
-		    notifyFriends(content);
+		    var friends = retval.splice(0, retval.length - 1);
+		    var self_name = retval[0];
+
+		    // notifyFriends(content);
+
+		    // reload friend's data.
+
+		    
+
+
+
 
 		   	source.close();
 		},false);
@@ -159,6 +170,9 @@ $(document).ready(function(){
 
 
 });
+
+
+
 
 function notifyFriends(content, self_name) {
   if (!Notification) {

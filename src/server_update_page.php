@@ -7,6 +7,8 @@ $user = $_SESSION['user'];
 $pdo = connect();
 
 $friends = $_SESSION['friends'];
+array_push($friends, $user->get_email());
+
 
 header("Content-Type: text/event-stream");
 // header("Cache-Control: no-cache");
