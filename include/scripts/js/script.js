@@ -1,6 +1,5 @@
 /** 
 	author: Melanie Lin 
-
 **/
 /* Drop-down Menu */
 function show_setting_menu() {
@@ -116,3 +115,8 @@ function show_about_page(link_id) {
 	links_to_pages[link_id] = page;
 }
 
+
+document.addEventListener('DOMContentLoaded', function () {
+  if (Notification.permission !== "granted")
+    Notification.requestPermission();
+});

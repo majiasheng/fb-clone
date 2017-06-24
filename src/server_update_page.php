@@ -6,16 +6,16 @@ session_start();
 $user = $_SESSION['user'];
 $pdo = connect();
 
-$friends = loadFriends($user->get_email(), $pdo);
-
-
-
+$friends = $_SESSION['friends'];
 
 header("Content-Type: text/event-stream");
 // header("Cache-Control: no-cache");
 header("Connection: keep-alive");
 
-echo "data: {$friends[0]}\n\n";
+
+// pass an associate array of friends to the client side.
+echo 'data: ' . json_decode($friends, true) . "\n\n";
+
 ob_flush();
 flush();
 

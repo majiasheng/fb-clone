@@ -1,5 +1,6 @@
 $(document).ready(function(){
 	// $("#posting_area").focus();
+
 	var source = null;
 
 	$('#post_form').submit(function(e){
@@ -7,20 +8,23 @@ $(document).ready(function(){
   		if(source){
   			source.close();
   		}
+
 	  	source = new EventSource('server_update_page.php');
 	  	source.addEventListener('message', function(e){
-		    console.log(e.data);
+		    
+		    notificaitonFriends();
+		    // Notify user here.
+		    test_sse(e);
+
 		   	source.close();
 		},false);
-	    // if(e.data >= 100){server.close();server=null;} //6
-	    // }, false);
 
 		e.preventDefault(); // Prevent Default Submission
 
-		var data_array = $(this).serializeArray();
-		data_array.push({name: 'update_page', value: true});
+		// var data_array = $(this).serializeArray();
+		// data_array.push({name: 'update_page', value: true});
 
-		$.post('../src/submit_post.php', data_array)
+		$.post('../src/submit_post.php', $(this).serialize())
 		.done(function(data){
 			$('.middle__posts').fadeOut('fast', function(){
 				$('.middle__posts').fadeIn('fast').html(data);
@@ -60,7 +64,6 @@ $(document).ready(function(){
 		return false;
 
 	});
-
 
 
 	// $(".thumb_up").on("click", function(e){
@@ -149,3 +152,32 @@ $(document).ready(function(){
 
 
 });
+
+function test_sse(e){
+	console.log(typeof(e.data));
+	console.log(e.data);
+}
+
+function notificaitonFriends() {
+  if (!Notification) {
+    alert('Desktop notifications not available in your browser. Try Chrome or Firefox.'); 
+    return;
+  }
+
+  if (Notification.permission !== "granted")
+    Notification.requestPermission();
+  else {
+    var notification = new Notification('Notification title', {
+      icon: 'http://cdn.sstatic.net/stackexchange/img/logos/so/so-icon.png',
+      body: "Hey there! You've been notified!",
+    });
+
+    notification.onclick = function () {
+      window.open("http://stackoverflow.com/a/13328397/1269037");      
+    };
+    
+  }
+
+}
+
+
