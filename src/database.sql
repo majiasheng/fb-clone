@@ -91,7 +91,9 @@ CREATE TABLE notification (
     receiver        VARCHAR(50) NOT NULL,
     content         TEXT NOT NULL,
     time_received   TIMESTAMP   DEFAULT CURRENT_TIMESTAMP,
-    processed       TINYINT DEFAULT 0
+    processed       TINYINT DEFAULT 0,
+
+    PRIMARY KEY(id)
 );
 
 
