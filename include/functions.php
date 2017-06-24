@@ -569,6 +569,4 @@ function saveNumProfile($user, $pdo) {
     return $stmt->execute();
 }
 
-
-
 ?>

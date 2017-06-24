@@ -25,6 +25,7 @@ $profile_pic = load_profile($user);
 <?php foreach($posts as $p):  
 	$comments = load_comments($p->getPostID(), $pdo);
     $name = getUserNameByEmail($p->getAuthorEmail(), $pdo);
+    // var_dump(loadUserProfile($_GET['user'], $pdo));
 
     include "../src/template/post_content.html";
     

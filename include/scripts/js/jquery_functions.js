@@ -117,8 +117,6 @@ $(document).ready(function(){
 
 	});
 
-
-
 	// Update info page
 	$('.update-info-form').submit(function(event){
 		event.preventDefault(); // Prevent Default Submission
