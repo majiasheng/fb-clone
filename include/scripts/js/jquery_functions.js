@@ -5,24 +5,13 @@ $(document).ready(function(){
 
 	$('#post_form').submit(function(e){
 
-  		if(source){
-  			source.close();
-  		}
-
-	  	source = new EventSource('server_update_page.php');
-	  	source.addEventListener('message', function(e){
-		    
-		    notificaitonFriends();
-		    // Notify user here.
-		    test_sse(e);
-
-		   	source.close();
-		},false);
-
+  		
 		e.preventDefault(); // Prevent Default Submission
 
 		// var data_array = $(this).serializeArray();
 		// data_array.push({name: 'update_page', value: true});
+		var content = $(this).find("#posting_area").val();
+
 
 		$.post('../src/submit_post.php', $(this).serialize())
 		.done(function(data){
@@ -34,6 +23,24 @@ $(document).ready(function(){
 		.fail(function(){
 			alert('Post submit Failed ...');
 		});
+
+
+		if(source){
+  			source.close();
+  		}
+
+	  	source = new EventSource('server_update_page.php');
+	  	source.addEventListener('message', function(sse_listener){
+		    
+		    var friends = JSON.parse(sse_listener.data);
+		    console.log(friends);
+		    
+		    notifyFriends(content);
+
+		   	source.close();
+		},false);
+
+
 	});
 
 
@@ -153,12 +160,7 @@ $(document).ready(function(){
 
 });
 
-function test_sse(e){
-	console.log(typeof(e.data));
-	console.log(e.data);
-}
-
-function notificaitonFriends() {
+function notifyFriends(content, self_name) {
   if (!Notification) {
     alert('Desktop notifications not available in your browser. Try Chrome or Firefox.'); 
     return;
@@ -168,12 +170,11 @@ function notificaitonFriends() {
     Notification.requestPermission();
   else {
     var notification = new Notification('Notification title', {
-      icon: 'http://cdn.sstatic.net/stackexchange/img/logos/so/so-icon.png',
-      body: "Hey there! You've been notified!",
+      body: content,
     });
 
     notification.onclick = function () {
-      window.open("http://stackoverflow.com/a/13328397/1269037");      
+      window.open("http://google.com");      
     };
     
   }

@@ -14,7 +14,7 @@ header("Connection: keep-alive");
 
 
 // pass an associate array of friends to the client side.
-echo 'data: ' . json_decode($friends, true) . "\n\n";
+echo 'data: ' . json_encode($friends) . "\n\n";
 
 ob_flush();
 flush();
