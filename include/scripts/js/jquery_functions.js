@@ -35,20 +35,17 @@ $(document).ready(function(){
 	// submit edit form on button click
 	$('#post_edit_form_btn').click(function() {
 		$('#post_edit_form_id').submit();
-		console.log("edit*********");
 	});
 
 	// update info page
 	$('#post_edit_form_id').submit(function(e){
 		e.preventDefault();
 
-		console.log("submitted*********");
-
 		$.post('../src/submit_post_edit.php', $(this).serialize())
 		.done(function(data) {
-			alert(data);
+			// alert(data);
 
-			// window.location.reload();
+			window.location.reload();
 
 		}) .fail(function() {
 			alert("Failed to edit post ...");
