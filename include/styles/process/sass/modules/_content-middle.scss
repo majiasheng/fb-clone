@@ -152,7 +152,7 @@
             cursor: pointer;
             // dropdown: edit, delete
             ul {
-                // display: none;
+                display: none;
                 position: absolute; // stay in a fixed position
                 right: 1px;         // set a number to 'initialize' the right value
                 width: 200px;

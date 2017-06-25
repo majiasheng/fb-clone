@@ -5,7 +5,6 @@ Jia Sheng Ma
 require_once("../include/functions.php");
 require_once("../include/loads/load_images.php");
 session_start();
-// TODO: use user data to populate main.php
 
 if ($_SESSION['loggedin'] !== TRUE) {
     header("Location: index.php");
