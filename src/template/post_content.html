@@ -5,10 +5,14 @@
             <!-- edit -->
             <li class="cog__dropdown--edit">
                 <form action="" method="POST" class="post_edit_form">
-                    <input type="hidden" name="post__id" value="<?php echo $p->getPostId(); ?>" />
-                    <a href="javascript:void(0);" onclick="$(this).closest('form').submit()">Edit Post</a>
+                    <input type="hidden" name="post__id" class="in" value="<?php echo $p->getPostId(); ?>" />
+                    <!-- trigger a modal to edit -->
+                    <a href="javascript:;" class="modal_trigger">Edit Post</a>
+
                 </form>
+
             </li>
+
             <!-- delete -->
             <li class="cog__dropdown--del">
                 <form action="" method="POST" class="post_delete_form">
@@ -19,15 +23,24 @@
             </li>
         </ul>
 </div>
+
+<?php
+    // edit post modal
+    // WARNING: the modal itself and its parents should not have any position attr
+    // include("template/modals/edit_post_modal.html");
+?>
+
 <div class="post__header">
     <!-- load user pic -->
     <img src="<?php echo loadProfileByEmail($p->getAuthorEmail(), $pdo) ?>" class="post__header__author-photo">
     
 
     <p class="post__header__info info__author">
-        <a class="" href="../src/NPC.php?user=<?php echo $p->getAuthorEmail(); ?>"><?php 
+        <a class="" href="../src/NPC.php?user=<?php echo $p->getAuthorEmail(); ?>">
+            <?php 
             echo getUserNameByEmail($p->getAuthorEmail(),$pdo); 
-        ?></a>
+            ?>
+        </a>
     </p>
 
     <p class="post__header__info info__date"><?php echo $p->getPostTime() ?></p>
@@ -35,7 +48,7 @@
 
 </div>
 <div class="post__content">
-    <p class="post__content__p"><?php echo $p->getContent() ?></p>
+    <p class="post__content__p" id="post_content"><?php echo $p->getContent() ?></p>
 </div>
 
 <hr>
