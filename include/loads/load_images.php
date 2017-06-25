@@ -29,7 +29,7 @@ function load_profile($user) {
 function loadProfileByEmail($email, $pdo){
     $index = getNumProfileByEmail($email, $pdo);
     // get the latest profile image
-	if(file_exists(PATH_TO_USERS.$email.'/profile'))
+	if(file_exists(PATH_TO_USERS.$email.'/profile/profile_img'.$index))
         return PATH_TO_USERS.$email.'/profile/profile_img'.$index;
     else
         return DEFAULT_PROFILE;
