@@ -49,7 +49,7 @@
                                      foreach($friend_requests as $fr) {
                                          echo "<li><p>".
                                                 // get user profile pic
-                                                '<img src="'. $profile_pic . '" >'
+                                                '<img src="'. loadProfileByEmail($fr, $pdo) . '" >'
                                                 // get username
                                              . "<a href='NPC.php?user=". $fr . "' target='_blank'>" . getUserNameByEmail($fr, $pdo) 
                                              . "</a> </p>";
