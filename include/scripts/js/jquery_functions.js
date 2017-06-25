@@ -1,13 +1,18 @@
 $(document).ready(function(){
 
-	// click anywhere to close 	// DOES NOT WORK ON CHROME?!
-    $(window).click(function() {
-	   if (!event.target.matches('.cog')) {
-	  		$(".cog__dropdown").hide();
-	  	}
+	$(".show").on("click", function(){
+	  $(".mask").addClass("active");
 	});
 
-    // toggle cog button
+
+
+
+	// click anywhere to close 	// DOES NOT WORK ON CHROME?!
+    $(window).click(function() {
+	  	closeDropdown();
+	});
+
+    // toggle cog buttons
     cogToggle();
 
 	// ajax to delete a post
@@ -15,7 +20,7 @@ $(document).ready(function(){
 		deletePost($(this), e);
 	});
 
-	// Update info page
+	// update info page
 	$('.update-info-form').submit(function(event){
 		updateInfo(this, event);
 	});
@@ -86,6 +91,36 @@ $(document).ready(function(){
 
 	});
 
+	// $(document).on('submit', '#edit_post_form', function(e){
+
+	// 	e.preventDefault(); // Prevent Default Submission
+
+	// 	// get the post_id.
+	// 	var id = $('input[class=in]').val();
+	// 	var name = 'post__' + id;
+	// 	alert(id);
+	// 	// $.post('../src/submit_comment.php', $(this).serialize() )
+	// 	// .done(function(data){
+	// 	// 	// update the comments based on the post id.
+	// 	// 	$('#' + name).fadeOut('fast', function(){
+	// 	// 		$('#' + name).fadeIn('fast').html(data);
+	// 	// 	});
+
+	// 	// 	// temporarily using: 
+	// 	// 	window.location.reload();
+	// 	// 	// empty out the comment.
+	// 	// 	$('.post_comment_form').trigger("reset");
+	// 	// })
+	// 	// .fail(function(){
+	// 	// 	alert('Comment submit failed ...');
+	// 	// });
+
+	// 	return false;
+
+	// });
+
+
+
 	
 
 
@@ -117,6 +152,18 @@ $(document).ready(function(){
 		return false;
 
 	});
+
+	// $(document).on('click', '.modal_trigger', function(e){
+	// // $('.thumb_up').click(function(e){
+
+	// 	e.preventDefault();
+	// 	// $('.post__content__p').addClass("display_none");
+	// 	$(".edit-modal").show();
+	// 	return false;
+
+	// });
+
+
 
 	$(document).on('click', '.share_content', function(e){
 	// $('.share_content').click(function(e){
@@ -176,6 +223,26 @@ function deletePost(thisObj, e) {
 }
 
 /**
+*	Edit a post 
+* 	thisObj: $this      	
+*	e: event
+*/
+function editPost(thisObj, e) {
+	e.preventDefault();
+	var id = thisObj.find("input[type=hidden]").val();
+	var name = 'post__' + id;
+
+	$.post('../src/submit_post_edit.php', thisObj.serialize())
+	.done(function(data) {
+		// alert(name);
+		window.location.reload();
+
+	}) .fail(function() {
+		alert("Failed to edit post ...");
+	});
+}
+
+/**
 *	Use AJAX to send update-info-form to backend
 *	thisObj: this (no $)
 *	event: event
@@ -206,3 +273,11 @@ function updateInfo(thisObj, event) {
 		alert('Failed to save your information ...');
 	});
 }
+
+function closeDropdown() {
+	if (!event.target.matches('.cog')) {
+  		$(".cog__dropdown").hide();
+  	}
+}
+
+

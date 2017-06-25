@@ -28,7 +28,7 @@ $cover_pic = load_cover($user);
 </title>
 <link rel="stylesheet" href="../include/styles/css/style.css">
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.6/css/bootstrap.min.css">
-          <link rel="stylesheet" type="text/css" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+<link rel="stylesheet" type="text/css" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
 
           <meta name="viewport" content="width=device-width, initial-scale=1">
       </head>
@@ -229,9 +229,10 @@ $cover_pic = load_cover($user);
 
                     // load the like_count.
                     $like_count = getLikeCount($p->getPostID(), $pdo);
-                    
+                    $post_id = $p->getPostID();
                     echo '<div class="middle__posts">';
                     include "../src/template/post_content.html";
+                    
                     echo '</div>';
                     endforeach;
                 ?>
@@ -260,6 +261,8 @@ $cover_pic = load_cover($user);
     </div>
 
 </div>
+
+
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
 <script src="https://cdn.jsdelivr.net/jquery.validation/1.16.0/jquery.validate.js"></script>

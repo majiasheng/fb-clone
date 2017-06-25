@@ -21,6 +21,7 @@ function show_friend_requests() {
         dropdown.style.display = "block";
     }
 }
+
 // click anythere to close 
 window.onclick = function(event) {
  	if (!event.target.matches('.fa-caret-down')) {
@@ -53,6 +54,7 @@ function close_update_info_page() {
 	modal.style.display = "none";
 }
 
+// TODO: use a:focus or jQuery addClass()/removeClass() instead
 // update info page: click add button to input
 function show_modal(clicked_id) {
 	// obj: add button and its correponding input box

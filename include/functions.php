@@ -308,6 +308,16 @@ function loadPosts($user_email, $pdo) {
     return $post_objs;
 }
 
+function loadPostContentById($user_email, $post_id, $pdo) {
+    $query = "SELECT content FROM " . POSTS_TABLE 
+    . " WHERE author_email = :email AND id = :id";
+    $stmt = $pdo->prepare($query);
+    $stmt->execute(['email' => $user_email, 'id' => $post_id]);
+
+    $post = $stmt->fetch(PDO::FETCH_ASSOC);
+    return $post;
+}
+
 function load_one_post($post_id, $pdo){
     // $query = "SELECT author_email, id from" . POSTS_TABLE
     // . " WHERE id = :id";
