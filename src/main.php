@@ -101,6 +101,7 @@ $cover_pic = load_cover($user);
 
                     <?php
                     $friends = loadFriends($user->get_email(), $pdo);
+
                     $_SESSION['friends'] = $friends;
 
                     if($friends){
@@ -109,9 +110,11 @@ $cover_pic = load_cover($user);
                             if($counter > 8) {
                                 break;
                             }
+                            // $profile_pic = loadProfileByEmail($f, $pdo);
                             //TODO: display profile picture instead
                             echo "<a href=\"NPC.php?user=". $f . "\">" . getUserNameByEmail($f, $pdo) . "</a>";
                             echo "&nbsp;";
+
                             $counter++;
                             
                         }
