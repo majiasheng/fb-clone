@@ -4,8 +4,8 @@
         <ul class="cog__dropdown">
             <!-- edit -->
             <li class="cog__dropdown--edit">
-                <form action="" method="POST" class="post_edit_form">
-                    <input type="hidden" name="post__id" class="in" value="<?php echo $p->getPostId(); ?>" />
+                <form action="" method="POST" class="post_edit_form" id="post_edit_form_id">
+                    <input type="hidden" name="post__id" class="in" value="<?php echo $post_id; ?>" />
                     <!-- trigger a modal to edit -->
                     <a data-toggle="modal" data-target="#editModal">Edit Post</a>
                 </form>
@@ -15,7 +15,7 @@
             <!-- delete -->
             <li class="cog__dropdown--del">
                 <form action="" method="POST" class="post_delete_form">
-                    <input type="hidden" name="post__id" value="<?php echo $p->getPostId(); ?>" />
+                    <input type="hidden" name="post__id" value="<?php echo $post_id; ?>" />
                     <a href="javascript:void(0);" onclick="$(this).closest('form').submit()">Delete Post</a>       
                 </form>
             </li>
@@ -56,7 +56,7 @@
     <!-- like -->
     <div class="actions--setting actions--decor">
         <a href="javascript:void(0);" class="thumb_up">
-            <i class="fa fa-thumbs-up"> <?php echo getLikeCount($p->getPostId(), $pdo)["count(liked)"] ?></i>
+            <i class="fa fa-thumbs-up"> <?php echo getLikeCount($post_id, $pdo)["count(liked)"] ?></i>
         </a>
     </div>
     <!-- share -->
@@ -72,7 +72,7 @@
             <input type="text" name="post_comment_content" placeholder="Write some comment" required="true" oninvalid="this.setCustomValidity('Say something ...')" 
             oninput="setCustomValidity('')" 
             />
-            <input type="hidden" name="post__id" value="<?php echo $p->getPostId(); ?>" />
+            <input type="hidden" name="post__id" value="<?php echo $post_id; ?>" />
            
             <a href="javascript:void(0);" onclick="$(this).closest('form').submit()"><i class="fa fa-comment"></i></a>
                 
@@ -80,7 +80,7 @@
     </div>
 
 </div>
-<div class="comment__content" id="<?php echo 'post__' . $p->getPostID() . ''?>">
+<div class="comment__content" id="<?php echo 'post__' . $post_id . ''?>">
     <?php
     foreach ($comments as $c) {
         $pic = loadProfileByEmail($c->getAuthor(), $pdo);

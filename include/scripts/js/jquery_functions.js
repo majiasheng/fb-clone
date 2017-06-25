@@ -17,12 +17,35 @@ $(document).ready(function(){
 
 	// ajax to delete a post
 	$('.post_delete_form').submit(function(e) {
-		deletePost($(this), e);
+
+		e.preventDefault();
+		var id = $(this).find("input[type=hidden]").val();
+		var name = 'post__' + id;
+
+		$.post('../src/submit_post_deletion.php', $(this).serialize())
+		.done(function(data) {
+			// alert(name);
+			window.location.reload();
+
+		}) .fail(function() {
+			alert("Deletion Failed ...");
+		});
 	});
 
 	// update info page
 	$('.update-info-form').submit(function(event){
-		updateInfo(this, event);
+		e.preventDefault();
+		var id = $(this).find("input[type=hidden]").val();
+		var name = 'post__' + id;
+
+		$.post('../src/submit_post_edit.php', $(this).serialize())
+		.done(function(data) {
+			// alert(name);
+			window.location.reload();
+
+		}) .fail(function() {
+			alert("Failed to edit post ...");
+		});
 	});
     
 
