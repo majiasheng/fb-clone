@@ -245,8 +245,8 @@ function savePostToDB($author_email, $owner_email, $pdo, $post) {
 }
 
 function updatePostContent($content, $id, $pdo) {
-    $query = "UPDATE " . POSTS_TABLE . " SET content = ? " .
-            "WHERE id = ?;";
+    $query = "UPDATE " . POSTS_TABLE . " SET content=? " .
+            "WHERE id=?;";
     $stmt = $pdo->prepare($query);
     return $stmt->execute([$content, $id]);
 }
@@ -609,5 +609,17 @@ function saveNumProfile($user, $pdo) {
     return $stmt->execute();
 }
 
+/**
+ * source : https://bueltge.de/einfaches-php-debugging-in-browser-console/
+ */
+function debug_to_console( $data ) {
+
+    if ( is_array( $data ) )
+        $output = "<script>console.log( 'Debug Objects: " . implode( ',', $data) . "' );</script>";
+    else
+        $output = "<script>console.log( 'Debug Objects: " . $data . "' );</script>";
+
+    echo $output;
+}
 
 ?>

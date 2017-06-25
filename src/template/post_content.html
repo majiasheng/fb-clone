@@ -1,4 +1,3 @@
-<!-- TODO: Change user to owner of post -->
  <!-- setting button: delete, edit -->
  <div class="cog fa fa-cog">
         <ul class="cog__dropdown">
@@ -56,7 +55,7 @@
     <!-- like -->
     <div class="actions--setting actions--decor">
         <a href="javascript:void(0);" class="thumb_up">
-            <i class="fa fa-thumbs-up"> <?php echo getLikeCount($post_id, $pdo)["count(liked)"] ?></i>
+            <i class="fa fa-thumbs-up"> <?php echo getLikeCount($p->getPostId(), $pdo)["count(liked)"] ?></i>
         </a>
     </div>
     <!-- share -->

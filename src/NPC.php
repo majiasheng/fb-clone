@@ -372,7 +372,7 @@ $cover_pic = load_cover($user);
                     // load the like_count.
                     $like_count = getLikeCount($p->getPostID(), $pdo);
 
-                    $post_id =  $p->getPostId();
+                    $post_id = $p->getPostId();
                     include "../src/template/post_content.html";
 
                     endforeach;

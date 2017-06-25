@@ -32,16 +32,23 @@ $(document).ready(function(){
 		});
 	});
 
+	// submit edit form on button click
+	$('#post_edit_form_btn').click(function() {
+		$('#post_edit_form_id').submit();
+		console.log("edit*********");
+	});
+
 	// update info page
-	$('.update-info-form').submit(function(event){
+	$('#post_edit_form_id').submit(function(e){
 		e.preventDefault();
-		var id = $(this).find("input[type=hidden]").val();
-		var name = 'post__' + id;
+
+		console.log("submitted*********");
 
 		$.post('../src/submit_post_edit.php', $(this).serialize())
 		.done(function(data) {
-			// alert(name);
-			window.location.reload();
+			alert(data);
+
+			// window.location.reload();
 
 		}) .fail(function() {
 			alert("Failed to edit post ...");
