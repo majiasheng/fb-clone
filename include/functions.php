@@ -246,8 +246,8 @@ function savePostToDB($author_email, $owner_email, $pdo, $post) {
 
 // delete a post from db
 function delPostFromDB($author_email, $pdo, $post_id) {
-    // must delete comments before deleting the post, otherwise, foreign key error
-    if (delCommentFromDB($author_email, $pdo, $post_id)) {
+    // must delete comments/likes/shares before deleting the post, otherwise, foreign key error
+    if (delCommentFromDB($author_email, $pdo, $post_id) && deleteLikeFromDB($author_email, $pdo, $post_id)) {
         $query = "DELETE FROM " . POSTS_TABLE . 
              " WHERE author_email='" . $author_email . "' AND id='" . $post_id . "'";
         $stmt = $pdo->prepare($query);
@@ -259,6 +259,13 @@ function delPostFromDB($author_email, $pdo, $post_id) {
 // delete comments
 function delCommentFromDB($author_email, $pdo, $post_id) {
     $query = "DELETE FROM " . COMMENTS_TABLE . 
+             " WHERE author_email='" . $author_email . "' AND post_id=" . $post_id;
+    $stmt = $pdo->prepare($query);
+    return $stmt->execute();  
+}
+// delete likes
+function deleteLikeFromDB($author_email, $pdo, $post_id) {
+    $query = "DELETE FROM " . LIKE_TABLE . 
              " WHERE author_email='" . $author_email . "' AND post_id=" . $post_id;
     $stmt = $pdo->prepare($query);
     return $stmt->execute();  
