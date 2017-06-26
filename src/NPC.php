@@ -60,27 +60,6 @@ if(isset($_POST['cancel_friend_request'])) {
     // unset($_SESSION['is_request_sent']);
 }
 
-// check if there's a post to friend
-// if(isset($_POST['post_to_friend'])) {
-//     if(isFriend($_SESSION['user']->get_email(), $user->get_email(), $pdo)) {        
-//         savePostToDB($_SESSION['user']->get_email(), 
-//             $user->get_email(), 
-//             $pdo, 
-//             $_POST['post_to_friend']
-//         );
-//         unset($_POST['post_to_friend']);
-//         // redirect to self to prevent resubmission by refreshing
-//         $self = $_SERVER['REQUEST_URI'];
-//         header("Location: $self");
-//     } else {
-//         //TODO: make popup window
-//         $msg = "Be " . $full_user_name . "'s friend first :)";
-//         echo $msg;
-//         unset($_POST['post_to_friend']);
-//     }
-// }
-
-
 // default profile picture
 // $profile_pic = "../rsrc/img/photos/default-profile.png";
 
@@ -137,7 +116,10 @@ $cover_pic = load_cover($user);
                 <div class="col-md-1 col-sm-12">
                     <li class="header__privacy header--icon-setting"><a href="#"><i class="fa fa-lock"></i></a></li>
                     <li class="header__setting header--icon-setting"><a href="#"><i class="fa fa-caret-down" onclick="show_setting_menu()"></i></a>
-
+                        <ul class="icon-dropdown" id="icon-setting--dropdown">
+                                <li><a href="settings.php">Settings</a></li>
+                                <li><a href="logout.php">Log Out</a></li>
+                             </ul>
                 </div>
                 <!-- search bar -->
                 <div class="col-md-4 col-sm-12">
@@ -178,6 +160,29 @@ $cover_pic = load_cover($user);
                 ?>
             </div>
 
+              <?php
+
+                //if it is not friend, then add a "Add Friend" button to send a friend request
+                if(!isFriend($_GET['user'], $_SESSION['user']->get_email(), $pdo)) {
+                    //TODO: on press, disable button, change text to "request sent"
+                    echo '<form action="" method="POST">';
+                    //TODO: onclick: change from "Add Friend" to "Cancel Request"
+                    if(!isRequestSent($_SESSION['user']->get_email(), $_GET['user'], $pdo)){
+                        // "you" send friend request to "NPC"
+
+                        //TODO: check if db has this friend request instead because 
+                        //      the other user can decline request
+                        echo '<input type="submit" name="friend_request" value="Add Friend" class="cover__friend-request"> ';
+                    } else {
+
+                        echo '<input type="submit" name="cancel_friend_request" value="Cancel Request" class="cover__friend-request"> ';
+                    }
+                    echo '</form>';
+                } else {
+                    echo '<input type="submit" value="Friend" class="cover__friend-request" disabled>';
+                } 
+              ?>
+
             </div> 
 
     </div>
@@ -185,28 +190,7 @@ $cover_pic = load_cover($user);
     
 
     
-    <?php
 
-    //if it is not friend, then add a "Add Friend" button to send a friend request
-    if(!isFriend($_GET['user'], $_SESSION['user']->get_email(), $pdo)) {
-        //TODO: on press, disable button, change text to "request sent"
-        echo '<form action="" method="POST">';
-        //TODO: onclick: change from "Add Friend" to "Cancel Request"
-        if(!isRequestSent($_SESSION['user']->get_email(), $_GET['user'], $pdo)){
-            // "you" send friend request to "NPC"
-
-            //TODO: check if db has this friend request instead because 
-            //      the other user can decline request
-            echo '<input type="submit" name="friend_request" value="Add Friend"> ';
-        } else {
-
-            echo '<input type="submit" name="cancel_friend_request" value="Cancel Request"> ';
-        }
-        echo '</form>';
-    } else {
-        echo "???";
-    }
-    ?>
 
     </div>
 
@@ -261,9 +245,11 @@ $cover_pic = load_cover($user);
                             if($counter > 8) {
                                 break;
                             }
-                            //TODO: display profile picture instead
+                            $friend_pic = loadProfileByEmail($f, $pdo);
+                            echo '<div class="container__img col-md-4">';
+                            echo '<img src="'. $friend_pic .'" class="small_image">';
                             echo "<a href=\"NPC.php?user=". $f . "\">" . getUserNameByEmail($f, $pdo) . "</a>";
-                            echo "&nbsp;";
+                            echo '</div>';
                         }
                     } else {
                         echo "Lonely person :(";

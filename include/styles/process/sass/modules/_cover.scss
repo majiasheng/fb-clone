@@ -83,7 +83,16 @@
         		margin-left: 200px;
         		font-size: 1.6em;
         	}
-         //    // update info / view activity
+            // NPC page: add friend btn
+            .cover__friend-request {
+                display: block;
+                margin-left: 200px;
+                padding: 6px 15px;
+                background: transparent; //Fall-back for browsers that don't support rgba
+                background: rgba(0,0,0, 0.1);
+                // font-size: 1.6em;
+            }
+            // update info / view activity
             .cover__act {
                 margin-left: 50px;
                 div {
