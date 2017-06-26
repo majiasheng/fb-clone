@@ -32,25 +32,37 @@ $(document).ready(function(){
 		});
 	});
 
-	// submit edit form on button click
-	$('#post_edit_form_btn').click(function() {
-		$('#post_edit_form_id').submit();
-	});
-
 	// update info page
-	$('#post_edit_form_id').submit(function(e){
+	$('.post_edit_form').submit(function(e){
 		e.preventDefault();
-
 		$.post('../src/submit_post_edit.php', $(this).serialize())
 		.done(function(data) {
 			// alert(data);
-
+			// console.log(data);
 			window.location.reload();
-
+			$(".post_edit_form")[0].reset();
 		}) .fail(function() {
 			alert("Failed to edit post ...");
 		});
 	});
+	// $('#post_edit_form_id').submit(function(e){
+
+	// 	e.preventDefault(); // Prevent Default Submission
+
+	// 	$.post('../src/submit_post_edit.php', $(this).serialize() )
+	// 	.done(function(data){
+	// 		$('.middle__posts').fadeOut('fast', function(){
+	// 			$('.middle__posts').fadeIn('fast').html(data);
+	// 		});
+	// 		alert(data);
+	// 		// temporarily using: 
+	// 		window.location.reload();
+	// 		$("#post_edit_form_id")[0].reset();
+	// 	})
+	// 	.fail(function(){
+	// 		alert('Post submit Failed ...');
+	// 	});
+	// });
     
 
 	$('#post_form').submit(function(e){

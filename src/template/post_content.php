@@ -2,12 +2,16 @@
  <div class="cog fa fa-cog">
         <ul class="cog__dropdown">
             <!-- edit -->
+            <li><?php echo $post_id; ?> </li>
             <li class="cog__dropdown--edit">
-                <form action="" method="POST" class="post_edit_form" id="post_edit_form_id">
-                    <input type="hidden" name="post__id" class="in" value="<?php echo $post_id; ?>" />
+                <!-- <form action="" method="POST" class="post_edit_form" > -->
+                    <!-- <input type="hidden" name="post__id" class="in" value="<?php echo $post_id; ?>" /> -->
                     <!-- trigger a modal to edit -->
-                    <a data-toggle="modal" data-target="#editModal">Edit Post</a>
-                </form>
+                    <!-- <a data-toggle="modal" data-target="#editModal">Edit Post</a> -->
+
+                    <!-- TODO -->
+                    <a onclick="toggle_edit()">Edit Post</a>
+                <!-- </form> -->
 
             </li>
 
@@ -15,17 +19,27 @@
             <li class="cog__dropdown--del">
                 <form action="" method="POST" class="post_delete_form">
                     <input type="hidden" name="post__id" value="<?php echo $post_id; ?>" />
-                    <a href="javascript:void(0);" onclick="$(this).closest('form').submit()">Delete Post</a>       
+                    <a href="javascript:void(0);" onclick="$(this).closest('form').submit()">Delete Post</a>
                 </form>
             </li>
         </ul>
 </div>
 
+<!-- 
 <?php
     // edit post modal
     // WARNING: the modal itself and its parents should not have any position attr
-    include("template/modals/edit_post_modal.html");
-?>
+//    include("template/modals/edit_post_modal.php");
+?> 
+-->
+
+<form action="" method="POST" id="post_edit_form_id" class="post_edit_form">
+<p>Edit Post</p>
+    <textarea rows="3" style="width:100%" name="new_content" id="edit_posting_area"></textarea>
+    <input type="hidden" name="post__id" value="<?php echo $post_id; ?>" />
+    <input type="submit" Value="Save" class="btn">
+</form>
+
 
 <div class="post__header">
     <!-- load user pic -->

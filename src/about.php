@@ -44,8 +44,8 @@ $cover_pic = load_cover($user);
 <body>
 <div class="container-fluid">
     <?php
-                include("template/navigation.html");
-                include("template/banner.html");
+                include("template/navigation.php");
+                include("template/banner.php");
     ?>
     <div class="row content">
 

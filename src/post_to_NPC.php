@@ -30,7 +30,7 @@ foreach($posts as $p):
     $comments = load_comments($p->getPostID(), $pdo);
     $name = getUserNameByEmail($p->getAuthorEmail(), $pdo);
 
-    include "../src/template/post_content.html";
+    include "../src/template/post_content.php";
 endforeach;
 
 unset($_POST);

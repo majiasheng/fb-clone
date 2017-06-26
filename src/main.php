@@ -35,8 +35,8 @@ $cover_pic = load_cover($user);
         <div class="container-fluid">
             <!-- Navigation and Banner-->
             <?php
-                include("template/navigation.html");
-                include("template/banner.html");
+                include("template/navigation.php");
+                include("template/banner.php");
             ?>
             <!-- End Navigation and Banner-->
 
@@ -91,7 +91,6 @@ $cover_pic = load_cover($user);
 
             <!-- ********************** left: friends ********************** -->
             <div class="left__friends">
-                <!-- TODO: redirect to user's friends -->
                 <a href="friends.php"><h2 class="content__title content__title--font">
                     <i class="fa fa-user-plus content__icon content__icon--bg" aria-hidden="true"></i>
                     Friends
@@ -227,7 +226,7 @@ $cover_pic = load_cover($user);
                 
                 <?php
                 $posts = loadPosts($user->get_email(), $pdo);
-                foreach($posts as $p):
+                foreach($posts as $p) {
                     
                     // load all the comment of the current post.
                     $comments = load_comments($p->getPostID(), $pdo);
@@ -236,10 +235,10 @@ $cover_pic = load_cover($user);
                     $like_count = getLikeCount($p->getPostID(), $pdo);
                     $post_id = $p->getPostID();
                     echo '<div class="middle__posts">';
-                    include "../src/template/post_content.html";
+                    include "../src/template/post_content.php";
                     
                     echo '</div>';
-                    endforeach;
+                }
                 ?>
                 
                 </div>

@@ -373,7 +373,8 @@ $cover_pic = load_cover($user);
                     $like_count = getLikeCount($p->getPostID(), $pdo);
 
                     $post_id = $p->getPostId();
-                    include "../src/template/post_content.html";
+                    //TODO: DO NOT load cog for posts
+                    include "../src/template/post_content.php";
 
                     endforeach;
                 ?>

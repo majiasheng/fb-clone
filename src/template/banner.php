@@ -38,7 +38,7 @@
 
         <!-- update info page -->
         <?php
-            include("modals/update_info_modal.html");
+            include("modals/update_info_modal.php");
         ?>
         <!-- end update_info page -->
 </div>

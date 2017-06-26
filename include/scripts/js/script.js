@@ -124,6 +124,15 @@ function show_about_page(link_id) {
 	links_to_pages[link_id] = page;
 }
 
+function toggle_edit() {
+	// var cog = document.getElementsByClassName("post_edit_form");
+	// if(cog.style.display == "block") { 
+	// 	cog.style.display = "none";
+	// } else { 
+	// 	cog.style.display = "block";
+	// }
+}
+
 window.onload = function setDataSource(){
 	// if(!!window.EventSource){
 	// 	var source = new EventSource("server_update_page.php");
