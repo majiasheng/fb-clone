@@ -179,7 +179,7 @@ $cover_pic = load_cover($user);
                     }
                     echo '</form>';
                 } else {
-                    echo '<div class="cover__friend-request">Friend <i class="fa fa-check"></i></div>';
+                    echo '<input type="submit" value="Friend" class="cover__friend-request" disabled>';
                 } 
               ?>
 
