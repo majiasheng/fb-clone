@@ -17,12 +17,39 @@ $(document).ready(function(){
 
 	// ajax to delete a post
 	$('.post_delete_form').submit(function(e) {
-		deletePost($(this), e);
+
+		e.preventDefault();
+		var id = $(this).find("input[type=hidden]").val();
+		var name = 'post__' + id;
+
+		$.post('../src/submit_post_deletion.php', $(this).serialize())
+		.done(function(data) {
+			// alert(name);
+			window.location.reload();
+
+		}) .fail(function() {
+			alert("Deletion Failed ...");
+		});
+	});
+
+	// submit edit form on button click
+	$('#post_edit_form_btn').click(function() {
+		$('#post_edit_form_id').submit();
 	});
 
 	// update info page
-	$('.update-info-form').submit(function(event){
-		updateInfo(this, event);
+	$('#post_edit_form_id').submit(function(e){
+		e.preventDefault();
+
+		$.post('../src/submit_post_edit.php', $(this).serialize())
+		.done(function(data) {
+			// alert(data);
+
+			window.location.reload();
+
+		}) .fail(function() {
+			alert("Failed to edit post ...");
+		});
 	});
     
 

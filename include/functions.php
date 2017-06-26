@@ -244,6 +244,13 @@ function savePostToDB($author_email, $owner_email, $pdo, $post) {
     return $rtval;
 }
 
+function updatePostContent($content, $id, $pdo) {
+    $query = "UPDATE " . POSTS_TABLE . " SET content=? " .
+            "WHERE id=?;";
+    $stmt = $pdo->prepare($query);
+    return $stmt->execute([$content, $id]);
+}
+
 // delete a post from db
 function delPostFromDB($author_email, $pdo, $post_id) {
     // must delete comments/likes/shares before deleting the post, otherwise, foreign key error
@@ -602,5 +609,17 @@ function saveNumProfile($user, $pdo) {
     return $stmt->execute();
 }
 
+/**
+ * source : https://bueltge.de/einfaches-php-debugging-in-browser-console/
+ */
+function debug_to_console( $data ) {
+
+    if ( is_array( $data ) )
+        $output = "<script>console.log( 'Debug Objects: " . implode( ',', $data) . "' );</script>";
+    else
+        $output = "<script>console.log( 'Debug Objects: " . $data . "' );</script>";
+
+    echo $output;
+}
 
 ?>
