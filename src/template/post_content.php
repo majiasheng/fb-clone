@@ -43,7 +43,7 @@
 <!-- edit post -->
 <div class="post__edit">
     <form action="" method="POST" id="post_edit_form_id" class="post_edit_form">
-        <h6>Edit Post</h6>
+        <!-- <h6>Edit Post</h6> -->
         <textarea rows="3" style="width:100%" name="new_content" id="edit_posting_area"></textarea>
         <input type="hidden" name="post__id" value="<?php echo $post_id; ?>" />
         <input type="submit" Value="Save" class="btn btn-primary btn-sm">

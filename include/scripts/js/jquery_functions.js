@@ -32,6 +32,11 @@ $(document).ready(function(){
 	});
 
 	// update info page
+ 	$('.update-info-form').submit(function(event){
+		updateInfo(this, event);
+	});
+
+	// edit post
 	$('.post_edit_form').submit(function(e){
 		e.preventDefault();
 		$.post('../src/submit_post_edit.php', $(this).serialize())
