@@ -19,31 +19,32 @@ if(isset($_FILES['cover_image'])){
     // TODO: change echo to js alert
     if(in_array($file_ext,$expensions)=== false){
         $errors[]="extension not allowed, please choose a JPEG or PNG file.";
+         $_SESSION['error'] = "extension not allowed, please choose a JPEG or PNG file.";
     }
 
     if($file_size > 2097152) {
-        $errors[]='File size must be excately 2 MB';
+        $errors[]='File size must be less than 2 MB';
+        $_SESSION['error'] = 'File size must be less than 2 MB';
     }
 
     // save image to rsrc/ folder if no error
-    if(empty($errors)==true) {
+    if(empty($errors)) {
         // create dir named with user email 
         // $path = PATH_TO_USERS.$user->get_email()."/cover";
         // create dir if not exist
 
         // upload image to the user's folder
-        $image_index = $user->get_num_cover();          // name the file according to index
+        $image_index = $user->get_num_cover()+1;          // name the file according to index
 
-        move_uploaded_file($file_tmp, PATH_TO_USERS.$user->get_email()."/cover/cover_img".($image_index+1));
+        move_uploaded_file($file_tmp, PATH_TO_USERS.$user->get_email()."/cover/cover_img".($image_index));
 
         // set num of cover image
-        $image_index++;
         $user->set_num_cover($image_index);
         saveNumCover($user, $pdo);
 
-    } else {
-        print_r($errors);
     }
+} else {
+    $_SESSION['error'] = "No image being uploaded";
 }
 header("Location: main.php");
 ?>

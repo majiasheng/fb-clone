@@ -14,10 +14,16 @@
             <div class="cover__profile-container">
                 <div class="img_wrapper">
                 <?php
+                    if(isset($_SESSION['error'])) {
+                        echo $_SESSION['error'];
+                        unset($_SESSION['error']);
+                    }
+
                     // load user profile picture
                     echo '<img src="'. $profile_pic . '" alt="profile photo" />';
                 ?>
                 </div>
+
                 <form method="POST" action="submit_profile_photo.php" enctype="multipart/form-data"> 
                     <!-- use a <a> tag to trigger the file input, since file input css cant be modified -->
                     <a href="#" onclick="document.getElementById('file_profile').click();return false;"><i class="fa fa-camera"></i>Add Photo</a>

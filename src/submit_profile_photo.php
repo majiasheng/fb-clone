@@ -20,10 +20,12 @@ if(isset($_FILES['profile_image'])){
     // TODO: change echo to js alert
     if(in_array($file_ext,$expensions)=== false){
         $errors[]="extension not allowed, please choose a JPEG or PNG file.";
+        $_SESSION['error'] = "extension not allowed, please choose a JPEG or PNG file.";
     }
 
     if($file_size > 2097152) {
-        $errors[]='File size must be excately 2 MB';
+        $errors[]='File size must be less than 2 MB';
+        $_SESSION['error'] = 'File size must be less than 2 MB';
     }
 
     // save image to rsrc/ folder if no error
@@ -40,6 +42,8 @@ if(isset($_FILES['profile_image'])){
     } else {
         print_r($errors);
     }
+} else {
+    $_SESSION['error'] = "No image being uploaded";
 }
 header("Location: main.php");
 ?>
