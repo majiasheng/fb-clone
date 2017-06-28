@@ -355,7 +355,7 @@ $cover_pic = load_cover($user);
 
             <!-- ********************** middle: post ********************** -->
 
-            <div class="middle__posts">
+            <!-- <div class="middle__posts"> -->
                 <?php
                 $posts = loadPosts($user->get_email(), $pdo);
                 foreach($posts as $p):
@@ -370,9 +370,10 @@ $cover_pic = load_cover($user);
                     $like_count = getLikeCount($p->getPostID(), $pdo);
 
                     $post_id = $p->getPostId();
-                    //TODO: DO NOT load cog for posts
+                    echo '<div class="middle__posts">';
+                    // TODO: DO NOT LOAD COG 
                     include "../src/template/post_content.php";
-
+                    echo '</div>';
                     endforeach;
                 ?>
 

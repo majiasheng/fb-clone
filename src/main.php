@@ -212,7 +212,6 @@ $cover_pic = load_cover($user);
                 <!-- ********************** middle: post ********************** -->
 
                 <!-- Begin middle__post -->
-
                 <?php
                 $posts = loadPosts($user->get_email(), $pdo);
                 // counts the number of posts; for toggle_edit() to know in which post the edit modal should toggle

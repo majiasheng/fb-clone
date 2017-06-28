@@ -61,7 +61,8 @@ $(document).ready(function(){
 				$('.middle__posts').fadeIn('fast').html(data);
 			});
 			// temporarily using: 
-			$('.middle__posts').load(document.URL +  '.middle__posts');
+			window.location.reload();
+			// $('.middle__posts').load(document.URL +  '.middle__posts');
 			$("#post_form")[0].reset();
 		})
 		.fail(function(){
@@ -78,6 +79,7 @@ $(document).ready(function(){
 			$('.middle__posts').fadeOut('fast', function(){
 				$('.middle__posts').fadeIn('fast').html(data);
 			});
+			window.location.reload();
 			$("#post_to_friend_form")[0].reset();
 		})
 		.fail(function(){
@@ -104,7 +106,8 @@ $(document).ready(function(){
 			});
 
 			// temporarily using: 
-			$('.middle__posts').load(document.URL +  '.middle__posts');
+			window.location.reload();
+			// $('.middle__posts').load(document.URL +  '.middle__posts');
 			// empty out the comment.
 			$('.post_comment_form').trigger("reset");
 		})

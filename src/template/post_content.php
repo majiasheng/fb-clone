@@ -94,11 +94,12 @@
                     <p class="comment__header__info info__commentor info__author">
                         <a href="../src/NPC.php?user=';
                         echo $c->getAuthor() . '">' . getUserNameByEmail($c->getAuthor(), $pdo) . '</a></p>
-                    <p class="comment__header__info info__date">'. $c->getCommentTime() .'</p>
+                    <p class="comment__header__info info__date" style="margin-top:-20px;">'. $c->getCommentTime() .'</p>
+                </div>
                     <p class="comment__content__p">'. $c->getCommentContent() .'</p>
 
-                    
-                </div>
+
+                
 
             </div>
         ';
