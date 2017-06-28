@@ -223,9 +223,9 @@ $cover_pic = load_cover($user);
 
                 <!-- Begin middle__post -->
 
-                
                 <?php
                 $posts = loadPosts($user->get_email(), $pdo);
+                $class_index = 0;           // for toggle_edit() to know which edit modal should open
                 foreach($posts as $p) {
                     
                     // load all the comment of the current post.
@@ -238,10 +238,10 @@ $cover_pic = load_cover($user);
                     include "../src/template/post_content.php";
                     
                     echo '</div>';
+                    $class_index++;
                 }
                 ?>
-                
-                </div>
+        </div>
                 <!-- End middle__post -->
 
                 <div class="content__right col-md-2">

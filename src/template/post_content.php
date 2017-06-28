@@ -10,7 +10,7 @@
                     <!-- <a data-toggle="modal" data-target="#editModal">Edit Post</a> -->
 
                     <!-- TODO -->
-                    <a onclick="toggle_edit()">Edit Post</a>
+                    <a onclick="toggle_edit($class_index)" class="edit__trigger">Edit Post</a>
                 <!-- </form> -->
 
             </li>
@@ -25,21 +25,14 @@
         </ul>
 </div>
 
-<!-- 
-<?php
-    // edit post modal
-    // WARNING: the modal itself and its parents should not have any position attr
-//    include("template/modals/edit_post_modal.php");
-?> 
--->
-
-<form action="" method="POST" id="post_edit_form_id" class="post_edit_form">
-<p>Edit Post</p>
-    <textarea rows="3" style="width:100%" name="new_content" id="edit_posting_area"></textarea>
-    <input type="hidden" name="post__id" value="<?php echo $post_id; ?>" />
-    <input type="submit" Value="Save" class="btn">
-</form>
-
+<div class="post__edit">
+    <form action="" method="POST" id="post_edit_form_id" class="post_edit_form">
+        <h6>Edit Post</h6>
+        <textarea rows="3" style="width:100%" name="new_content" id="edit_posting_area"></textarea>
+        <input type="hidden" name="post__id" value="<?php echo $post_id; ?>" />
+        <input type="submit" Value="Save" class="btn">
+    </form>
+</div>
 
 <div class="post__header">
     <!-- load user pic -->

@@ -5,8 +5,6 @@ $(document).ready(function(){
 	});
 
 
-
-
 	// click anywhere to close 	// DOES NOT WORK ON CHROME?!
     $(window).click(function() {
 	  	closeDropdown();
@@ -25,7 +23,8 @@ $(document).ready(function(){
 		$.post('../src/submit_post_deletion.php', $(this).serialize())
 		.done(function(data) {
 			// alert(name);
-			window.location.reload();
+			
+			$('.middle__posts').load(document.URL +  '.middle__posts');
 
 		}) .fail(function() {
 			alert("Deletion Failed ...");
@@ -39,7 +38,7 @@ $(document).ready(function(){
 		.done(function(data) {
 			// alert(data);
 			// console.log(data);
-			window.location.reload();
+			$('.middle__posts').load(document.URL +  '.middle__posts');
 			$(".post_edit_form")[0].reset();
 		}) .fail(function() {
 			alert("Failed to edit post ...");
@@ -75,7 +74,7 @@ $(document).ready(function(){
 				$('.middle__posts').fadeIn('fast').html(data);
 			});
 			// temporarily using: 
-			window.location.reload();
+			$('.middle__posts').load(document.URL +  '.middle__posts');
 			$("#post_form")[0].reset();
 		})
 		.fail(function(){
@@ -118,7 +117,7 @@ $(document).ready(function(){
 			});
 
 			// temporarily using: 
-			window.location.reload();
+			$('.middle__posts').load(document.URL +  '.middle__posts');
 			// empty out the comment.
 			$('.post_comment_form').trigger("reset");
 		})
@@ -254,7 +253,7 @@ function deletePost(thisObj, e) {
 	$.post('../src/submit_post_deletion.php', thisObj.serialize())
 	.done(function(data) {
 		// alert(name);
-		window.location.reload();
+		$('.middle__posts').load(document.URL +  '.middle__posts');
 
 	}) .fail(function() {
 		alert("Deletion Failed ...");
@@ -274,7 +273,7 @@ function editPost(thisObj, e) {
 	$.post('../src/submit_post_edit.php', thisObj.serialize())
 	.done(function(data) {
 		// alert(name);
-		window.location.reload();
+		$('.middle__posts').load(document.URL +  '.middle__posts');
 
 	}) .fail(function() {
 		alert("Failed to edit post ...");
@@ -319,4 +318,8 @@ function closeDropdown() {
   	}
 }
 
+var myFunction = function() {
+    var attribute = this.getAttribute("data-myattribute");
+    alert(attribute);
+};
 
