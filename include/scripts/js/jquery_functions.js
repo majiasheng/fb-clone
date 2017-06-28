@@ -36,33 +36,15 @@ $(document).ready(function(){
 		e.preventDefault();
 		$.post('../src/submit_post_edit.php', $(this).serialize())
 		.done(function(data) {
-			// alert(data);
 			// refresh posts
-			$('.middle__posts').load(document.URL +  '.middle__posts');
+			window.location.reload();
+			// $('.middle__posts').load(document.URL +  '.middle__posts');
+
 			$(".post_edit_form")[0].reset();
 		}) .fail(function() {
 			alert("Failed to edit post ...");
 		});
 	});
-	// $('#post_edit_form_id').submit(function(e){
-
-	// 	e.preventDefault(); // Prevent Default Submission
-
-	// 	$.post('../src/submit_post_edit.php', $(this).serialize() )
-	// 	.done(function(data){
-	// 		$('.middle__posts').fadeOut('fast', function(){
-	// 			$('.middle__posts').fadeIn('fast').html(data);
-	// 		});
-	// 		alert(data);
-	// 		// temporarily using: 
-	// 		window.location.reload();
-	// 		$("#post_edit_form_id")[0].reset();
-	// 	})
-	// 	.fail(function(){
-	// 		alert('Post submit Failed ...');
-	// 	});
-	// });
-    
 
 	$('#post_form').submit(function(e){
 
@@ -316,7 +298,8 @@ function closeDropdown() {
 	if (!event.target.matches('.cog')) {
   		$(".cog__dropdown").hide();
   	}
-  	if (!event.target.matches('.edit__trigger')) {
+  	// close the edit modal if not click the cog and editing area
+  	if (!event.target.matches('.edit__trigger') && !event.target.matches('#edit_posting_area')) {
   		$(".post__edit").hide();
   	}
 }

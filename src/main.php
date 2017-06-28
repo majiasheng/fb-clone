@@ -225,7 +225,8 @@ $cover_pic = load_cover($user);
 
                 <?php
                 $posts = loadPosts($user->get_email(), $pdo);
-                $class_index = 0;           // for toggle_edit() to know which edit modal should open
+                // counts the number of posts; for toggle_edit() to know in which post the edit modal should display
+                $class_index = 0;           
                 foreach($posts as $p) {
                     
                     // load all the comment of the current post.

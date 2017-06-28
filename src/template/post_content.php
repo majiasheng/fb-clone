@@ -2,16 +2,8 @@
  <div class="cog fa fa-cog">
         <ul class="cog__dropdown">
             <!-- edit -->
-            <li><?php echo $post_id; ?> </li>
             <li class="cog__dropdown--edit">
-                <!-- <form action="" method="POST" class="post_edit_form" > -->
-                    <!-- <input type="hidden" name="post__id" class="in" value="<?php echo $post_id; ?>" /> -->
-                    <!-- trigger a modal to edit -->
-                    <!-- <a data-toggle="modal" data-target="#editModal">Edit Post</a> -->
-
-                    <!-- TODO -->
                     <a onclick="toggle_edit(<?php echo $class_index ?>)" class="edit__trigger">Edit Post</a>
-                <!-- </form> -->
 
             </li>
 
@@ -25,14 +17,7 @@
         </ul>
 </div>
 
-<div class="post__edit">
-    <form action="" method="POST" id="post_edit_form_id" class="post_edit_form">
-        <h6>Edit Post</h6>
-        <textarea rows="3" style="width:100%" name="new_content" id="edit_posting_area"></textarea>
-        <input type="hidden" name="post__id" value="<?php echo $post_id; ?>" />
-        <input type="submit" Value="Save" class="btn">
-    </form>
-</div>
+
 
 <div class="post__header">
     <!-- load user pic -->
@@ -49,14 +34,23 @@
 
     <p class="post__header__info info__date"><?php echo $p->getPostTime() ?></p>
    
-
+<!-- post content -->
 </div>
 <div class="post__content">
     <p class="post__content__p" id="post_content"><?php echo $p->getContent() ?></p>
 </div>
 
-<hr>
+<!-- edit post -->
+<div class="post__edit">
+    <form action="" method="POST" id="post_edit_form_id" class="post_edit_form">
+        <h6>Edit Post</h6>
+        <textarea rows="3" style="width:100%" name="new_content" id="edit_posting_area"></textarea>
+        <input type="hidden" name="post__id" value="<?php echo $post_id; ?>" />
+        <input type="submit" Value="Save" class="btn btn-primary btn-sm">
+    </form>
+</div>
 
+<hr>
 
 <div class="post__actions">
     <!-- like -->
