@@ -247,7 +247,8 @@ $cover_pic = load_cover($user);
                             }
                             $friend_pic = loadProfileByEmail($f, $pdo);
                             echo '<div class="container__img col-md-4">';
-                            echo '<img src="'. $friend_pic .'" class="small_image">';
+                            echo '<a href="NPC.php?user=' . $f . '">';
+                            echo '<img src="'. $friend_pic .'" class="small_image"></a>';
                             echo "<a href=\"NPC.php?user=". $f . "\">" . getUserNameByEmail($f, $pdo) . "</a>";
                             echo '</div>';
                         }
