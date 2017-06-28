@@ -51,14 +51,22 @@ if(isset($_POST['friend_request'])) {
     header("Location: $self");
 }
 
+
 // check whether there's a cancelling of friend request
 if(isset($_POST['cancel_friend_request'])) {
 
     removeFriendRequest($_SESSION['user']->get_email(), $_GET['user'], $pdo);
     unset($_POST['cancel_friend_request']);
     
-    // unset($_SESSION['is_request_sent']);
 }
+// handle unfriend request 
+if(isset($_POST['unfriend_request'])) {
+    removeFriend($_SESSION['user']->get_email(), $_GET['user'], $pdo);
+    removeFriend($_GET['user'], $_SESSION['user']->get_email(),  $pdo);
+    unset($_POST['unfriend_request']);
+    
+}
+
 
 // default profile picture
 // $profile_pic = "../rsrc/img/photos/default-profile.png";
@@ -179,7 +187,9 @@ $cover_pic = load_cover($user);
                     }
                     echo '</form>';
                 } else {
-                    echo '<input type="submit" value="Friend" class="cover__friend-request" disabled>';
+                    echo '<form action="" method="POST" id="unfriend_rqs">';
+                    echo '<input type="submit" name="unfriend_request" value="Unfriend" class="cover__friend-request">';
+                    echo '</form>';
                 } 
               ?>
 
