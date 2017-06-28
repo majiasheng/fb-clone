@@ -124,27 +124,16 @@ function show_about_page(link_id) {
 	links_to_pages[link_id] = page;
 }
 
-// var edit_class = document.getElementsByClassName("post__edit");
-// var myFunction = function() {
-//     // var attribute = this.getAttribute("data-myattribute");
-//     alert("attribute");
-// };
-// edit_class.addEventListener('click', myFunction(), false);
-
-// document.addEventListener("click", function(){
-//     document.getElementsByClassName("post__edit").style.display = "block";
-// });
-
 function toggle_edit(class_index) {
-	alert("class_index");
+	// alert(class_index);
 	// var edit_modals = document.getElementsByClassName("post__edit");
 	var edit_modals = document.getElementsByClassName("post__edit");
 	
-	// if(edit_modals[class_index].style.display == "block") { 
-	// 	edit_modals[class_index].style.display = "none";
-	// } else { 
-	// 	edit_modals[class_index].style.display = "block";
-	// }
+	if(edit_modals[class_index].style.display == "block") { 
+		edit_modals[class_index].style.display = "none";
+	} else { 
+		edit_modals[class_index].style.display = "block";
+	}
 }
 
 window.onload = function setDataSource(){

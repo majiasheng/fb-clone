@@ -10,7 +10,7 @@
                     <!-- <a data-toggle="modal" data-target="#editModal">Edit Post</a> -->
 
                     <!-- TODO -->
-                    <a onclick="toggle_edit($class_index)" class="edit__trigger">Edit Post</a>
+                    <a onclick="toggle_edit(<?php echo $class_index ?>)" class="edit__trigger">Edit Post</a>
                 <!-- </form> -->
 
             </li>

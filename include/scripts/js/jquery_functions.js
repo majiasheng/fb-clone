@@ -37,7 +37,7 @@ $(document).ready(function(){
 		$.post('../src/submit_post_edit.php', $(this).serialize())
 		.done(function(data) {
 			// alert(data);
-			// console.log(data);
+			// refresh posts
 			$('.middle__posts').load(document.URL +  '.middle__posts');
 			$(".post_edit_form")[0].reset();
 		}) .fail(function() {
@@ -315,6 +315,9 @@ function updateInfo(thisObj, event) {
 function closeDropdown() {
 	if (!event.target.matches('.cog')) {
   		$(".cog__dropdown").hide();
+  	}
+  	if (!event.target.matches('.edit__trigger')) {
+  		$(".post__edit").hide();
   	}
 }
 
