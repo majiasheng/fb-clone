@@ -112,7 +112,8 @@ $cover_pic = load_cover($user);
                             // load profile photo by email
                             $friend_pic = loadProfileByEmail($f, $pdo);
                             echo '<div class="container__img col-md-4">';
-                            echo '<img src="'. $friend_pic .'" class="small_image">';
+                            echo '<a href="NPC.php?user=' . $f . '">';
+                            echo '<img src="'. $friend_pic .'" class="small_image"></a>';
                             echo "<a href=\"NPC.php?user=". $f . "\">" . getUserNameByEmail($f, $pdo) . "</a>";
                             echo '</div>';
                             // echo "&nbsp;";
@@ -225,7 +226,7 @@ $cover_pic = load_cover($user);
 
                 <?php
                 $posts = loadPosts($user->get_email(), $pdo);
-                // counts the number of posts; for toggle_edit() to know in which post the edit modal should display
+                // counts the number of posts; for toggle_edit() to know in which post the edit modal should toggle
                 $class_index = 0;           
                 foreach($posts as $p) {
                     
@@ -253,10 +254,6 @@ $cover_pic = load_cover($user);
 
 
                         ?>
-                <!-- <a href="#"><img src="../rsrc/img/friends/cat1.png" alt="friends"></a>
-                <a href="#"><img src="../rsrc/img/friends/cat2.jpeg" alt="friends"></a>
-                <a href="#"><img src="../rsrc/img/friends/cat9.jpeg" alt="friends"></a> -->
-
 
                 <a href="#" class="contacts__setting"><i class="fa fa-cog"></i></a>
             </div> <!-- ********************** end online contacts bar ********************** -->

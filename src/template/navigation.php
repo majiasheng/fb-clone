@@ -13,7 +13,7 @@
                                 </a>
                             </li>
 
-                            <li class="header__home"><a href="#">Home</a></li>
+                            <li class="header__home"><a href="main.php">Home</a></li>
                         </div>
                         <!-- friends, messages, and alerts -->
                         <div class="col-md-2 col-sm-12 navbar__header">

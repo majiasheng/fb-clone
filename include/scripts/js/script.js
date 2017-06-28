@@ -124,6 +124,10 @@ function show_about_page(link_id) {
 	links_to_pages[link_id] = page;
 }
 
+/**
+*	Toggle edit modal
+*	class_index: index of the post
+*/
 function toggle_edit(class_index) {
 	// alert(class_index);
 	// var edit_modals = document.getElementsByClassName("post__edit");

@@ -21,8 +21,9 @@
 
 <div class="post__header">
     <!-- load user pic -->
+    <a class="" href="../src/NPC.php?user=<?php echo $p->getAuthorEmail(); ?>">
     <img src="<?php echo loadProfileByEmail($p->getAuthorEmail(), $pdo) ?>" class="post__header__author-photo">
-    
+    </a>
 
     <p class="post__header__info info__author">
         <a class="" href="../src/NPC.php?user=<?php echo $p->getAuthorEmail(); ?>">
@@ -87,7 +88,8 @@
 
         echo '
             <div class="comment__details post__header">  
-                <img src="'. $pic .'" class="comment__pic ">
+                <a href="../src/NPC.php?user=';
+                        echo $c->getAuthor() . '"><img src="'. $pic .'" class="comment__pic "></a>
                 <div class="commenter">
                     <p class="comment__header__info info__commentor info__author">
                         <a href="../src/NPC.php?user=';
